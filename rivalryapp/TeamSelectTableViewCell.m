@@ -46,6 +46,12 @@
         //Add gradient to cell
         [self.layer insertSublayer:gradient atIndex:0];
         
+        //Create seperators
+        seperator = [[UIView alloc] initWithFrame:CGRectMake(0, 84, self.bounds.size.width, 1)];
+        seperator.backgroundColor = [UIColor blackColor];
+        [self.contentView addSubview:seperator];
+        
+        //Selection Style
         self.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     return self;
@@ -58,6 +64,7 @@
     //Set frames if layout changes
     gradient.frame = self.bounds;
     teamNameLabel.frame = self.bounds;
+    seperator.frame = CGRectMake(0, 84, self.bounds.size.width, 1);
 }
 
 - (void)awakeFromNib {

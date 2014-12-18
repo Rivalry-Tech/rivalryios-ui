@@ -15,6 +15,9 @@
     
     //Cell Gradient
     CAGradientLayer *gradient;
+    
+    //Cell Seperator
+    UIView *seperator;
 }
 
 //Interface Properties

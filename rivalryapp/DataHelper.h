@@ -12,11 +12,18 @@
 
 @interface DataHelper : NSObject
 {
-    
+    //Data Storage
+    NSArray *teams;
 }
+
+//Data Storage Properties
+@property (nonatomic, strong) NSArray *teams;
 
 //Singleton Object Method
 + (DataHelper *)getInstance;
+
+//Data Methods
+- (void)getTeams:(void (^)())callback;
 
 //Helper Methods
 + (UIColor *)colorFromHex:(NSString *)hexString;

@@ -12,6 +12,8 @@
 
 #pragma mark - Singleton Object Method
 
+@synthesize teams;
+
 static DataHelper *instance = nil;
 
 + (DataHelper *)getInstance
@@ -24,6 +26,18 @@ static DataHelper *instance = nil;
         }
     }
     return instance;
+}
+
+#pragma mark - Data Methods
+- (void)getTeams:(void (^)())callback
+{
+    PFQuery *teamQuery = [PFQuery queryWithClassName:@"Team"];
+    [teamQuery orderByAscending:@"name"];
+    [teamQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+    {
+        teams = objects;
+        callback();
+    }];
 }
 
 #pragma mark - Helper Methods

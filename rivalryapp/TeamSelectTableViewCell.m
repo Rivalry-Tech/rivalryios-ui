@@ -67,14 +67,4 @@
     seperator.frame = CGRectMake(0, 84, self.bounds.size.width, 1);
 }
 
-- (void)awakeFromNib {
-    // Initialization code
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
-}
-
 @end

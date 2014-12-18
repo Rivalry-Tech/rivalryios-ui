@@ -21,9 +21,6 @@
     
     //Data Source
     NSArray *teams;
-    
-    //Generic Gradient
-    CAGradientLayer *gradient;
 }
 
 @end

@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--PICK YOUR TEAM-->
@@ -21,6 +22,9 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <connections>
+                                    <segue destination="rjO-nb-iXd" kind="show" identifier="showRivalry" id="g2T-XV-3QJ"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -38,6 +42,61 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7hB-fs-PLZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="483" y="296"/>
+        </scene>
+        <!--SEND A CALLOUT-->
+        <scene sceneID="acj-M0-9Gj">
+            <objects>
+                <tableViewController automaticallyAdjustsScrollViewInsets="NO" id="rjO-nb-iXd" customClass="RivalryTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="2cp-81-3bP">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.10622410220994472" green="0.10622410220994472" blue="0.10622410220994472" alpha="1" colorSpace="calibratedRGB"/>
+                        <prototypes>
+                            <tableViewCell opaque="NO" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="instructionCell" rowHeight="100" id="hAY-Sq-QQK">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hAY-Sq-QQK" id="yZS-bZ-WMu">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap one of the RivalBots below to send your team's callout. Turn on your sound for the best experience!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="plX-IC-YXu">
+                                            <rect key="frame" x="159" y="8" width="283" height="84"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="283" id="dVc-jy-Yc6"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="18"/>
+                                            <color key="textColor" red="0.43352067287551449" green="0.45440341336739237" blue="0.45925414364640882" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="plX-IC-YXu" firstAttribute="bottom" secondItem="yZS-bZ-WMu" secondAttribute="bottomMargin" id="hRz-R9-4Wg"/>
+                                        <constraint firstAttribute="centerX" secondItem="plX-IC-YXu" secondAttribute="centerX" id="m51-L6-70d"/>
+                                        <constraint firstItem="plX-IC-YXu" firstAttribute="top" secondItem="yZS-bZ-WMu" secondAttribute="topMargin" id="nUX-dw-gbH"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" red="0.29411764705882354" green="0.30588235294117649" blue="0.30980392156862746" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="botCell" rowHeight="85" id="4XJ-3V-WVx">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4XJ-3V-WVx" id="LUs-dy-4sH">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="rjO-nb-iXd" id="a9J-GH-D3M"/>
+                            <outlet property="delegate" destination="rjO-nb-iXd" id="QVF-dH-DbN"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="SEND A CALLOUT" id="geF-sO-jjV">
+                        <barButtonItem key="rightBarButtonItem" title="LOG IN" id="JP3-kG-1WK"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="loginButton" destination="JP3-kG-1WK" id="pTg-VA-pPl"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8Xp-FO-OtT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1195" y="296"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="IZW-dQ-WFS">

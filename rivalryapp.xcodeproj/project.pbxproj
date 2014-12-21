@@ -27,6 +27,7 @@
 		D33A76221A40EFA20080D572 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D33A76191A40EFA20080D572 /* StoreKit.framework */; };
 		D33A76231A40EFA20080D572 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D33A761A1A40EFA20080D572 /* SystemConfiguration.framework */; };
 		D3AB61E91A42651E001C08D4 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AB61E81A42651E001C08D4 /* MBProgressHUD.m */; };
+		D3AB61ED1A4351E6001C08D4 /* RivalryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AB61EC1A4351E6001C08D4 /* RivalryTableViewController.m */; };
 		D3C4A0F91A3EA0B0009B8E67 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D3C4A0F81A3EA0B0009B8E67 /* main.m */; };
 		D3C4A0FC1A3EA0B0009B8E67 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D3C4A0FB1A3EA0B0009B8E67 /* AppDelegate.m */; };
 		D3C4A0FF1A3EA0B0009B8E67 /* rivalryapp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D3C4A0FD1A3EA0B0009B8E67 /* rivalryapp.xcdatamodeld */; };
@@ -71,6 +72,8 @@
 		D33A761A1A40EFA20080D572 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		D3AB61E71A42651E001C08D4 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = "../../../../Downloads/MBProgressHUD-master/MBProgressHUD.h"; sourceTree = "<group>"; };
 		D3AB61E81A42651E001C08D4 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = "../../../../Downloads/MBProgressHUD-master/MBProgressHUD.m"; sourceTree = "<group>"; };
+		D3AB61EB1A4351E6001C08D4 /* RivalryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RivalryTableViewController.h; sourceTree = "<group>"; };
+		D3AB61EC1A4351E6001C08D4 /* RivalryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RivalryTableViewController.m; sourceTree = "<group>"; };
 		D3C4A0F31A3EA0B0009B8E67 /* rivalryapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rivalryapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3C4A0F71A3EA0B0009B8E67 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D3C4A0F81A3EA0B0009B8E67 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -180,6 +183,8 @@
 				D33A75FB1A40E3CC0080D572 /* TeamSelectTableViewController.m */,
 				D33A76001A40ED010080D572 /* TeamSelectTableViewCell.h */,
 				D33A76011A40ED010080D572 /* TeamSelectTableViewCell.m */,
+				D3AB61EB1A4351E6001C08D4 /* RivalryTableViewController.h */,
+				D3AB61EC1A4351E6001C08D4 /* RivalryTableViewController.m */,
 				D3C4A1031A3EA0B0009B8E67 /* Main.storyboard */,
 				D3C4A1061A3EA0B0009B8E67 /* Images.xcassets */,
 				D3C4A1081A3EA0B0009B8E67 /* LaunchScreen.xib */,
@@ -342,6 +347,7 @@
 				D33A76021A40ED010080D572 /* TeamSelectTableViewCell.m in Sources */,
 				D3C4A0F91A3EA0B0009B8E67 /* main.m in Sources */,
 				D3AB61E91A42651E001C08D4 /* MBProgressHUD.m in Sources */,
+				D3AB61ED1A4351E6001C08D4 /* RivalryTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

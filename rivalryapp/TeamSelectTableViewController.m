@@ -21,6 +21,19 @@
     //Init DataHelper
     helper = [DataHelper getInstance];
     
+    //Set UITableViewCell class
+    [self.tableView registerClass:[TeamSelectTableViewCell class] forCellReuseIdentifier:@"teamCell"];
+    
+    [self getData];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self setViewStyles];
+}
+
+- (void)setViewStyles
+{
     //Navigation Bar Styles
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor], NSForegroundColorAttributeName, [UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:20.0],NSFontAttributeName, nil];
     [self.navigationController.navigationBar setTitleTextAttributes:attributes];
@@ -29,11 +42,6 @@
     //Login Button Styles
     [loginButton setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:15.0],NSFontAttributeName, nil] forState:UIControlStateNormal];
     loginButton.tintColor = [DataHelper colorFromHex:@"#0099FF"];
-    
-    //Set UITableViewCell class
-    [self.tableView registerClass:[TeamSelectTableViewCell class] forCellReuseIdentifier:@"teamCell"];
-    
-    [self getData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -73,6 +81,14 @@
     cell.teamNameLabel.textColor = [DataHelper colorFromHex:team[@"SecondaryColor"]];
     
     return cell;
+}
+
+#pragma mark - UITableViewController Delegate Methods
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    helper.myTeam = [teams objectAtIndex:indexPath.row];
+    [self performSegueWithIdentifier:@"showRivalry" sender:self];
 }
 
 #pragma mark - Navigation

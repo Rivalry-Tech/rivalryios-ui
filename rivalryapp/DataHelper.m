@@ -12,7 +12,7 @@
 
 #pragma mark - Singleton Object Method
 
-@synthesize teams;
+@synthesize teams, myTeam;
 
 static DataHelper *instance = nil;
 
@@ -29,10 +29,23 @@ static DataHelper *instance = nil;
 }
 
 #pragma mark - Data Methods
+
 - (void)getTeams:(void (^)())callback
 {
+    //Create Query For the List of Teams
     PFQuery *teamQuery = [PFQuery queryWithClassName:@"Team"];
     [teamQuery orderByAscending:@"name"];
+    
+    if ([teamQuery hasCachedResult])
+    {
+        teamQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
+    }
+    else
+    {
+        teamQuery.cachePolicy = kPFCachePolicyNetworkOnly;
+    }
+    
+    //Async call to Parse and return with callback
     [teamQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
     {
         teams = objects;
@@ -44,11 +57,21 @@ static DataHelper *instance = nil;
 
 + (UIColor *)colorFromHex:(NSString *)hexString
 {
-    unsigned rgbValue = 0;
-    NSScanner *scanner = [NSScanner scannerWithString:hexString];
-    [scanner setScanLocation:1];
-    [scanner scanHexInt:&rgbValue];
-    return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0 green:((rgbValue & 0xFF00) >> 8)/255.0 blue:(rgbValue & 0xFF)/255.0 alpha:1.0];
+    if (hexString != nil || ![hexString isEqualToString:@""])
+    {
+        unsigned rgbValue = 0;
+        NSScanner *scanner = [NSScanner scannerWithString:hexString];
+        if ([hexString characterAtIndex:0] == '#')
+        {
+            [scanner setScanLocation:1];
+        }
+        [scanner scanHexInt:&rgbValue];
+        return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0 green:((rgbValue & 0xFF00) >> 8)/255.0 blue:(rgbValue & 0xFF)/255.0 alpha:1.0];
+    }
+    else
+    {
+        return [UIColor whiteColor];
+    }
 }
 
 @end

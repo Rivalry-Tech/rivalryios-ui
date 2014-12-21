@@ -14,10 +14,16 @@
 {
     //Data Storage
     NSArray *teams;
+    
+    //User Data Storage
+    PFObject *myTeam;
 }
 
 //Data Storage Properties
 @property (nonatomic, strong) NSArray *teams;
+
+//User Data Storage Properties
+@property (nonatomic, strong) PFObject *myTeam;
 
 //Singleton Object Method
 + (DataHelper *)getInstance;

@@ -33,6 +33,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="PICK YOUR TEAM" id="cxH-Nt-2UL">
+                        <barButtonItem key="backBarButtonItem" title="TEAM" id="lg2-UZ-H18"/>
                         <barButtonItem key="rightBarButtonItem" title="LOG IN" id="e0v-RU-swS"/>
                     </navigationItem>
                     <connections>
@@ -63,7 +64,7 @@
                                                 <constraint firstAttribute="width" constant="283" id="dVc-jy-Yc6"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="18"/>
-                                            <color key="textColor" red="0.43352067287551449" green="0.45440341336739237" blue="0.45925414364640882" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="textColor" red="0.38039215686274508" green="0.40000000000000002" blue="0.40392156862745099" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>

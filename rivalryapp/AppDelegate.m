@@ -21,6 +21,9 @@
                   clientKey:@"U62N1GwoVE5sVa3T3mm7p6CthwQMO1GT3Y8mcIwq"];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
+    //Set Global Navigation Bar Styles
+    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:15.0],NSFontAttributeName, nil] forState:UIControlStateNormal];
+    
     return YES;
 }
 

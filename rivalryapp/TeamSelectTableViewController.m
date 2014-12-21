@@ -39,8 +39,8 @@
     [self.navigationController.navigationBar setTitleTextAttributes:attributes];
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     
-    //Login Button Styles
     [loginButton setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:15.0],NSFontAttributeName, nil] forState:UIControlStateNormal];
+    
     loginButton.tintColor = [DataHelper colorFromHex:@"#0099FF"];
 }
 
@@ -103,8 +103,10 @@
 
 - (void)getData
 {
+    //Start progress indicator
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
+    //Call data method for intro bots
     [helper getTeams:^{
         teams = helper.teams;
         [self.tableView reloadData];

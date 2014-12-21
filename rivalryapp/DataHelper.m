@@ -12,7 +12,7 @@
 
 #pragma mark - Singleton Object Method
 
-@synthesize teams, myTeam;
+@synthesize teams, myTeam, bots;
 
 static DataHelper *instance = nil;
 
@@ -36,6 +36,7 @@ static DataHelper *instance = nil;
     PFQuery *teamQuery = [PFQuery queryWithClassName:@"Team"];
     [teamQuery orderByAscending:@"name"];
     
+    //Cache the query
     if ([teamQuery hasCachedResult])
     {
         teamQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
@@ -49,6 +50,21 @@ static DataHelper *instance = nil;
     [teamQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
     {
         teams = objects;
+        callback();
+    }];
+}
+
+- (void)getIntroBots:(void (^)())callback
+{
+    //Create Query to get the IntroBots from myTeam
+    PFRelation *botsRelation = [myTeam relationForKey:@"introBots"];
+    PFQuery *botsQuery = [botsRelation query];
+    [botsQuery orderByAscending:@"name"];
+    
+    //Async call to Parse and return with callback
+    [botsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+    {
+        bots = objects;
         callback();
     }];
 }

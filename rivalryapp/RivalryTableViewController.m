@@ -26,11 +26,16 @@
     botsSection = 1;
     numberOfSections = 2;
     
+    //Set cell class for bot cells
+    [self.tableView registerClass:[TeamSelectTableViewCell class] forCellReuseIdentifier:@"botCell"];
+    
+    //Get data for view
     [self getData];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    //Set styles each time view is displayed
     [self setViewStyles];
 }
 
@@ -66,31 +71,80 @@
 {
     if (indexPath.section == instructionsSection)
     {
+        //Create instructions Cell
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"instructionCell" forIndexPath:indexPath];
-        
         return cell;
     }
     else if (indexPath.section == botsSection)
     {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"instructionCell" forIndexPath:indexPath];
+        //Create Bot Cells. Reusing Team Select cells
+        TeamSelectTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"botCell" forIndexPath:indexPath];
+        
+        //Get Team for Row
+        PFObject *bot = [bots objectAtIndex:indexPath.row];
+        
+        //Add Team Name to Cell
+        NSString *botName = [NSString stringWithFormat:@"%@ BOT", bot[@"name"]];
+        cell.teamNameLabel.text = [botName uppercaseString];
+        
+        //Set Cell Styles
+        cell.backgroundColor = [DataHelper colorFromHex:bot[@"PrimaryColor"]];
+        cell.teamNameLabel.textColor = [DataHelper colorFromHex:bot[@"SecondaryColor"]];
         
         return cell;
     }
     else
     {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-        
         return cell;
     }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    //Return bigger size for instructions
     if (indexPath.section == 0)
     {
         return 100.0;
     }
     return 85.0;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if (section == botsSection)
+    {
+        UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 25)];
+        headerView.backgroundColor = [UIColor clearColor];
+        
+        UILabel *meLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, headerView.frame.size.width - 20, headerView.frame.size.height)];
+        meLabel.text = @"ME";
+        meLabel.textAlignment = NSTextAlignmentLeft;
+        meLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:15.0];
+        meLabel.textColor = [DataHelper colorFromHex:@"#616667"];
+        [headerView addSubview:meLabel];
+        
+        UILabel *themLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, headerView.frame.size.width - 20, headerView.frame.size.height)];
+        themLabel.text = @"THEM";
+        themLabel.textAlignment = NSTextAlignmentRight;
+        themLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:15.0];
+        themLabel.textColor = [DataHelper colorFromHex:@"#616667"];
+        [headerView addSubview:themLabel];
+        
+        return headerView;
+    }
+    
+    return nil;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (section == botsSection)
+    {
+        return 25.0;
+    }
+    
+    return 0.0;
 }
 
 
@@ -107,7 +161,15 @@
 
 - (void)getData
 {
+    //Start progress indicator
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
+    //Call data method for bots
+    [helper getIntroBots:^{
+        bots = helper.bots;
+        [self.tableView reloadData];
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+    }];
 }
 
 - (void)setViewStyles

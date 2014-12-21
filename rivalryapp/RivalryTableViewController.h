@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import "DataHelper.h"
+#import "TeamSelectTableViewCell.h"
 
 @interface RivalryTableViewController : UITableViewController
 {

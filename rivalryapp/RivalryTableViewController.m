@@ -91,6 +91,11 @@
         cell.backgroundColor = [DataHelper colorFromHex:bot[@"PrimaryColor"]];
         cell.teamNameLabel.textColor = [DataHelper colorFromHex:bot[@"SecondaryColor"]];
         
+        cell.meLabel.text = @"0";
+        cell.themLabel.text = @"0";
+        cell.meLabel.textColor = [DataHelper colorFromHex:bot[@"SecondaryColor"]];
+        cell.themLabel.textColor = [DataHelper colorFromHex:bot[@"SecondaryColor"]];
+        
         return cell;
     }
     else
@@ -117,7 +122,7 @@
         UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 25)];
         headerView.backgroundColor = [UIColor clearColor];
         
-        UILabel *meLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, headerView.frame.size.width - 20, headerView.frame.size.height)];
+        UILabel *meLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, headerView.frame.size.width - 30, headerView.frame.size.height)];
         meLabel.text = @"ME";
         meLabel.textAlignment = NSTextAlignmentLeft;
         meLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:15.0];
@@ -189,6 +194,18 @@
     
     //TableView Styles
     [self.tableView setContentInset:UIEdgeInsetsMake(40, 0, 0, 0)];
+    
+    
+    
+    if (helper.myTeam[@"lightStatus"] == [NSNumber numberWithBool:YES])
+    {
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+    }
+    else
+    {
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
+    }
+
 }
 
 @end

@@ -12,6 +12,8 @@
 {
     //Interface Connections
     UILabel *teamNameLabel;
+    UILabel *meLabel;
+    UILabel *themLabel;
     
     //Cell Gradient
     CAGradientLayer *gradient;
@@ -22,5 +24,7 @@
 
 //Interface Properties
 @property (nonatomic, strong) UILabel *teamNameLabel;
+@property (nonatomic, strong) UILabel *meLabel;
+@property (nonatomic, strong) UILabel *themLabel;
 
 @end

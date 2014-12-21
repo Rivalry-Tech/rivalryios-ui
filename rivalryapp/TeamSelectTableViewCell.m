@@ -10,7 +10,7 @@
 
 @implementation TeamSelectTableViewCell
 
-@synthesize teamNameLabel;
+@synthesize teamNameLabel, meLabel, themLabel;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -35,16 +35,25 @@
         gradient.startPoint = CGPointMake(0.5, 0);
         gradient.endPoint = CGPointMake(0.5, 1);
         
+        [self.layer insertSublayer:gradient atIndex:0];
+        
         //Create Name Label
         teamNameLabel = [[UILabel alloc] initWithFrame:self.bounds];
         teamNameLabel.textAlignment = NSTextAlignmentCenter;
         teamNameLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:30.0];
-        
-        //Add Label to Cell
         [self.contentView addSubview:teamNameLabel];
         
-        //Add gradient to cell
-        [self.layer insertSublayer:gradient atIndex:0];
+        //Create Me Label
+        meLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, self.bounds.size.width - 40, self.bounds.size.height)];
+        meLabel.textAlignment = NSTextAlignmentLeft;
+        meLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:15.0];
+        [self.contentView addSubview:meLabel];
+        
+        //Create Them Label
+        themLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, self.bounds.size.width - 40, self.bounds.size.height)];
+        themLabel.textAlignment = NSTextAlignmentRight;
+        themLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:15.0];
+        [self.contentView addSubview:themLabel];
         
         //Create seperators
         seperator = [[UIView alloc] initWithFrame:CGRectMake(0, 84, self.bounds.size.width, 1)];
@@ -64,6 +73,8 @@
     //Set frames if layout changes
     gradient.frame = self.bounds;
     teamNameLabel.frame = self.bounds;
+    meLabel.frame = CGRectMake(20, 0, self.bounds.size.width - 40, self.bounds.size.height);
+    themLabel.frame = CGRectMake(20, 0, self.bounds.size.width - 40, self.bounds.size.height);
     seperator.frame = CGRectMake(0, 84, self.bounds.size.width, 1);
 }
 

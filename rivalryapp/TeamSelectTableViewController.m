@@ -39,9 +39,12 @@
     [self.navigationController.navigationBar setTitleTextAttributes:attributes];
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     
+    //Login Button Styles
     [loginButton setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:15.0],NSFontAttributeName, nil] forState:UIControlStateNormal];
-    
     loginButton.tintColor = [DataHelper colorFromHex:@"#0099FF"];
+    
+    //Set status bar to black
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -79,6 +82,10 @@
     //Set Cell Styles
     cell.backgroundColor = [DataHelper colorFromHex:team[@"PrimaryColor"]];
     cell.teamNameLabel.textColor = [DataHelper colorFromHex:team[@"SecondaryColor"]];
+    
+    //Don't need the score labels yet
+    cell.meLabel.text = @"";
+    cell.themLabel.text = @"";
     
     return cell;
 }

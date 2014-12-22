@@ -130,7 +130,7 @@
         meLabel.text = @"ME";
         meLabel.textAlignment = NSTextAlignmentLeft;
         meLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:15.0];
-        meLabel.textColor = [DataHelper colorFromHex:@"#616667"];
+        meLabel.textColor = [DataHelper colorFromHex:@"#4b4d4f"];
         [headerView addSubview:meLabel];
         
         //Create the THEM label
@@ -138,7 +138,7 @@
         themLabel.text = @"THEM";
         themLabel.textAlignment = NSTextAlignmentRight;
         themLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:15.0];
-        themLabel.textColor = [DataHelper colorFromHex:@"#616667"];
+        themLabel.textColor = [DataHelper colorFromHex:@"#4b4e4f"];
         [headerView addSubview:themLabel];
         
         return headerView;

@@ -61,10 +61,12 @@ static DataHelper *instance = nil;
     PFQuery *botsQuery = [botsRelation query];
     [botsQuery orderByAscending:@"name"];
     
+    NSArray *myTeamArray = @[myTeam];
+    
     //Async call to Parse and return with callback
     [botsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
     {
-        bots = objects;
+        bots = [myTeamArray arrayByAddingObjectsFromArray:objects];
         callback();
     }];
 }

@@ -26,6 +26,7 @@
     //Set UITableViewCell class
     [self.tableView registerClass:[TeamSelectTableViewCell class] forCellReuseIdentifier:@"teamCell"];
     
+    //Get Data for Table
     [self getData];
 }
 

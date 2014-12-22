@@ -14,6 +14,8 @@
 
 @implementation RivalryTableViewController
 
+#pragma mark - UIViewController Methods
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -119,9 +121,11 @@
 {
     if (section == botsSection)
     {
+        //Create Header View
         UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 25)];
         headerView.backgroundColor = [UIColor clearColor];
         
+        //Create the ME Label
         UILabel *meLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, headerView.frame.size.width - 30, headerView.frame.size.height)];
         meLabel.text = @"ME";
         meLabel.textAlignment = NSTextAlignmentLeft;
@@ -129,6 +133,7 @@
         meLabel.textColor = [DataHelper colorFromHex:@"#616667"];
         [headerView addSubview:meLabel];
         
+        //Create the THEM label
         UILabel *themLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, headerView.frame.size.width - 20, headerView.frame.size.height)];
         themLabel.text = @"THEM";
         themLabel.textAlignment = NSTextAlignmentRight;
@@ -195,8 +200,7 @@
     //TableView Styles
     [self.tableView setContentInset:UIEdgeInsetsMake(40, 0, 0, 0)];
     
-    
-    
+    //Set status bar style
     if (helper.myTeam[@"lightStatus"] == [NSNumber numberWithBool:YES])
     {
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
@@ -205,7 +209,6 @@
     {
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
     }
-
 }
 
 @end

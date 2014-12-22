@@ -14,6 +14,8 @@
 
 @implementation AppDelegate
 
+#pragma mark - Application Delegate Methods
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     //Set up Parse
@@ -59,7 +61,7 @@
     [self saveContext];
 }
 
-#pragma mark - Core Data stack
+#pragma mark - Core Data Stack
 
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
@@ -133,7 +135,7 @@
     return _managedObjectContext;
 }
 
-#pragma mark - Core Data Saving support
+#pragma mark - Core Data Saving Support
 
 - (void)saveContext
 {

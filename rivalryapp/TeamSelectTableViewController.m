@@ -14,6 +14,8 @@
 
 @implementation TeamSelectTableViewController
 
+#pragma mark - UIViewController Methods
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -30,21 +32,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [self setViewStyles];
-}
-
-- (void)setViewStyles
-{
-    //Navigation Bar Styles
-    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor], NSForegroundColorAttributeName, [UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:20.0],NSFontAttributeName, nil];
-    [self.navigationController.navigationBar setTitleTextAttributes:attributes];
-    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
-    
-    //Login Button Styles
-    [loginButton setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:15.0],NSFontAttributeName, nil] forState:UIControlStateNormal];
-    loginButton.tintColor = [DataHelper colorFromHex:@"#0099FF"];
-    
-    //Set status bar to black
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -94,6 +81,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    //Custom call to segue from custom UITableViewCell
     helper.myTeam = [teams objectAtIndex:indexPath.row];
     [self performSegueWithIdentifier:@"showRivalry" sender:self];
 }
@@ -119,6 +107,21 @@
         [self.tableView reloadData];
         [MBProgressHUD hideHUDForView:self.view animated:YES];
     }];
+}
+
+- (void)setViewStyles
+{
+    //Navigation Bar Styles
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor], NSForegroundColorAttributeName, [UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:20.0],NSFontAttributeName, nil];
+    [self.navigationController.navigationBar setTitleTextAttributes:attributes];
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    
+    //Login Button Styles
+    [loginButton setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:15.0],NSFontAttributeName, nil] forState:UIControlStateNormal];
+    loginButton.tintColor = [DataHelper colorFromHex:@"#0099FF"];
+    
+    //Set status bar to black
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
 }
 
 @end

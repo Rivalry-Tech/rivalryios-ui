@@ -93,6 +93,7 @@
     if (!flipped)
     {
         flipped = true;
+        timeLeft = 2;
         
         //Create view to flip to
         [self createFlipView];
@@ -101,7 +102,6 @@
         [UIView transitionFromView:self.contentView toView:flipView duration:0.4 options:UIViewAnimationOptionTransitionFlipFromBottom completion:^(BOOL finished)
         {
             //Create timer
-            timeLeft = 2;
             timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(tick) userInfo:nil repeats:YES];
         }];
     }
@@ -109,8 +109,11 @@
 
 - (void)tick
 {
-    //Decrement timer and check if timer is finished
+    //Decrement timer and update label
     timeLeft --;
+    timerLabel.text = [DataHelper formatFlipTimer:timeLeft];
+    
+    //Check if timer is finished
     if (timeLeft == 0)
     {
         [timer invalidate];
@@ -154,6 +157,17 @@
     calloutLabel.textColor = [DataHelper colorFromHex:helper.myTeam[@"SecondaryColor"]];
     calloutLabel.text = [NSString stringWithFormat:@"%@ SENT!", callout];
     [flipView addSubview:calloutLabel];
+    
+    //Create timer label
+    timerLabel = [[UILabel alloc] init];
+    NSInteger height = self.contentView.frame.size.height;
+    timerLabel.frame = CGRectMake(0, height - 35, self.contentView.frame.size.width, 35);
+    timerLabel.textAlignment = NSTextAlignmentCenter;
+    timerLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:14.0];
+    timerLabel.textColor = [DataHelper colorFromHex:helper.myTeam[@"SecondaryColor"]];
+    timerLabel.alpha = 0.5;
+    timerLabel.text = [DataHelper formatFlipTimer:timeLeft];
+    [flipView addSubview:timerLabel];
 }
 
 @end

@@ -92,4 +92,15 @@ static DataHelper *instance = nil;
     }
 }
 
++ (NSString *)formatFlipTimer:(NSInteger)timeLeft
+{
+    float minutes = timeLeft / 60;
+    NSString *minutesString = [NSString stringWithFormat:@"%02d", (int)floorf(minutes)];
+    
+    int seconds = timeLeft % 60;
+    NSString *secondsString = [NSString stringWithFormat:@"%02d", seconds];
+    
+    return [NSString stringWithFormat:@"%@:%@", minutesString, secondsString];
+}
+
 @end

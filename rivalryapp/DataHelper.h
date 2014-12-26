@@ -38,5 +38,6 @@
 
 //Helper Methods
 + (UIColor *)colorFromHex:(NSString *)hexString;
++ (NSString *)formatFlipTimer:(NSInteger)timeLeft;
 
 @end

@@ -28,6 +28,7 @@
     NSInteger timeLeft;
     BOOL flipped;
     UIView *flipView;
+    UILabel *timerLabel;
 }
 
 //Interface Properties

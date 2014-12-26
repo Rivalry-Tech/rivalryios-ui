@@ -10,13 +10,20 @@
 
 @implementation TeamSelectTableViewCell
 
-@synthesize teamNameLabel, meLabel, themLabel;
+@synthesize teamNameLabel, meLabel, themLabel, timer, timeLeft, flipped;
+
+#pragma mark - UITableViewCell Methods
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self)
     {
+        //Init Properties
+        timer = nil;
+        timeLeft = 0;
+        flipped = false;
+        
         //Create generic gradient
         UIColor *clear = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.0];
         UIColor *shade = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.2];
@@ -76,6 +83,77 @@
     meLabel.frame = CGRectMake(20, 0, self.bounds.size.width - 40, self.bounds.size.height);
     themLabel.frame = CGRectMake(20, 0, self.bounds.size.width - 40, self.bounds.size.height);
     seperator.frame = CGRectMake(0, 84, self.bounds.size.width, 1);
+}
+
+#pragma mark - Flip Timer Methods
+
+- (void)flip
+{
+    //Only flip if not flipped
+    if (!flipped)
+    {
+        flipped = true;
+        
+        //Create view to flip to
+        [self createFlipView];
+        
+        //Create animation
+        [UIView transitionFromView:self.contentView toView:flipView duration:0.4 options:UIViewAnimationOptionTransitionFlipFromBottom completion:^(BOOL finished)
+        {
+            //Create timer
+            timeLeft = 2;
+            timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(tick) userInfo:nil repeats:YES];
+        }];
+    }
+}
+
+- (void)tick
+{
+    //Decrement timer and check if timer is finished
+    timeLeft --;
+    if (timeLeft == 0)
+    {
+        [timer invalidate];
+        timer = nil;
+        [self flipBack];
+    }
+}
+
+- (void)flipBack
+{
+    //Add layers back to original view
+    [self.layer insertSublayer:gradient atIndex:0];
+    [self.contentView addSubview:seperator];
+    
+    //Animate View
+    [UIView transitionFromView:flipView toView:self.contentView duration:0.4 options:UIViewAnimationOptionTransitionFlipFromBottom completion:^(BOOL finished) {
+        flipped = false;
+    }];
+}
+
+#pragma mark - Custom Methods
+
+- (void)createFlipView
+{
+    //Get access to Data Helper
+    DataHelper *helper = [DataHelper getInstance];
+    
+    //Create flip view
+    flipView = [[UIView alloc] initWithFrame:self.contentView.frame];
+    flipView.backgroundColor = [DataHelper colorFromHex:helper.myTeam[@"PrimaryColor"]];
+    [flipView.layer insertSublayer:gradient atIndex:0];
+    [flipView addSubview:seperator];
+    
+    //Get Team Callout
+    NSString *callout = [helper.myTeam[@"callout"] uppercaseString];
+    
+    //Create callout label
+    UILabel *calloutLabel = [[UILabel alloc] initWithFrame:self.bounds];
+    calloutLabel.textAlignment = NSTextAlignmentCenter;
+    calloutLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:30.0];
+    calloutLabel.textColor = [DataHelper colorFromHex:helper.myTeam[@"SecondaryColor"]];
+    calloutLabel.text = [NSString stringWithFormat:@"%@ SENT!", callout];
+    [flipView addSubview:calloutLabel];
 }
 
 @end

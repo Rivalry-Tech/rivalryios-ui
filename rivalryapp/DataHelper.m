@@ -75,7 +75,7 @@ static DataHelper *instance = nil;
 
 + (UIColor *)colorFromHex:(NSString *)hexString
 {
-    if (hexString != nil || ![hexString isEqualToString:@""])
+    if (hexString != nil && ![hexString isEqualToString:@""])
     {
         unsigned rgbValue = 0;
         NSScanner *scanner = [NSScanner scannerWithString:hexString];

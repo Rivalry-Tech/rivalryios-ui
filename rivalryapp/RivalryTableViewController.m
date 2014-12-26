@@ -46,7 +46,7 @@
     [super didReceiveMemoryWarning];
 }
 
-#pragma mark - Table view data source
+#pragma mark - UITableView Data Source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -155,6 +155,17 @@
     }
     
     return 0.0;
+}
+
+#pragma mark - UITableView Delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+   if (indexPath.section == botsSection)
+   {
+       TeamSelectTableViewCell *selectedCell = (TeamSelectTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+       [selectedCell flip];
+   }
 }
 
 

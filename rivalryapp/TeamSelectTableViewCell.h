@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "DataHelper.h"
+
 @interface TeamSelectTableViewCell : UITableViewCell
 {
     //Interface Connections
@@ -20,11 +22,25 @@
     
     //Cell Seperator
     UIView *seperator;
+    
+    //Flipping Properties
+    NSTimer *timer;
+    NSInteger timeLeft;
+    BOOL flipped;
+    UIView *flipView;
 }
 
 //Interface Properties
 @property (nonatomic, strong) UILabel *teamNameLabel;
 @property (nonatomic, strong) UILabel *meLabel;
 @property (nonatomic, strong) UILabel *themLabel;
+
+//Flipping Properties
+@property (nonatomic, strong) NSTimer *timer;
+@property (nonatomic) NSInteger timeLeft;
+@property (nonatomic) BOOL flipped;
+
+//Flip Timer Methods
+- (void)flip;
 
 @end

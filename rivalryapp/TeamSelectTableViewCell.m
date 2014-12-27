@@ -92,6 +92,7 @@
     //Only flip if not flipped
     if (!flipped)
     {
+        //Set cell flip properties
         flipped = true;
         timeLeft = 2;
         

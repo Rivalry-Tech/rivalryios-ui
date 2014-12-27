@@ -67,6 +67,10 @@ static DataHelper *instance = nil;
     [botsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
     {
         bots = [myTeamArray arrayByAddingObjectsFromArray:objects];
+        bots = [bots arrayByAddingObjectsFromArray:objects];
+        bots = [bots arrayByAddingObjectsFromArray:objects];
+        bots = [bots arrayByAddingObjectsFromArray:objects];
+        bots = [bots arrayByAddingObjectsFromArray:objects];
         callback();
     }];
 }

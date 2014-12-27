@@ -31,6 +31,9 @@
     //Set cell class for bot cells
     [self.tableView registerClass:[TeamSelectTableViewCell class] forCellReuseIdentifier:@"botCell"];
     
+    //Setup Tutorial
+    tutorialFinished = NO;
+    
     //Get data for view
     [self getData];
 }
@@ -73,9 +76,18 @@
 {
     if (indexPath.section == instructionsSection)
     {
-        //Create instructions Cell
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"instructionCell" forIndexPath:indexPath];
-        return cell;
+        if (tutorialFinished)
+        {
+            //Create recruit Cell
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"recruitCell" forIndexPath:indexPath];
+            return cell;
+        }
+        else
+        {
+            //Create instructions Cell
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"instructionCell" forIndexPath:indexPath];
+            return cell;
+        }
     }
     else if (indexPath.section == botsSection)
     {
@@ -107,30 +119,20 @@
     }
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    //Return bigger size for instructions
-    if (indexPath.section == 0)
-    {
-        return 100.0;
-    }
-    return 85.0;
-}
-
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     if (section == botsSection)
     {
         //Create Header View
-        UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 25)];
-        headerView.backgroundColor = [UIColor clearColor];
+        UIView *headerView = [[UIView alloc] initWithFrame:[tableView rectForHeaderInSection:botsSection]];
+        headerView.backgroundColor = [self.tableView.backgroundColor colorWithAlphaComponent:0.8];
         
         //Create the ME Label
         UILabel *meLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, headerView.frame.size.width - 30, headerView.frame.size.height)];
         meLabel.text = @"ME";
         meLabel.textAlignment = NSTextAlignmentLeft;
         meLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:15.0];
-        meLabel.textColor = [DataHelper colorFromHex:@"#4b4d4f"];
+        meLabel.textColor = [DataHelper colorFromHex:@"#5C5C5C"];
         [headerView addSubview:meLabel];
         
         //Create the THEM label
@@ -138,10 +140,48 @@
         themLabel.text = @"THEM";
         themLabel.textAlignment = NSTextAlignmentRight;
         themLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:15.0];
-        themLabel.textColor = [DataHelper colorFromHex:@"#4b4e4f"];
+        themLabel.textColor = [DataHelper colorFromHex:@"#5C5C5C"];
         [headerView addSubview:themLabel];
         
         return headerView;
+    }
+    else if (section == instructionsSection)
+    {
+        if (tutorialFinished)
+        {
+            UIView *headerView = [[UIView alloc] initWithFrame:[tableView rectForHeaderInSection:instructionsSection]];
+            headerView.backgroundColor = [UIColor clearColor];
+            
+            UILabel *readyLabel = [[UILabel alloc] init];
+            readyLabel.frame = CGRectMake(0, 30, tableView.frame.size.width, 30);
+            readyLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:18.0];
+            readyLabel.textColor = [DataHelper colorFromHex:@"#5C5C5C"];
+            readyLabel.textAlignment = NSTextAlignmentCenter;
+            readyLabel.text = @"Now you're ready to harass your friends";
+            [headerView addSubview:readyLabel];
+            
+            return headerView;
+        }
+        else
+        {
+            UIView *headerView = [[UIView alloc] initWithFrame:[tableView rectForHeaderInSection:instructionsSection]];
+            headerView.backgroundColor = [UIColor clearColor];
+        
+            return headerView;
+        }
+    }
+    
+    return nil;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    if (section == instructionsSection && tutorialFinished)
+    {
+        UIView *footerView = [[UIView alloc] initWithFrame:[tableView rectForFooterInSection:instructionsSection]];
+        footerView.backgroundColor = [UIColor clearColor];
+        
+        return footerView;
     }
     
     return nil;
@@ -153,8 +193,35 @@
     {
         return 25.0;
     }
+    else if (section == instructionsSection)
+    {
+        if (tutorialFinished)
+        {
+            return 60.0;
+        }
+        return 10.0;
+    }
     
     return 0.0;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    if (section == instructionsSection && tutorialFinished)
+    {
+        return 20.0;
+    }
+    return 0.0;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //Return bigger size for instructions
+    if (indexPath.section == instructionsSection && !tutorialFinished)
+    {
+        return 100.0;
+    }
+    return 85.0;
 }
 
 #pragma mark - UITableView Delegate
@@ -163,8 +230,14 @@
 {
    if (indexPath.section == botsSection)
    {
+       //Get Selected cell and flip it
        TeamSelectTableViewCell *selectedCell = (TeamSelectTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
        [selectedCell flip];
+       if (!tutorialFinished)
+       {
+           tutorialFinished = YES;
+           [tableView reloadSections:[NSIndexSet indexSetWithIndex:instructionsSection] withRowAnimation:UITableViewRowAnimationFade];
+       }
    }
 }
 
@@ -207,9 +280,6 @@
     
     //Login Button Styles
     [loginButton setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:15.0],NSFontAttributeName, nil] forState:UIControlStateNormal];
-    
-    //TableView Styles
-    [self.tableView setContentInset:UIEdgeInsetsMake(40, 0, 0, 0)];
     
     //Set status bar style
     if (helper.myTeam[@"lightStatus"] == [NSNumber numberWithBool:YES])

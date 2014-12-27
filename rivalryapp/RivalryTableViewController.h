@@ -26,6 +26,9 @@
     NSInteger numberOfSections;
     NSInteger instructionsSection;
     NSInteger botsSection;
+    
+    //Tutorial Properties
+    BOOL tutorialFinished;
 }
 
 @end

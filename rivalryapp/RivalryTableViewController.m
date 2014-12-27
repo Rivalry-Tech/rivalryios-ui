@@ -32,7 +32,11 @@
     [self.tableView registerClass:[TeamSelectTableViewCell class] forCellReuseIdentifier:@"botCell"];
     
     //Setup Tutorial
-    tutorialFinished = NO;
+    firstCalloutSent = NO;
+    tutorialFinished = helper.tutorialComplete;
+    
+    //Register with Notification Center for tutorial completion
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(finishTutorial) name:@"pushRegistered" object:nil];
     
     //Get data for view
     [self getData];
@@ -149,9 +153,11 @@
     {
         if (tutorialFinished)
         {
+            //Create header for signup button
             UIView *headerView = [[UIView alloc] initWithFrame:[tableView rectForHeaderInSection:instructionsSection]];
             headerView.backgroundColor = [UIColor clearColor];
             
+            //Now you're ready label
             UILabel *readyLabel = [[UILabel alloc] init];
             readyLabel.frame = CGRectMake(0, 30, tableView.frame.size.width, 30);
             readyLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:18.0];
@@ -164,6 +170,7 @@
         }
         else
         {
+            //Padding for instructions
             UIView *headerView = [[UIView alloc] initWithFrame:[tableView rectForHeaderInSection:instructionsSection]];
             headerView.backgroundColor = [UIColor clearColor];
         
@@ -176,6 +183,7 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
+    //Padding for signup button
     if (section == instructionsSection && tutorialFinished)
     {
         UIView *footerView = [[UIView alloc] initWithFrame:[tableView rectForFooterInSection:instructionsSection]];
@@ -189,6 +197,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
+    //Headers and padding
     if (section == botsSection)
     {
         return 25.0;
@@ -207,6 +216,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
+    //Padding for sign up button
     if (section == instructionsSection && tutorialFinished)
     {
         return 20.0;
@@ -232,12 +242,15 @@
    {
        //Get Selected cell and flip it
        TeamSelectTableViewCell *selectedCell = (TeamSelectTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-       [selectedCell flip];
-       if (!tutorialFinished)
-       {
-           tutorialFinished = YES;
-           [tableView reloadSections:[NSIndexSet indexSetWithIndex:instructionsSection] withRowAnimation:UITableViewRowAnimationFade];
-       }
+       [selectedCell flip:^{
+           //If this is the first callout, start the tutorial
+           if (!firstCalloutSent)
+           {
+               firstCalloutSent = YES;
+               PFObject *bot = [bots objectAtIndex:indexPath.row];
+               [self performSelector:@selector(notificaitonTutorial:) withObject:bot afterDelay:1.0];
+           }
+       }];
    }
 }
 
@@ -290,6 +303,29 @@
     {
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
     }
+}
+
+- (void)notificaitonTutorial:(PFObject *)bot
+{
+    //Get Bot data
+    NSString *botName = [bot[@"name"] uppercaseString];
+    NSString *callout = bot[@"callout"];
+    
+    //Show recieving alert and register for notificaitons
+    [UIAlertView showWithTitle:@"Recieving..." message:[NSString stringWithFormat:@"%@ BOT is trying to send you %@!\nEnable notifications on the next screen to recieve callouts from your friends!", botName, callout] cancelButtonTitle:@"Okay!" otherButtonTitles:nil tapBlock:^(UIAlertView *alertView, NSInteger buttonIndex) {
+        [DataHelper registerNotificaitons];
+    }];
+}
+
+- (void)finishTutorial
+{
+   if (!tutorialFinished)
+   {
+       //Finish tutoiral and show sign up button
+       tutorialFinished = YES;
+       helper.tutorialComplete = YES;
+       [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:instructionsSection] withRowAnimation:UITableViewRowAnimationFade];
+   }
 }
 
 @end

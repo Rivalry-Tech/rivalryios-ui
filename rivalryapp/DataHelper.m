@@ -12,7 +12,7 @@
 
 #pragma mark - Singleton Object Method
 
-@synthesize teams, myTeam, bots;
+@synthesize teams, myTeam, bots, tutorialComplete;
 
 static DataHelper *instance = nil;
 
@@ -67,10 +67,6 @@ static DataHelper *instance = nil;
     [botsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
     {
         bots = [myTeamArray arrayByAddingObjectsFromArray:objects];
-        bots = [bots arrayByAddingObjectsFromArray:objects];
-        bots = [bots arrayByAddingObjectsFromArray:objects];
-        bots = [bots arrayByAddingObjectsFromArray:objects];
-        bots = [bots arrayByAddingObjectsFromArray:objects];
         callback();
     }];
 }
@@ -98,13 +94,79 @@ static DataHelper *instance = nil;
 
 + (NSString *)formatFlipTimer:(NSInteger)timeLeft
 {
+    //Format minutes
     float minutes = timeLeft / 60;
     NSString *minutesString = [NSString stringWithFormat:@"%02d", (int)floorf(minutes)];
     
+    //Format seconds
     int seconds = timeLeft % 60;
     NSString *secondsString = [NSString stringWithFormat:@"%02d", seconds];
     
+    //Return timer
     return [NSString stringWithFormat:@"%@:%@", minutesString, secondsString];
+}
+
++ (void)registerNotificaitons
+{
+    UIApplication *application = [UIApplication sharedApplication];
+    
+    //Register for push notifications
+    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) //Version > iOS 8.0
+    {
+        //Types to register
+        UIUserNotificationType types = (UIUserNotificationTypeAlert |
+                                        UIUserNotificationTypeBadge |
+                                        UIUserNotificationTypeSound);
+        
+        //Create accept and decline actions for friend requests
+        UIMutableUserNotificationAction *acceptAction = [[UIMutableUserNotificationAction alloc] init];
+        acceptAction.identifier = @"ACCEPT_IDENTIFIER";
+        acceptAction.title = @"Accept";
+        acceptAction.activationMode = UIUserNotificationActivationModeBackground;
+        acceptAction.destructive = NO;
+        acceptAction.authenticationRequired = NO;
+        
+        UIMutableUserNotificationAction *declineAction = [[UIMutableUserNotificationAction alloc] init];
+        declineAction.identifier = @"DECLINE_IDENTIFIER";
+        declineAction.title = @"Decline";
+        declineAction.activationMode = UIUserNotificationActivationModeBackground;
+        declineAction.destructive = YES;
+        declineAction.authenticationRequired = NO;
+        
+        //Create category for friend requests
+        UIMutableUserNotificationCategory *inviteCategory = [[UIMutableUserNotificationCategory alloc] init];
+        inviteCategory.identifier = @"INVITE_CATEGORY";
+        
+        [inviteCategory setActions:@[acceptAction, declineAction]
+                        forContext:UIUserNotificationActionContextDefault];
+        
+        //Create reply action for callouts
+        UIMutableUserNotificationAction *replyAction = [[UIMutableUserNotificationAction alloc] init];
+        replyAction.identifier = @"REPLY_IDENTIFIER";
+        replyAction.title = @"Fight back!";
+        replyAction.activationMode = UIUserNotificationActivationModeBackground;
+        replyAction.destructive = NO;
+        replyAction.authenticationRequired = NO;
+        
+        //Create category for callouts
+        UIMutableUserNotificationCategory *messageCategory = [[UIMutableUserNotificationCategory alloc] init];
+        messageCategory.identifier = @"MESSAGE_CATEGORY";
+        
+        [messageCategory setActions:@[replyAction]
+                         forContext:UIUserNotificationActionContextDefault];
+        
+        //Set categories and settings
+        NSSet *categories = [NSSet setWithObjects:inviteCategory, messageCategory, nil];
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:types categories:categories];
+        
+        //Register for notifications
+        [application registerUserNotificationSettings:settings];
+        [application registerForRemoteNotifications];
+    }
+    else //Version < iOS 8.0
+    {
+        [application registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound)];
+    }
 }
 
 @end

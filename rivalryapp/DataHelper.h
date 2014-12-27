@@ -11,6 +11,7 @@
 #import <Parse/Parse.h>
 
 #import "MBProgressHUD.h"
+#import "UIAlertView+Blocks.h"
 
 @interface DataHelper : NSObject
 {
@@ -20,6 +21,9 @@
     
     //User Data Storage
     PFObject *myTeam;
+    
+    //Global Storage
+    BOOL tutorialComplete;
 }
 
 //Data Storage Properties
@@ -28,6 +32,9 @@
 
 //User Data Storage Properties
 @property (nonatomic, strong) PFObject *myTeam;
+
+//Global Stoage Properties
+@property (nonatomic) BOOL tutorialComplete;
 
 //Singleton Object Method
 + (DataHelper *)getInstance;
@@ -39,5 +46,6 @@
 //Helper Methods
 + (UIColor *)colorFromHex:(NSString *)hexString;
 + (NSString *)formatFlipTimer:(NSInteger)timeLeft;
++ (void)registerNotificaitons;
 
 @end

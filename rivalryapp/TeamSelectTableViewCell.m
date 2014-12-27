@@ -87,7 +87,7 @@
 
 #pragma mark - Flip Timer Methods
 
-- (void)flip
+- (void)flip:(void (^)())callback
 {
     //Only flip if not flipped
     if (!flipped)
@@ -95,6 +95,7 @@
         //Set cell flip properties
         flipped = true;
         timeLeft = 2;
+        flipCallback = callback;
         
         //Create view to flip to
         [self createFlipView];
@@ -132,6 +133,7 @@
     //Animate View
     [UIView transitionFromView:flipView toView:self.contentView duration:0.4 options:UIViewAnimationOptionTransitionFlipFromBottom completion:^(BOOL finished) {
         flipped = false;
+        flipCallback();
     }];
 }
 

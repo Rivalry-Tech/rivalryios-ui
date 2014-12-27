@@ -29,6 +29,7 @@
     BOOL flipped;
     UIView *flipView;
     UILabel *timerLabel;
+    void (^flipCallback)();
 }
 
 //Interface Properties
@@ -42,6 +43,6 @@
 @property (nonatomic) BOOL flipped;
 
 //Flip Timer Methods
-- (void)flip;
+- (void)flip:(void (^)())callback;
 
 @end

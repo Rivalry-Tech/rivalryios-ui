@@ -28,6 +28,7 @@
     NSInteger botsSection;
     
     //Tutorial Properties
+    BOOL firstCalloutSent;
     BOOL tutorialFinished;
 }
 

@@ -42,6 +42,7 @@
 //Data Methods
 - (void)getTeams:(void (^)())callback;
 - (void)getIntroBots:(void (^)())callback;
+- (void)login:(NSString *)username password:(NSString *)password callback:(void (^)())callback;
 
 //Helper Methods
 + (UIColor *)colorFromHex:(NSString *)hexString;

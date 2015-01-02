@@ -11,7 +11,7 @@
 #import "DataHelper.h"
 #import "TeamSelectTableViewCell.h"
 
-@interface RivalryTableViewController : UITableViewController
+@interface TutorialTableViewController : UITableViewController
 {
     //Data Helper
     DataHelper *helper;

@@ -6,13 +6,13 @@
 //  Copyright (c) 2014 Rivalry Technologies. All rights reserved.
 //
 
-#import "RivalryTableViewController.h"
+#import "TutorialTableViewController.h"
 
-@interface RivalryTableViewController ()
+@interface TutorialTableViewController ()
 
 @end
 
-@implementation RivalryTableViewController
+@implementation TutorialTableViewController
 
 #pragma mark - UIViewController Methods
 

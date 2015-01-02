@@ -71,6 +71,18 @@ static DataHelper *instance = nil;
     }];
 }
 
+- (void)login:(NSString *)username password:(NSString *)password callback:(void (^)())callback
+{
+    //Login through Parse
+    [PFUser logInWithUsernameInBackground:username password:password block:^(PFUser *user, NSError *error)
+    {
+        if (user)
+        {
+            callback();
+        }
+    }];
+}
+
 #pragma mark - Helper Methods
 
 + (UIColor *)colorFromHex:(NSString *)hexString

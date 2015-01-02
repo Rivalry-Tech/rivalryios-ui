@@ -216,12 +216,20 @@
 - (void)cancelClicked
 {
     //Return to place that called login
-    [self performSegueWithIdentifier:@"cancelLogin" sender:self];
+    [self performSegueWithIdentifier:@"exitLogin" sender:self];
 }
 
 - (void)loginClicked
 {
+    //End all editing
     [self.tableView endEditing:YES];
+    
+    //Log In
+    NSString *username = usernameField.text;
+    NSString *password = passwordField.text;
+    [helper login:username password:password callback:^{
+        //Perform action after successful login
+    }];
 }
 
 - (void)enableLogin

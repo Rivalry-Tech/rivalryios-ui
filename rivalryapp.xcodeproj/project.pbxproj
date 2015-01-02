@@ -31,6 +31,8 @@
 		D3AB61F41A477829001C08D4 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D3AB61F21A477829001C08D4 /* libsqlite3.0.dylib */; };
 		D3AB61F51A477829001C08D4 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D3AB61F31A477829001C08D4 /* libstdc++.6.dylib */; };
 		D3AB61F81A4F3FE9001C08D4 /* UIAlertView+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AB61F71A4F3FE9001C08D4 /* UIAlertView+Blocks.m */; };
+		D3AB62161A563CB7001C08D4 /* LogInTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AB62151A563CB7001C08D4 /* LogInTableViewController.m */; };
+		D3AB621C1A572101001C08D4 /* UIFloatLabelTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AB621B1A572101001C08D4 /* UIFloatLabelTextField.m */; };
 		D3C4A0F91A3EA0B0009B8E67 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D3C4A0F81A3EA0B0009B8E67 /* main.m */; };
 		D3C4A0FC1A3EA0B0009B8E67 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D3C4A0FB1A3EA0B0009B8E67 /* AppDelegate.m */; };
 		D3C4A0FF1A3EA0B0009B8E67 /* rivalryapp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D3C4A0FD1A3EA0B0009B8E67 /* rivalryapp.xcdatamodeld */; };
@@ -81,6 +83,10 @@
 		D3AB61F31A477829001C08D4 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		D3AB61F61A4F3FE9001C08D4 /* UIAlertView+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+Blocks.h"; sourceTree = "<group>"; };
 		D3AB61F71A4F3FE9001C08D4 /* UIAlertView+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+Blocks.m"; sourceTree = "<group>"; };
+		D3AB62141A563CB7001C08D4 /* LogInTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogInTableViewController.h; sourceTree = "<group>"; };
+		D3AB62151A563CB7001C08D4 /* LogInTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogInTableViewController.m; sourceTree = "<group>"; };
+		D3AB621A1A572101001C08D4 /* UIFloatLabelTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIFloatLabelTextField.h; sourceTree = "<group>"; };
+		D3AB621B1A572101001C08D4 /* UIFloatLabelTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIFloatLabelTextField.m; sourceTree = "<group>"; };
 		D3C4A0F31A3EA0B0009B8E67 /* rivalryapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rivalryapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3C4A0F71A3EA0B0009B8E67 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D3C4A0F81A3EA0B0009B8E67 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -159,6 +165,8 @@
 		D3AB61EA1A426524001C08D4 /* Added Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D3AB621A1A572101001C08D4 /* UIFloatLabelTextField.h */,
+				D3AB621B1A572101001C08D4 /* UIFloatLabelTextField.m */,
 				D3AB61F61A4F3FE9001C08D4 /* UIAlertView+Blocks.h */,
 				D3AB61F71A4F3FE9001C08D4 /* UIAlertView+Blocks.m */,
 				D3AB61E71A42651E001C08D4 /* MBProgressHUD.h */,
@@ -198,6 +206,8 @@
 				D33A76011A40ED010080D572 /* TeamSelectTableViewCell.m */,
 				D3AB61EB1A4351E6001C08D4 /* RivalryTableViewController.h */,
 				D3AB61EC1A4351E6001C08D4 /* RivalryTableViewController.m */,
+				D3AB62141A563CB7001C08D4 /* LogInTableViewController.h */,
+				D3AB62151A563CB7001C08D4 /* LogInTableViewController.m */,
 				D3C4A1031A3EA0B0009B8E67 /* Main.storyboard */,
 				D3C4A1061A3EA0B0009B8E67 /* Images.xcassets */,
 				D3C4A1081A3EA0B0009B8E67 /* LaunchScreen.xib */,
@@ -354,9 +364,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				D33A75FF1A40E3EB0080D572 /* DataHelper.m in Sources */,
+				D3AB62161A563CB7001C08D4 /* LogInTableViewController.m in Sources */,
 				D33A75FC1A40E3CC0080D572 /* TeamSelectTableViewController.m in Sources */,
 				D3C4A0FC1A3EA0B0009B8E67 /* AppDelegate.m in Sources */,
 				D3AB61F81A4F3FE9001C08D4 /* UIAlertView+Blocks.m in Sources */,
+				D3AB621C1A572101001C08D4 /* UIFloatLabelTextField.m in Sources */,
 				D3C4A0FF1A3EA0B0009B8E67 /* rivalryapp.xcdatamodeld in Sources */,
 				D33A76021A40ED010080D572 /* TeamSelectTableViewCell.m in Sources */,
 				D3C4A0F91A3EA0B0009B8E67 /* main.m in Sources */,

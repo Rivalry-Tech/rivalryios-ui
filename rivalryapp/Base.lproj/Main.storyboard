@@ -13,7 +13,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="85" sectionHeaderHeight="22" sectionFooterHeight="22" id="7B3-kB-016">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="teamCell" id="Egv-q9-ifO" customClass="TeamSelectTableViewCell">
@@ -34,7 +34,11 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="PICK YOUR TEAM" id="cxH-Nt-2UL">
                         <barButtonItem key="backBarButtonItem" title="TEAM" id="lg2-UZ-H18"/>
-                        <barButtonItem key="rightBarButtonItem" title="LOG IN" id="e0v-RU-swS"/>
+                        <barButtonItem key="rightBarButtonItem" title="LOG IN" id="e0v-RU-swS">
+                            <connections>
+                                <segue destination="1wF-by-suS" kind="presentation" id="h5f-q6-HGo"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="loginButton" destination="e0v-RU-swS" id="i6q-O0-K6O"/>
@@ -42,7 +46,98 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7hB-fs-PLZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="483" y="296"/>
+            <point key="canvasLocation" x="431" y="296"/>
+        </scene>
+        <!--LOG IN-->
+        <scene sceneID="XwW-uK-Tvu">
+            <objects>
+                <tableViewController id="D22-Q4-Csm" customClass="LogInTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" rowHeight="85" sectionHeaderHeight="22" sectionFooterHeight="22" id="j9U-Ci-g9j">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.12941176470588237" green="0.12941176470588237" blue="0.12941176470588237" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="separatorColor" red="0.20694492403314912" green="0.20694492403314912" blue="0.20694492403314912" alpha="1" colorSpace="calibratedRGB"/>
+                        <sections>
+                            <tableViewSection id="5CA-5K-RSw">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="e5o-qc-CTA">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="e5o-qc-CTA" id="HTv-KM-uMB">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="USERNAME" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZkG-O2-ZUL" customClass="UIFloatLabelTextField">
+                                                    <rect key="frame" x="15" y="8" width="577" height="68"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-DemiBold" family="Avenir Next Condensed" pointSize="30"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" autocorrectionType="no" spellCheckingType="no" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="_placeholderLabel.textColor">
+                                                            <color key="value" red="0.36078431372549019" green="0.36078431372549019" blue="0.36078431372549019" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="D22-Q4-Csm" id="Z39-t1-Lqa"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="ZkG-O2-ZUL" firstAttribute="leading" secondItem="HTv-KM-uMB" secondAttribute="leadingMargin" constant="7" id="1B7-Na-4gg"/>
+                                                <constraint firstItem="ZkG-O2-ZUL" firstAttribute="top" secondItem="HTv-KM-uMB" secondAttribute="topMargin" id="3gW-Uc-jFm"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="ZkG-O2-ZUL" secondAttribute="bottom" constant="1" id="O0D-gc-1zb"/>
+                                                <constraint firstItem="ZkG-O2-ZUL" firstAttribute="trailing" secondItem="HTv-KM-uMB" secondAttribute="trailingMargin" id="gHC-5X-wGy"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.12941176470588237" green="0.12941176470588237" blue="0.12941176470588237" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="wct-mz-fgo">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wct-mz-fgo" id="Uvn-Eb-7HY">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="PASSWORD" adjustsFontSizeToFit="NO" minimumFontSize="30" translatesAutoresizingMaskIntoConstraints="NO" id="JBa-OV-E2Q" customClass="UIFloatLabelTextField">
+                                                    <rect key="frame" x="15" y="8" width="577" height="68"/>
+                                                    <rect key="contentStretch" x="0.0" y="0.0" width="0.0" height="0.0"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-DemiBold" family="Avenir Next Condensed" pointSize="30"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="_placeholderLabel.textColor">
+                                                            <color key="value" red="0.36078431372549019" green="0.36078431372549019" blue="0.36078431372549019" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="D22-Q4-Csm" id="6fW-Zj-Tj1"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottomMargin" secondItem="JBa-OV-E2Q" secondAttribute="bottom" constant="1" id="A0Y-nY-Uos"/>
+                                                <constraint firstItem="JBa-OV-E2Q" firstAttribute="trailing" secondItem="Uvn-Eb-7HY" secondAttribute="trailingMargin" id="aUO-di-7kz"/>
+                                                <constraint firstItem="JBa-OV-E2Q" firstAttribute="top" secondItem="Uvn-Eb-7HY" secondAttribute="topMargin" id="hav-e9-RDv"/>
+                                                <constraint firstItem="JBa-OV-E2Q" firstAttribute="leading" secondItem="Uvn-Eb-7HY" secondAttribute="leadingMargin" constant="7" id="i9N-hL-vEc"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.12941176470588237" green="0.12941176470588237" blue="0.12941176470588237" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="D22-Q4-Csm" id="RyM-Kf-ITH"/>
+                            <outlet property="delegate" destination="D22-Q4-Csm" id="Vvd-cl-UaU"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="LOG IN" id="Qtn-OP-9ch"/>
+                    <connections>
+                        <outlet property="passwordField" destination="JBa-OV-E2Q" id="YCj-Ja-grR"/>
+                        <outlet property="usernameField" destination="ZkG-O2-ZUL" id="qS0-XA-7xx"/>
+                        <segue destination="N0U-n2-bFq" kind="unwind" identifier="cancelLogin" unwindAction="unwindFromLogin:" id="XeR-tN-C91"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2DW-t2-rU5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="N0U-n2-bFq" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="2651" y="-410"/>
         </scene>
         <!--SEND A CALLOUT-->
         <scene sceneID="acj-M0-9Gj">
@@ -51,7 +146,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="2cp-81-3bP">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.097916666666666666" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.12941176470588237" green="0.12941176470588237" blue="0.12941176470588237" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
                             <tableViewCell opaque="NO" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="instructionCell" rowHeight="100" id="hAY-Sq-QQK">
                                 <autoresizingMask key="autoresizingMask"/>
@@ -110,7 +205,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="SEND A CALLOUT" id="geF-sO-jjV">
-                        <barButtonItem key="rightBarButtonItem" title="LOG IN" id="JP3-kG-1WK"/>
+                        <barButtonItem key="rightBarButtonItem" title="LOG IN" id="JP3-kG-1WK">
+                            <connections>
+                                <segue destination="1wF-by-suS" kind="presentation" id="3zf-Xc-LZJ"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="loginButton" destination="JP3-kG-1WK" id="pTg-VA-pPl"/>
@@ -139,5 +238,26 @@
             </objects>
             <point key="canvasLocation" x="-337" y="296"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="udV-xY-x1D">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="1wF-by-suS" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="hWJ-0h-fRA">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="D22-Q4-Csm" kind="relationship" relationship="rootViewController" id="znK-Pg-WUG"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YdO-C9-DYo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1911" y="-410"/>
+        </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="3zf-Xc-LZJ"/>
+    </inferredMetricsTieBreakers>
 </document>

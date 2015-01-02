@@ -291,9 +291,6 @@
     self.navigationController.navigationBar.barTintColor = primary;
     self.navigationController.navigationBar.tintColor = secondary;
     
-    //Login Button Styles
-    [loginButton setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:15.0],NSFontAttributeName, nil] forState:UIControlStateNormal];
-    
     //Set status bar style
     if (helper.myTeam[@"lightStatus"] == [NSNumber numberWithBool:YES])
     {
@@ -326,6 +323,13 @@
        helper.tutorialComplete = YES;
        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:instructionsSection] withRowAnimation:UITableViewRowAnimationFade];
    }
+}
+
+#pragma mark - Unwind Segues
+
+- (IBAction)unwindFromLogin:(UIStoryboardSegue *)segue
+{
+    
 }
 
 @end

@@ -227,9 +227,19 @@
     //Log In
     NSString *username = usernameField.text;
     NSString *password = passwordField.text;
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [helper login:username password:password callback:^{
-        //Perform action after successful login
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"Login Successful!";
+        [hud hide:YES afterDelay:1.0];
+        [self performSelector:@selector(finishLogin) withObject:nil afterDelay:1.0];
     }];
+}
+
+- (void)finishLogin
+{
+    NSLog(@"Logged In");
 }
 
 - (void)enableLogin

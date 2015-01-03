@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 #import "DataHelper.h"
-#import "UIFloatLabelTextField.h"
 
 @interface LogInTableViewController : UITableViewController <UITextFieldDelegate>
 {

@@ -85,34 +85,11 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
+    NSInteger dir = ([string isEqualToString:@""] ? -1 : 1);
+    
     //Get the lengths of the text field inputs
-    NSInteger uLength, pLength;
-    if (![string isEqualToString:@""])
-    {
-        if (usernameField.isEditing)
-        {
-            uLength = usernameField.text.length + 1;
-            pLength = passwordField.text.length;
-        }
-        else
-        {
-            uLength = usernameField.text.length;
-            pLength = passwordField.text.length + 1;
-        }
-    }
-    else
-    {
-        if (usernameField.isEditing)
-        {
-            uLength = usernameField.text.length - 1;
-            pLength = passwordField.text.length;
-        }
-        else
-        {
-            uLength = usernameField.text.length;
-            pLength = passwordField.text.length - 1;
-        }
-    }
+    NSInteger uLength = usernameField.text.length + (usernameField.isEditing ? 1 : 0) * dir;
+    NSInteger pLength = passwordField.text.length + (passwordField.isEditing ? 1 : 0) * dir;
     
     //If both are greater than zero, enable login button
     if (uLength > 0 && pLength > 0)
@@ -211,6 +188,8 @@
     passwordField.floatLabelPassiveColor = [DataHelper colorFromHex:@"#5C5C5C"];
     usernameField.floatLabelFont = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:14.0];
     passwordField.floatLabelFont = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:14.0];
+    usernameField.clearButtonMode = UITextFieldViewModeNever;
+    passwordField.clearButtonMode = UITextFieldViewModeNever;
 }
 
 - (void)cancelClicked

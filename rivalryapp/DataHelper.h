@@ -12,6 +12,7 @@
 
 #import "MBProgressHUD.h"
 #import "UIAlertView+Blocks.h"
+#import "UIFloatLabelTextField.h"
 
 @interface DataHelper : NSObject
 {
@@ -43,6 +44,7 @@
 - (void)getTeams:(void (^)())callback;
 - (void)getIntroBots:(void (^)())callback;
 - (void)login:(NSString *)username password:(NSString *)password callback:(void (^)())callback;
+- (void)signup:(NSString *)username password:(NSString *)password email:(NSString *)email phone:(NSString *)phone callback:(void (^)())callback;
 
 //Helper Methods
 + (UIColor *)colorFromHex:(NSString *)hexString;

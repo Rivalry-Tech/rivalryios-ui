@@ -252,6 +252,13 @@
            }
        }];
    }
+   else if (indexPath.section == instructionsSection)
+   {
+       if (tutorialFinished)
+       {
+           [self performSegueWithIdentifier:@"showSignUp" sender:self];
+       }
+   }
 }
 
 
@@ -328,6 +335,11 @@
 #pragma mark - Unwind Segues
 
 - (IBAction)unwindFromLogin:(UIStoryboardSegue *)segue
+{
+    
+}
+
+- (IBAction)unwindFromSignup:(UIStoryboardSegue *)segue
 {
     
 }

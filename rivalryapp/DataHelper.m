@@ -83,6 +83,26 @@ static DataHelper *instance = nil;
     }];
 }
 
+- (void)signup:(NSString *)username password:(NSString *)password email:(NSString *)email phone:(NSString *)phone callback:(void (^)())callback
+{
+    //Create new user
+    PFUser *newUser = [PFUser user];
+    newUser.username = username;
+    newUser.password = password;
+    newUser.email = email;
+    newUser[@"phone"] = [NSNumber numberWithLongLong:[phone longLongValue]];
+    newUser[@"messageCounter"] = @{};
+    newUser[@"primaryTeam"] = myTeam;
+    
+    //Signup new user with Parse
+    [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded)
+        {
+            callback();
+        }
+    }];
+}
+
 #pragma mark - Helper Methods
 
 + (UIColor *)colorFromHex:(NSString *)hexString

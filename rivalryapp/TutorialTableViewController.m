@@ -32,7 +32,7 @@
     [self.tableView registerClass:[TeamSelectTableViewCell class] forCellReuseIdentifier:@"botCell"];
     
     //Setup Tutorial
-    firstCalloutSent = NO;
+    firstCalloutSent = helper.tutorialComplete;
     tutorialFinished = helper.tutorialComplete;
     
     //Register with Notification Center for tutorial completion
@@ -66,6 +66,10 @@
     // Return the number of rows in the section.
     if (section == instructionsSection)
     {
+        if (tutorialFinished)
+        {
+            return 2;
+        }
         return 1;
     }
     else if (section == botsSection)
@@ -82,9 +86,18 @@
     {
         if (tutorialFinished)
         {
-            //Create recruit Cell
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"recruitCell" forIndexPath:indexPath];
-            return cell;
+            if (indexPath.row == 0)
+            {
+                //Create instructions Cell
+                UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"harassCell" forIndexPath:indexPath];
+                return cell;
+            }
+            else
+            {
+                //Create recruit Cell
+                UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"recruitCell" forIndexPath:indexPath];
+                return cell;
+            }
         }
         else
         {
@@ -157,15 +170,6 @@
             UIView *headerView = [[UIView alloc] initWithFrame:[tableView rectForHeaderInSection:instructionsSection]];
             headerView.backgroundColor = [UIColor clearColor];
             
-            //Now you're ready label
-            UILabel *readyLabel = [[UILabel alloc] init];
-            readyLabel.frame = CGRectMake(0, 30, tableView.frame.size.width, 30);
-            readyLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:18.0];
-            readyLabel.textColor = [DataHelper colorFromHex:@"#5C5C5C"];
-            readyLabel.textAlignment = NSTextAlignmentCenter;
-            readyLabel.text = @"Now you're ready to harass your friends";
-            [headerView addSubview:readyLabel];
-            
             return headerView;
         }
         else
@@ -191,6 +195,13 @@
         
         return footerView;
     }
+    else if (section == botsSection)
+    {
+        UIView *footerView = [[UIView alloc] initWithFrame:[tableView rectForFooterInSection:instructionsSection]];
+        footerView.backgroundColor = [UIColor clearColor];
+        
+        return footerView;
+    }
     
     return nil;
 }
@@ -200,13 +211,13 @@
     //Headers and padding
     if (section == botsSection)
     {
-        return 25.0;
+        return 30.0;
     }
     else if (section == instructionsSection)
     {
         if (tutorialFinished)
         {
-            return 60.0;
+            return 30.0;
         }
         return 10.0;
     }
@@ -221,6 +232,10 @@
     {
         return 20.0;
     }
+    else if (section == botsSection)
+    {
+        return 20.0;
+    }
     return 0.0;
 }
 
@@ -230,6 +245,10 @@
     if (indexPath.section == instructionsSection && !tutorialFinished)
     {
         return 100.0;
+    }
+    else if (indexPath.section == instructionsSection && tutorialFinished && indexPath.row == 0)
+    {
+        return 30.0;
     }
     return 85.0;
 }
@@ -297,6 +316,9 @@
     [self.navigationController.navigationBar setTitleTextAttributes:attributes];
     self.navigationController.navigationBar.barTintColor = primary;
     self.navigationController.navigationBar.tintColor = secondary;
+    
+    //Make bar opaque to preserve colors
+    self.navigationController.navigationBar.translucent = NO;
     
     //Set status bar style
     if (helper.myTeam[@"lightStatus"] == [NSNumber numberWithBool:YES])

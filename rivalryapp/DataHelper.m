@@ -12,7 +12,7 @@
 
 #pragma mark - Singleton Object Method
 
-@synthesize teams, myTeam, bots, tutorialComplete;
+@synthesize teams, myTeam, bots, tutorialComplete, friends;
 
 static DataHelper *instance = nil;
 
@@ -71,19 +71,27 @@ static DataHelper *instance = nil;
     }];
 }
 
-- (void)login:(NSString *)username password:(NSString *)password callback:(void (^)())callback
+- (void)login:(NSString *)username password:(NSString *)password callback:(void (^)(BOOL successful))callback
 {
     //Login through Parse
     [PFUser logInWithUsernameInBackground:username password:password block:^(PFUser *user, NSError *error)
     {
         if (user)
         {
-            callback();
+            [user[@"primaryTeam"] fetchInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+                myTeam = object;
+                callback(YES);
+            }];
+        }
+        else
+        {
+            [DataHelper handleError:error];
+            callback(NO);
         }
     }];
 }
 
-- (void)signup:(NSString *)username password:(NSString *)password email:(NSString *)email phone:(NSString *)phone callback:(void (^)())callback
+- (void)signup:(NSString *)username password:(NSString *)password email:(NSString *)email phone:(NSString *)phone callback:(void (^)(BOOL successful))callback
 {
     //Create new user
     PFUser *newUser = [PFUser user];
@@ -98,9 +106,46 @@ static DataHelper *instance = nil;
     [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded)
         {
-            callback();
+            callback(YES);
+        }
+        else
+        {
+            [DataHelper handleError:error];
+            callback(NO);
         }
     }];
+}
+
+- (void)getFriends:(void (^)(BOOL successful))callback
+{
+    PFUser *currentUser = [PFUser currentUser];
+    PFRelation *friendsRelation = [currentUser relationForKey:@"friends"];
+    PFQuery *friendsQuery = [friendsRelation query];
+    friendsQuery.limit = 1000;
+    [friendsQuery includeKey:@"primaryTeam"];
+    [friendsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+    {
+        if (objects)
+        {
+            friends = objects;
+            callback(YES);
+        }
+        else
+        {
+            [DataHelper handleError:error];
+            callback(NO);
+        }
+    }];
+}
+
+#pragma mark - Error Handling
+
++ (void)handleError:(NSError *)error
+{
+    if (error.userInfo[@"error"])
+    {
+        [UIAlertView showWithTitle:@"ERROR" message:[NSString stringWithFormat:@"Server - %@", error.userInfo[@"error"]] cancelButtonTitle:@"Done" otherButtonTitles:nil tapBlock:nil];
+    }
 }
 
 #pragma mark - Helper Methods

@@ -132,12 +132,61 @@
                         <outlet property="passwordField" destination="JBa-OV-E2Q" id="YCj-Ja-grR"/>
                         <outlet property="usernameField" destination="ZkG-O2-ZUL" id="qS0-XA-7xx"/>
                         <segue destination="N0U-n2-bFq" kind="unwind" identifier="exitLogin" unwindAction="unwindFromLogin:" id="XeR-tN-C91"/>
+                        <segue destination="4ZR-5c-oH3" kind="show" identifier="loginToFriends" id="x80-4B-CEK"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2DW-t2-rU5" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="N0U-n2-bFq" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2651" y="-410"/>
+        </scene>
+        <!--MBOTTONE-->
+        <scene sceneID="Svy-Zn-ngP">
+            <objects>
+                <tableViewController id="4ZR-5c-oH3" customClass="RivalryTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="85" sectionHeaderHeight="22" sectionFooterHeight="22" id="msy-b5-Q0n">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="friendCell" id="mch-oj-MWY" customClass="TeamSelectTableViewCell">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mch-oj-MWY" id="hvE-as-2er">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="recruitCell" id="Gov-1Q-DdH">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Gov-1Q-DdH" id="jcR-aY-DjS">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RECRUIT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8HM-BM-31Z">
+                                            <rect key="frame" x="8" y="8" width="584" height="69"/>
+                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-DemiBold" family="Avenir Next Condensed" pointSize="30"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="8HM-BM-31Z" firstAttribute="trailing" secondItem="jcR-aY-DjS" secondAttribute="trailingMargin" id="2rB-ao-yuE"/>
+                                        <constraint firstItem="8HM-BM-31Z" firstAttribute="leading" secondItem="jcR-aY-DjS" secondAttribute="leadingMargin" id="VLR-4s-8YB"/>
+                                        <constraint firstItem="8HM-BM-31Z" firstAttribute="top" secondItem="jcR-aY-DjS" secondAttribute="topMargin" id="mQy-Kc-j1d"/>
+                                        <constraint firstItem="8HM-BM-31Z" firstAttribute="bottom" secondItem="jcR-aY-DjS" secondAttribute="bottomMargin" id="reR-ny-Sb9"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.36078431370000003" blue="0.36078431370000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="4ZR-5c-oH3" id="4eU-hQ-JJn"/>
+                            <outlet property="delegate" destination="4ZR-5c-oH3" id="jlb-94-HEj"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="MBOTTONE" id="Wee-fT-isy"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LPy-AY-bjD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3365" y="338"/>
         </scene>
         <!--SEND A CALLOUT-->
         <scene sceneID="acj-M0-9Gj">
@@ -197,6 +246,27 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.15758101851851852" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="harassCell" rowHeight="30" id="ZHH-5f-C5t">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZHH-5f-C5t" id="3Xk-LW-Hxw">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Now you're ready to harass your friends" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EOQ-gk-Ksl">
+                                            <rect key="frame" x="8" y="0.0" width="584" height="30"/>
+                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="18"/>
+                                            <color key="textColor" red="0.36078431372549019" green="0.36078431372549019" blue="0.36078431372549019" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottomMargin" secondItem="EOQ-gk-Ksl" secondAttribute="bottom" constant="-8" id="6BQ-Ib-vBK"/>
+                                        <constraint firstItem="EOQ-gk-Ksl" firstAttribute="trailing" secondItem="3Xk-LW-Hxw" secondAttribute="trailingMargin" id="F6J-mg-fD1"/>
+                                        <constraint firstItem="EOQ-gk-Ksl" firstAttribute="leading" secondItem="3Xk-LW-Hxw" secondAttribute="leadingMargin" id="Isf-El-j75"/>
+                                        <constraint firstItem="EOQ-gk-Ksl" firstAttribute="top" secondItem="3Xk-LW-Hxw" secondAttribute="topMargin" constant="-8" id="LHG-ig-LZm"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -403,6 +473,7 @@
                         <outlet property="phoneField" destination="4qz-Ww-wl6" id="0KE-Ug-P8z"/>
                         <outlet property="usernameField" destination="HOL-9j-qfs" id="KbD-eQ-osf"/>
                         <segue destination="se9-Pz-EmU" kind="unwind" identifier="cancelSignup" unwindAction="unwindFromSignup:" id="7PC-1L-QlY"/>
+                        <segue destination="4ZR-5c-oH3" kind="show" identifier="signupToFriends" id="Lzr-r1-Jmb"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2ei-Y9-IlU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -431,5 +502,6 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="3zf-Xc-LZJ"/>
+        <segue reference="Lzr-r1-Jmb"/>
     </inferredMetricsTieBreakers>
 </document>

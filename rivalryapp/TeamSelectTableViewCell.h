@@ -44,5 +44,6 @@
 
 //Flip Timer Methods
 - (void)flip:(void (^)())callback;
+- (void)stopFlip;
 
 @end

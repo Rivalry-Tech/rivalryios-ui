@@ -22,6 +22,17 @@
     
     //Get DataHelper instance
     helper = [DataHelper getInstance];
+    
+    //Register for keyboard notifications
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -32,6 +43,31 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [self setViewStyles];
+}
+
+#pragma mark - Keyboard Methods
+
+- (void)keyboardWillShow:(NSNotification *)notification
+{
+    CGSize keyboardSize = [notification.userInfo[UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    NSNumber *rate = notification.userInfo[UIKeyboardAnimationDurationUserInfoKey];
+    
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, (keyboardSize.height), 0.0);
+    
+    [UIView animateWithDuration:rate.floatValue animations:^{
+        self.tableView.contentInset = contentInsets;
+        self.tableView.scrollIndicatorInsets = contentInsets;
+    }];
+    [self.tableView scrollToRowAtIndexPath:editingIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification
+{
+    NSNumber *rate = notification.userInfo[UIKeyboardAnimationDurationUserInfoKey];
+    [UIView animateWithDuration:rate.floatValue animations:^{
+        self.tableView.contentInset = UIEdgeInsetsZero;
+        self.tableView.scrollIndicatorInsets = UIEdgeInsetsZero;
+    }];
 }
 
 #pragma mark - UITableViewDataSource Methods
@@ -165,6 +201,9 @@
     //Get rid of extra lines
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
+    //Make bar opaque to preserve colors
+    self.navigationController.navigationBar.translucent = NO;
+    
     //Style floating label text fields
     usernameField.placeholder = @"USERNAME (< 16 char.)";
     passwordField.placeholder = @"PASSWORD";
@@ -201,11 +240,15 @@
     NSString *phone = phoneField.text;
     
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [helper signup:username password:password email:email phone:phone callback:^{
-        hud.mode = MBProgressHUDModeText;
-        hud.labelText = @"Signup Successful!";
+    [helper signup:username password:password email:email phone:phone callback:^(BOOL successful)
+    {
+        if (successful)
+        {
+            hud.mode = MBProgressHUDModeText;
+            hud.labelText = @"Signup Successful!";
+            [self performSelector:@selector(finishSignup) withObject:nil afterDelay:1.0];
+        }
         [hud hide:YES afterDelay:1.0];
-        [self performSelector:@selector(finishSignup) withObject:nil afterDelay:1.0];
     }];
 }
 

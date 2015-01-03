@@ -24,6 +24,9 @@
     IBOutlet UIFloatLabelTextField *passwordField;
     IBOutlet UIFloatLabelTextField *emailField;
     IBOutlet UIFloatLabelTextField *phoneField;
+    
+    //Keyboard moving properties
+    NSIndexPath *editingIndexPath;
 }
 
 @end

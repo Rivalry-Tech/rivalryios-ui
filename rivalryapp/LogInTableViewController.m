@@ -179,6 +179,9 @@
     //Get rid of extra lines
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
+    //Make bar opaque to preserve colors
+    self.navigationController.navigationBar.translucent = NO;
+    
     //Style floating label text fields
     usernameField.placeholder = @"USERNAME";
     passwordField.placeholder = @"PASSWORD";
@@ -208,17 +211,22 @@
     NSString *password = passwordField.text;
     
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [helper login:username password:password callback:^{
-        hud.mode = MBProgressHUDModeText;
-        hud.labelText = @"Login Successful!";
+    [helper login:username password:password callback:^(BOOL successful)
+    {
+        if (successful)
+        {
+            hud.mode = MBProgressHUDModeText;
+            hud.labelText = @"Login Successful!";
+            [self performSelector:@selector(finishLogin) withObject:nil afterDelay:1.0];
+        }
         [hud hide:YES afterDelay:1.0];
-        [self performSelector:@selector(finishLogin) withObject:nil afterDelay:1.0];
     }];
 }
 
 - (void)finishLogin
 {
-    NSLog(@"Logged In");
+    [DataHelper registerNotificaitons];
+    [self performSegueWithIdentifier:@"loginToFriends" sender:self];
 }
 
 - (void)enableLogin

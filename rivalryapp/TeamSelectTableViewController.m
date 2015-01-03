@@ -123,6 +123,9 @@
     [loginButton setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:15.0],NSFontAttributeName, nil] forState:UIControlStateNormal];
     loginButton.tintColor = [DataHelper colorFromHex:@"#0099FF"];
     
+    //Make bar opaque to preserve colors
+    self.navigationController.navigationBar.translucent = NO;
+    
     //Set status bar to black
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
 }

@@ -19,6 +19,7 @@
     //Data Storage
     NSArray *teams;
     NSArray *bots;
+    NSArray *friends;
     
     //User Data Storage
     PFObject *myTeam;
@@ -30,6 +31,7 @@
 //Data Storage Properties
 @property (nonatomic, strong) NSArray *teams;
 @property (nonatomic, strong) NSArray *bots;
+@property (nonatomic, strong) NSArray *friends;
 
 //User Data Storage Properties
 @property (nonatomic, strong) PFObject *myTeam;
@@ -43,8 +45,12 @@
 //Data Methods
 - (void)getTeams:(void (^)())callback;
 - (void)getIntroBots:(void (^)())callback;
-- (void)login:(NSString *)username password:(NSString *)password callback:(void (^)())callback;
-- (void)signup:(NSString *)username password:(NSString *)password email:(NSString *)email phone:(NSString *)phone callback:(void (^)())callback;
+- (void)login:(NSString *)username password:(NSString *)password callback:(void (^)(BOOL successful))callback;
+- (void)signup:(NSString *)username password:(NSString *)password email:(NSString *)email phone:(NSString *)phone callback:(void (^)(BOOL successful))callback;
+- (void)getFriends:(void (^)(BOOL successful))callback;
+
+//Error Handling
++ (void)handleError:(NSError *)error;
 
 //Helper Methods
 + (UIColor *)colorFromHex:(NSString *)hexString;

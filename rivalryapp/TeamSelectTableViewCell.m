@@ -87,6 +87,21 @@
 
 #pragma mark - Flip Timer Methods
 
+- (void)stopFlip
+{
+    [timer invalidate];
+    timer = nil;
+    timeLeft = 0;
+    
+    //Add layers back to original view
+    [self.layer insertSublayer:gradient atIndex:0];
+    [self.contentView addSubview:seperator];
+    
+    [UIView transitionFromView:flipView toView:self.contentView duration:0 options:UIViewAnimationOptionTransitionNone completion:^(BOOL finished) {
+        flipped = false;
+    }];
+}
+
 - (void)flip:(void (^)())callback
 {
     //Only flip if not flipped

@@ -48,6 +48,8 @@
 - (void)login:(NSString *)username password:(NSString *)password callback:(void (^)(BOOL successful))callback;
 - (void)signup:(NSString *)username password:(NSString *)password email:(NSString *)email phone:(NSString *)phone callback:(void (^)(BOOL successful))callback;
 - (void)getFriends:(void (^)(BOOL successful))callback;
+- (void)sendCallout:(PFUser *)user callback:(void (^)(BOOL successful))callback;
+- (void)deleteFriend:(PFUser *)user callback:(void (^)(BOOL successful))callback;
 
 //Error Handling
 + (void)handleError:(NSError *)error;

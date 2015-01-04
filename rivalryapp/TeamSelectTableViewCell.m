@@ -51,14 +51,14 @@
         [self.contentView addSubview:teamNameLabel];
         
         //Create Me Label
-        meLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, self.bounds.size.width - 40, self.bounds.size.height)];
-        meLabel.textAlignment = NSTextAlignmentLeft;
+        meLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, 40, self.bounds.size.height)];
+        meLabel.textAlignment = NSTextAlignmentCenter;
         meLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:15.0];
         [self.contentView addSubview:meLabel];
         
         //Create Them Label
-        themLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, self.bounds.size.width - 40, self.bounds.size.height)];
-        themLabel.textAlignment = NSTextAlignmentRight;
+        themLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.bounds.size.width - 45, 0, 40, self.bounds.size.height)];
+        themLabel.textAlignment = NSTextAlignmentCenter;
         themLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:15.0];
         [self.contentView addSubview:themLabel];
         
@@ -80,8 +80,8 @@
     //Set frames if layout changes
     gradient.frame = self.bounds;
     teamNameLabel.frame = self.bounds;
-    meLabel.frame = CGRectMake(20, 0, self.bounds.size.width - 40, self.bounds.size.height);
-    themLabel.frame = CGRectMake(20, 0, self.bounds.size.width - 40, self.bounds.size.height);
+    meLabel.frame = CGRectMake(5, 0, 40, self.bounds.size.height);
+    themLabel.frame = CGRectMake(self.bounds.size.width - 45, 0, 40, self.bounds.size.height);
     seperator.frame = CGRectMake(0, 84, self.bounds.size.width, 1);
 }
 

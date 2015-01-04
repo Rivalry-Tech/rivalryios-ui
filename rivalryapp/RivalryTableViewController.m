@@ -120,14 +120,6 @@
     return NO;
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete)
-    {
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }
-}
-
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if (section == recruitSection)
@@ -216,8 +208,18 @@
         //Get Selected cell and flip it
         TeamSelectTableViewCell *selectedCell = (TeamSelectTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
         
+        //Flip cell
         [selectedCell flip:^{
             //Flip finished
+        }];
+        
+        //Send callout
+        [helper sendCallout:[friends objectAtIndex:indexPath.row] callback:^(BOOL successful)
+        {
+            if (successful)
+            {
+                //Callout Sent
+            }
         }];
     }
 }
@@ -228,6 +230,41 @@
     {
         [(TeamSelectTableViewCell *)cell stopFlip];
     }
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete)
+    {
+        [helper deleteFriend:[friends objectAtIndex:indexPath.row] callback:^(BOOL successful) {
+            //Delete Friend Successful
+        }];
+        [[friends mutableCopy] removeObjectAtIndex:indexPath.row];
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }
+}
+
+- (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewRowAction *muteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"MUTE" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
+    {
+        //TODO - MUTE PEOPLE
+    }];
+    
+    UITableViewRowAction *unfriendAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"UNFRIEND" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
+    {
+        [helper deleteFriend:[friends objectAtIndex:indexPath.row] callback:^(BOOL successful) {
+            //Delete Friend Successful
+        }];
+        [tableView beginUpdates];
+        NSMutableArray *mutableFriends = [friends mutableCopy];
+        [mutableFriends removeObjectAtIndex:indexPath.row];
+        friends = mutableFriends;
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+        [tableView endUpdates];
+    }];
+    
+    return @[unfriendAction, muteAction];
 }
 
 #pragma mark - Navigation

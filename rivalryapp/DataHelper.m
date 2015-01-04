@@ -118,11 +118,14 @@ static DataHelper *instance = nil;
 
 - (void)getFriends:(void (^)(BOOL successful))callback
 {
+    //Create query for friends
     PFUser *currentUser = [PFUser currentUser];
     PFRelation *friendsRelation = [currentUser relationForKey:@"friends"];
     PFQuery *friendsQuery = [friendsRelation query];
     friendsQuery.limit = 1000;
     [friendsQuery includeKey:@"primaryTeam"];
+    
+    //Retrieve friends from Parse
     [friendsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
     {
         if (objects)
@@ -136,6 +139,70 @@ static DataHelper *instance = nil;
             callback(NO);
         }
     }];
+}
+
+- (void)sendCallout:(PFUser *)user callback:(void (^)(BOOL successful))callback
+{
+    PFUser *currentUser = [PFUser currentUser];
+    PFRelation *friendsRelation = [currentUser relationForKey:@"friends"];
+    PFQuery *friendsQuery = [friendsRelation query];
+    [friendsQuery whereKey:@"username" equalTo:user.username];
+    [friendsQuery getFirstObjectInBackgroundWithBlock:^(PFObject *user, NSError *error) {
+        if (user)
+        {
+            //Update team callout count
+            NSNumber *calloutCount = (NSNumber *)myTeam[@"calloutCount"];
+            calloutCount = [NSNumber numberWithInteger:[calloutCount integerValue] + 1];
+            myTeam[@"calloutCount"] = calloutCount;
+            [myTeam saveEventually];
+            
+            //Generate push payload
+            NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:
+                                  [NSString stringWithFormat:@"%@ says %@!", currentUser.username, myTeam[@"callout"]], @"alert",
+                                  @"Increment", @"badge",
+                                  myTeam[@"audioFile"], @"sound",
+                                  [currentUser username], @"username",
+                                  nil];
+            
+            //Which phone to send notificaiton to
+            PFQuery *pushQuery = [PFInstallation query];
+            [pushQuery whereKey:@"user" matchesQuery:friendsQuery];
+            
+            PFPush *push = [[PFPush alloc] init];
+            [push setQuery:pushQuery];
+            [push setData:data];
+            [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (succeeded)
+                {
+                    callback(YES);
+                }
+                else
+                {
+                    [DataHelper handleError:error];
+                    callback(NO);
+                }
+            }];
+        }
+        else
+        {
+            [DataHelper handleError:error];
+            callback(NO);
+        }
+    }];
+}
+
+- (void)deleteFriend:(PFUser *)user callback:(void (^)(BOOL successful))callback
+{
+    //Remove friend in Parse
+    PFUser *currentUser = [PFUser currentUser];
+    PFRelation *friendsRelation = [currentUser relationForKey:@"friends"];
+    [friendsRelation removeObject:user];
+    [currentUser saveEventually];
+    
+    //Remove friend locally
+    [[friends mutableCopy] removeObject:user];
+    
+    callback(YES);
 }
 
 #pragma mark - Error Handling

@@ -205,7 +205,20 @@
 
 - (void)saveClicked
 {
-    
+    NSString *username = usernameField.text;
+    NSString *password = passwordField.text;
+    NSString *email = emailField.text;
+    NSString *phone = phoneField.text;
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.tableView animated:YES];
+    [helper updateProfile:username password:password email:email phone:phone callback:^(BOOL successful) {
+        if (successful)
+        {
+            hud.mode = MBProgressHUDModeText;
+            hud.labelText = @"Settings Saved!";
+            [self performSelector:@selector(cancelClicked) withObject:nil afterDelay:1.0];
+        }
+        [hud hide:YES afterDelay:1.0];
+    }];
 }
 
 @end

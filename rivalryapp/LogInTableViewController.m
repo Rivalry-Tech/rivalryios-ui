@@ -182,6 +182,9 @@
     //Make bar opaque to preserve colors
     self.navigationController.navigationBar.translucent = NO;
     
+    recoverButton.imageView.image = [recoverButton.imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    recoverButton.imageView.tintColor = [UIColor whiteColor];
+    
     //Style floating label text fields
     usernameField.placeholder = @"USERNAME";
     passwordField.placeholder = @"PASSWORD";

@@ -85,6 +85,21 @@
     seperator.frame = CGRectMake(0, 84, self.bounds.size.width, 1);
 }
 
+- (void)prepareForReuse
+{
+    [timer invalidate];
+    timer = nil;
+    timeLeft = 0;
+    
+    //Add layers back to original view
+    [self.layer insertSublayer:gradient atIndex:0];
+    [self.contentView addSubview:seperator];
+    
+    [UIView transitionFromView:flipView toView:self.contentView duration:0 options:UIViewAnimationOptionTransitionNone completion:^(BOOL finished) {
+        flipped = false;
+    }];
+}
+
 #pragma mark - Flip Timer Methods
 
 - (void)stopFlip

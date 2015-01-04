@@ -224,26 +224,6 @@
     }
 }
 
-- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.section == friendsSection)
-    {
-        [(TeamSelectTableViewCell *)cell stopFlip];
-    }
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete)
-    {
-        [helper deleteFriend:[friends objectAtIndex:indexPath.row] callback:^(BOOL successful) {
-            //Delete Friend Successful
-        }];
-        [[friends mutableCopy] removeObjectAtIndex:indexPath.row];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }
-}
-
 - (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewRowAction *muteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"MUTE" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
@@ -253,9 +233,13 @@
     
     UITableViewRowAction *unfriendAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"UNFRIEND" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
     {
-        [helper deleteFriend:[friends objectAtIndex:indexPath.row] callback:^(BOOL successful) {
+        //Delete friend from server
+        [helper deleteFriend:[friends objectAtIndex:indexPath.row] callback:^(BOOL successful)
+        {
             //Delete Friend Successful
         }];
+        
+        //Delete row from table view
         [tableView beginUpdates];
         NSMutableArray *mutableFriends = [friends mutableCopy];
         [mutableFriends removeObjectAtIndex:indexPath.row];
@@ -321,6 +305,13 @@
         }
         [MBProgressHUD hideAllHUDsForView:self.tableView animated:YES];
     }];
+}
+
+#pragma mark - Unwind Segues
+
+- (IBAction)unwindFromSettings:(UIStoryboardSegue *)segue
+{
+    
 }
 
 @end

@@ -124,6 +124,7 @@ static DataHelper *instance = nil;
     PFQuery *friendsQuery = [friendsRelation query];
     friendsQuery.limit = 1000;
     [friendsQuery includeKey:@"primaryTeam"];
+    [friendsQuery orderByAscending:@"username"];
     
     //Retrieve friends from Parse
     [friendsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
@@ -143,6 +144,7 @@ static DataHelper *instance = nil;
 
 - (void)sendCallout:(PFUser *)user callback:(void (^)(BOOL successful))callback
 {
+    //Find friends from Parse
     PFUser *currentUser = [PFUser currentUser];
     PFRelation *friendsRelation = [currentUser relationForKey:@"friends"];
     PFQuery *friendsQuery = [friendsRelation query];
@@ -168,9 +170,12 @@ static DataHelper *instance = nil;
             PFQuery *pushQuery = [PFInstallation query];
             [pushQuery whereKey:@"user" matchesQuery:friendsQuery];
             
+            //Create push
             PFPush *push = [[PFPush alloc] init];
             [push setQuery:pushQuery];
             [push setData:data];
+            
+            //Send push
             [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (succeeded)
                 {

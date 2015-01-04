@@ -35,6 +35,7 @@
 		D3AB621C1A572101001C08D4 /* UIFloatLabelTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AB621B1A572101001C08D4 /* UIFloatLabelTextField.m */; };
 		D3AB621F1A579659001C08D4 /* SignUpTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AB621E1A579659001C08D4 /* SignUpTableViewController.m */; };
 		D3AB62221A588314001C08D4 /* RivalryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AB62211A588314001C08D4 /* RivalryTableViewController.m */; };
+		D3AB62251A58F9FE001C08D4 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AB62241A58F9FE001C08D4 /* SettingsTableViewController.m */; };
 		D3C4A0F91A3EA0B0009B8E67 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D3C4A0F81A3EA0B0009B8E67 /* main.m */; };
 		D3C4A0FC1A3EA0B0009B8E67 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D3C4A0FB1A3EA0B0009B8E67 /* AppDelegate.m */; };
 		D3C4A0FF1A3EA0B0009B8E67 /* rivalryapp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D3C4A0FD1A3EA0B0009B8E67 /* rivalryapp.xcdatamodeld */; };
@@ -93,6 +94,8 @@
 		D3AB621E1A579659001C08D4 /* SignUpTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpTableViewController.m; sourceTree = "<group>"; };
 		D3AB62201A588314001C08D4 /* RivalryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RivalryTableViewController.h; sourceTree = "<group>"; };
 		D3AB62211A588314001C08D4 /* RivalryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RivalryTableViewController.m; sourceTree = "<group>"; };
+		D3AB62231A58F9FE001C08D4 /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewController.h; sourceTree = "<group>"; };
+		D3AB62241A58F9FE001C08D4 /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
 		D3C4A0F31A3EA0B0009B8E67 /* rivalryapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rivalryapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3C4A0F71A3EA0B0009B8E67 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D3C4A0F81A3EA0B0009B8E67 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -218,6 +221,8 @@
 				D3AB621E1A579659001C08D4 /* SignUpTableViewController.m */,
 				D3AB62201A588314001C08D4 /* RivalryTableViewController.h */,
 				D3AB62211A588314001C08D4 /* RivalryTableViewController.m */,
+				D3AB62231A58F9FE001C08D4 /* SettingsTableViewController.h */,
+				D3AB62241A58F9FE001C08D4 /* SettingsTableViewController.m */,
 				D3C4A1031A3EA0B0009B8E67 /* Main.storyboard */,
 				D3C4A1081A3EA0B0009B8E67 /* LaunchScreen.xib */,
 				D3C4A1061A3EA0B0009B8E67 /* Images.xcassets */,
@@ -373,6 +378,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3AB62251A58F9FE001C08D4 /* SettingsTableViewController.m in Sources */,
 				D33A75FF1A40E3EB0080D572 /* DataHelper.m in Sources */,
 				D3AB62161A563CB7001C08D4 /* LogInTableViewController.m in Sources */,
 				D3AB62221A588314001C08D4 /* RivalryTableViewController.m in Sources */,

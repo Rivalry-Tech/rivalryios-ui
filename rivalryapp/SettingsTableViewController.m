@@ -136,7 +136,7 @@
     saveButton = [[UIButton alloc] init];
     saveButton.frame = CGRectMake(0, 0, 68, 30);
     saveButton.backgroundColor = [secondary colorWithAlphaComponent:1.0];
-    [saveButton setTitle:@"SIGN UP" forState:UIControlStateNormal];
+    [saveButton setTitle:@"SAVE" forState:UIControlStateNormal];
     saveButton.titleLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:15.0];
     [saveButton setTitleColor:primary forState:UIControlStateNormal];
     [saveButton setTitleColor:[primary colorWithAlphaComponent:1.0] forState:UIControlStateDisabled];

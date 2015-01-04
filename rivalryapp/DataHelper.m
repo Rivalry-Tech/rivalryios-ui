@@ -212,7 +212,16 @@ static DataHelper *instance = nil;
 
 - (void)updateProfile:(NSString *)username password:(NSString *)password email:(NSString *)email phone:(NSString *)phone callback:(void (^)(BOOL successful))callback
 {
+    //Get current user
     PFUser *currentUser = [PFUser currentUser];
+    
+    //Save old values
+    NSString *oldUsername = currentUser.username;
+    NSString *oldPassword = currentUser.password;
+    NSString *oldEmail = currentUser.email;
+    NSNumber *oldPhone = (NSNumber *)currentUser[@"phone"];
+    
+    //Update currentUser
     currentUser.username = username;
     if (![password isEqualToString:@""])
     {
@@ -221,6 +230,8 @@ static DataHelper *instance = nil;
     currentUser.email = email;
     currentUser[@"phone"] = [NSNumber numberWithLongLong:[phone longLongValue]];
     currentUser[@"primaryTeam"] = myTeam;
+    
+    //Save current user
     [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded)
         {
@@ -228,6 +239,11 @@ static DataHelper *instance = nil;
         }
         else
         {
+            currentUser.username = oldUsername;
+            currentUser.password = oldPassword;
+            currentUser.email = oldEmail;
+            currentUser[@"phone"] = oldPhone;
+            currentUser[@"primaryTeam"] = myTeam;
             [DataHelper handleError:error];
             callback(NO);
         }

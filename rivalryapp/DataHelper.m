@@ -12,7 +12,7 @@
 
 #pragma mark - Singleton Object Method
 
-@synthesize teams, myTeam, bots, tutorialComplete, friends;
+@synthesize teams, myTeam, bots, tutorialComplete, friends, interactions;
 
 static DataHelper *instance = nil;
 
@@ -132,7 +132,30 @@ static DataHelper *instance = nil;
         if (objects)
         {
             friends = objects;
-            callback(YES);
+            
+            //Create query for interactions
+            PFQuery *interactionQuery1 = [PFQuery queryWithClassName:@"Interaction"];
+            [interactionQuery1 whereKey:@"User1" equalTo:currentUser];
+            PFQuery *interactionQuery2 = [PFQuery queryWithClassName:@"Interaction"];
+            [interactionQuery2 whereKey:@"User2" equalTo:currentUser];
+            PFQuery *interactionQuery = [PFQuery orQueryWithSubqueries:@[interactionQuery1, interactionQuery2]];
+            [interactionQuery includeKey:@"User1"];
+            [interactionQuery includeKey:@"User2"];
+            
+            //Get interactions from Parse
+            [interactionQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+            {
+                if (objects)
+                {
+                    interactions = objects;
+                    callback(YES);
+                }
+                else
+                {
+                    [DataHelper handleError:error];
+                    callback(NO);
+                }
+            }];
         }
         else
         {
@@ -157,6 +180,9 @@ static DataHelper *instance = nil;
             calloutCount = [NSNumber numberWithInteger:[calloutCount integerValue] + 1];
             myTeam[@"calloutCount"] = calloutCount;
             [myTeam saveEventually];
+            
+            //Update user callout count
+            [self updateUserCallout:(PFUser *)user];
             
             //Generate push payload
             NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -248,6 +274,95 @@ static DataHelper *instance = nil;
             callback(NO);
         }
     }];
+}
+
+- (NSArray *)calloutCountsWithUser:(PFUser *)user;
+{
+    PFUser *currentUser = [PFUser currentUser];
+    NSUInteger index = [interactions indexOfObjectPassingTest:^BOOL(PFObject *obj, NSUInteger idx, BOOL *stop)
+                        {
+                            PFUser *user1 = obj[@"User1"];
+                            PFUser *user2 = obj[@"User2"];
+                            if ([user1.objectId isEqualToString:user.objectId] || [user2.objectId isEqualToString:user.objectId])
+                            {
+                                *stop = YES;
+                                return *stop;
+                            }
+                            return NO;
+                        }];
+    if (index != NSNotFound)
+    {
+        PFObject *interaction = [interactions objectAtIndex:index];
+        PFUser *user1 = interaction[@"User1"];
+        NSNumber *myCount, *theirCount;
+        if ([user1.objectId isEqualToString:currentUser.objectId])
+        {
+            myCount = interaction[@"Count1"];
+            theirCount = interaction[@"Count2"];
+        }
+        else
+        {
+            myCount = interaction[@"Count1"];
+            theirCount = interaction[@"Count2"];
+        }
+        return @[myCount, theirCount];
+    }
+    else
+    {
+        NSNumber *zero = [NSNumber numberWithLongLong:0];
+        return @[zero, zero];
+    }
+}
+
+#pragma mark - Hidden Helper Methods
+
+- (void)updateUserCallout:(PFUser *)user
+{
+    PFUser *currentUser = [PFUser currentUser];
+    NSUInteger index = [interactions indexOfObjectPassingTest:^BOOL(PFObject *obj, NSUInteger idx, BOOL *stop)
+                        {
+                            PFUser *user1 = obj[@"User1"];
+                            PFUser *user2 = obj[@"User2"];
+                            BOOL user1Bool = ([user1.objectId isEqualToString:user.objectId] || [user1.objectId isEqualToString:currentUser.objectId]);
+                            BOOL user2Bool = ([user2.objectId isEqualToString:user.objectId] || [user2.objectId isEqualToString:currentUser.objectId]);
+                            if (user1Bool && user2Bool)
+                            {
+                                *stop = YES;
+                                return *stop;
+                            }
+                            return NO;
+                        }];
+    PFObject *interaction;
+    if (index != NSNotFound)
+    {
+        interaction = [interactions objectAtIndex:index];
+        PFUser *user1 = (PFUser *)interaction[@"User1"];
+        PFUser *user2 = (PFUser *)interaction[@"User2"];
+        NSNumber *count, *newCount;
+        if ([user1.objectId isEqualToString:currentUser.objectId])
+        {
+            count = (NSNumber *)interaction[@"Count1"];
+            newCount = [NSNumber numberWithLongLong:[count longLongValue] + 1];
+            interaction[@"Count1"] = newCount;
+        }
+        else if ([user2.objectId isEqualToString:currentUser.objectId])
+        {
+            count = (NSNumber *)interaction[@"Count2"];
+            newCount = [NSNumber numberWithLongLong:[count longLongValue] + 1];
+            interaction[@"Count2"] = newCount;
+        }
+        
+        [interaction saveInBackground];
+    }
+    else
+    {
+        interaction = [PFObject objectWithClassName:@"Interaction"];
+        interaction[@"User1"] = currentUser;
+        interaction[@"User2"] = user;
+        interaction[@"Count1"] = [NSNumber numberWithInt:1];
+        interaction[@"Count2"] = [NSNumber numberWithInt:0];
+        [interaction saveInBackground];
+    }
 }
 
 #pragma mark - Error Handling

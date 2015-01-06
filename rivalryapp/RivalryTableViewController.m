@@ -23,10 +23,6 @@
     //Get DataHelper instance
     helper = [DataHelper getInstance];
     
-    //Set username as title
-    PFUser *currentUser = [PFUser currentUser];
-    self.title = currentUser.username;
-    
     //Use TeamSelectTableViewCell
     [self.tableView registerClass:[TeamSelectTableViewCell class] forCellReuseIdentifier:@"friendCell"];
     
@@ -96,8 +92,10 @@
         cell.backgroundColor = [DataHelper colorFromHex:friendTeam[@"PrimaryColor"]];
         cell.teamNameLabel.textColor = [DataHelper colorFromHex:friendTeam[@"SecondaryColor"]];
         
-        cell.meLabel.text = @"0";
-        cell.themLabel.text = @"0";
+        NSArray *callouts = [helper calloutCountsWithUser:friend];
+        
+        cell.meLabel.text = [callouts[0] stringValue];
+        cell.themLabel.text = [callouts[1] stringValue];
         cell.meLabel.textColor = [DataHelper colorFromHex:friendTeam[@"SecondaryColor"]];
         cell.themLabel.textColor = [DataHelper colorFromHex:friendTeam[@"SecondaryColor"]];
         
@@ -209,8 +207,9 @@
         TeamSelectTableViewCell *selectedCell = (TeamSelectTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
         
         //Flip cell
-        [selectedCell flip:^{
-            //Flip finished
+        [selectedCell flip:^
+        {
+            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
         }];
         
         //Send callout
@@ -222,6 +221,11 @@
             }
         }];
     }
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //Need this, but don't need implementation
 }
 
 - (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -286,6 +290,10 @@
     //Hide back button
     [self.navigationItem setHidesBackButton:YES];
     
+    //Set username as title
+    PFUser *currentUser = [PFUser currentUser];
+    self.title = currentUser.username;
+    
     //Make bar opaque to preserve colors
     self.navigationController.navigationBar.translucent = NO;
     
@@ -295,9 +303,11 @@
 
 - (void)getData
 {
+    //Add progress indicator
     [MBProgressHUD showHUDAddedTo:self.tableView animated:YES];
     [helper getFriends:^(BOOL successful)
     {
+        //If friends are fetched, reload data
         if (successful)
         {
             friends = helper.friends;

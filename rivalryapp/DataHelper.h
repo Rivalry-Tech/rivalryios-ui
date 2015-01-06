@@ -20,6 +20,7 @@
     NSArray *teams;
     NSArray *bots;
     NSArray *friends;
+    NSArray *interactions;
     
     //User Data Storage
     PFObject *myTeam;
@@ -32,6 +33,7 @@
 @property (nonatomic, strong) NSArray *teams;
 @property (nonatomic, strong) NSArray *bots;
 @property (nonatomic, strong) NSArray *friends;
+@property (nonatomic, strong) NSArray *interactions;
 
 //User Data Storage Properties
 @property (nonatomic, strong) PFObject *myTeam;
@@ -51,6 +53,7 @@
 - (void)sendCallout:(PFUser *)user callback:(void (^)(BOOL successful))callback;
 - (void)deleteFriend:(PFUser *)user callback:(void (^)(BOOL successful))callback;
 - (void)updateProfile:(NSString *)username password:(NSString *)password email:(NSString *)email phone:(NSString *)phone callback:(void (^)(BOOL successful))callback;
+- (NSArray *)calloutCountsWithUser:(PFUser *)user;
 
 //Error Handling
 + (void)handleError:(NSError *)error;

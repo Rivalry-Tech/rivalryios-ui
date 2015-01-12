@@ -200,7 +200,10 @@
 {
     if (indexPath.section == recruitSection)
     {
-        //TODO - Show Recruit Menu
+        dispatch_async(dispatch_get_main_queue(), ^
+        {
+            [self performSegueWithIdentifier:@"showRecruit" sender:self];
+        });
     }
     else if (indexPath.section == friendsSection)
     {

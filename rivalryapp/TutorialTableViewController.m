@@ -275,7 +275,10 @@
    {
        if (tutorialFinished)
        {
-           [self performSegueWithIdentifier:@"showSignUp" sender:self];
+           dispatch_async(dispatch_get_main_queue(), ^
+          {
+              [self performSegueWithIdentifier:@"showSignUp" sender:self];
+          });
        }
    }
 }

@@ -175,6 +175,9 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="0.20784313725490197" green="0.20784313725490197" blue="0.20784313725490197" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <segue destination="xR9-8f-XpP" kind="presentation" id="f6S-Dd-ZQZ"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -193,6 +196,51 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LPy-AY-bjD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3365" y="338"/>
+        </scene>
+        <!--RECRUIT-->
+        <scene sceneID="xeX-B5-yyV">
+            <objects>
+                <tableViewController id="7Ha-YQ-n48" customClass="RecruitTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="85" sectionHeaderHeight="10" sectionFooterHeight="10" id="fz4-sv-tjI">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="searchCell" id="vvq-Gp-guh">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vvq-Gp-guh" id="FrI-0e-eT7">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="SEARCH" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ffm-zt-qva">
+                                            <rect key="frame" x="8" y="8" width="584" height="69"/>
+                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-DemiBold" family="Avenir Next Condensed" pointSize="30"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </textField>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="ffm-zt-qva" firstAttribute="trailing" secondItem="FrI-0e-eT7" secondAttribute="trailingMargin" id="GEe-qh-HfR"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="ffm-zt-qva" secondAttribute="bottom" constant="-0.5" id="QRP-xS-GQM"/>
+                                        <constraint firstItem="ffm-zt-qva" firstAttribute="top" secondItem="FrI-0e-eT7" secondAttribute="topMargin" id="Rsx-FZ-bPt"/>
+                                        <constraint firstItem="ffm-zt-qva" firstAttribute="leading" secondItem="FrI-0e-eT7" secondAttribute="leadingMargin" id="SPP-vr-D3a"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <sections/>
+                        <connections>
+                            <outlet property="dataSource" destination="7Ha-YQ-n48" id="s0d-iS-ti5"/>
+                            <outlet property="delegate" destination="7Ha-YQ-n48" id="zRR-hm-x5B"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="RECRUIT" id="zAw-1m-c3I"/>
+                    <connections>
+                        <segue destination="kXQ-6b-0K0" kind="unwind" identifier="exitRecruit" unwindAction="unwindFromRecruit:" id="wjd-Ln-WTj"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9Pg-fA-IIi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="kXQ-6b-0K0" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="4933" y="338"/>
         </scene>
         <!--SETTINGS-->
         <scene sceneID="aUa-rB-n7s">
@@ -700,6 +748,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sRN-cn-fCq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1911" y="1042"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="9WB-vz-BzF">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="xR9-8f-XpP" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="C7n-rQ-2Te">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="7Ha-YQ-n48" kind="relationship" relationship="rootViewController" id="G1v-gl-o6Q"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DQE-Jg-cHr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4121" y="338"/>
         </scene>
     </scenes>
     <resources>

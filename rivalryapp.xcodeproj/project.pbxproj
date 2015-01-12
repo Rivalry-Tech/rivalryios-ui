@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D3304E4E1A6445AB00314DBF /* RecruitTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3304E4D1A6445AB00314DBF /* RecruitTableViewController.m */; };
 		D33A75FC1A40E3CC0080D572 /* TeamSelectTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D33A75FB1A40E3CC0080D572 /* TeamSelectTableViewController.m */; };
 		D33A75FF1A40E3EB0080D572 /* DataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D33A75FE1A40E3EB0080D572 /* DataHelper.m */; };
 		D33A76021A40ED010080D572 /* TeamSelectTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D33A76011A40ED010080D572 /* TeamSelectTableViewCell.m */; };
@@ -56,6 +57,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D3304E4C1A6445AB00314DBF /* RecruitTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecruitTableViewController.h; sourceTree = "<group>"; };
+		D3304E4D1A6445AB00314DBF /* RecruitTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecruitTableViewController.m; sourceTree = "<group>"; };
 		D33A75FA1A40E3CC0080D572 /* TeamSelectTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamSelectTableViewController.h; sourceTree = "<group>"; };
 		D33A75FB1A40E3CC0080D572 /* TeamSelectTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamSelectTableViewController.m; sourceTree = "<group>"; };
 		D33A75FD1A40E3EB0080D572 /* DataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataHelper.h; sourceTree = "<group>"; };
@@ -223,6 +226,8 @@
 				D3AB62211A588314001C08D4 /* RivalryTableViewController.m */,
 				D3AB62231A58F9FE001C08D4 /* SettingsTableViewController.h */,
 				D3AB62241A58F9FE001C08D4 /* SettingsTableViewController.m */,
+				D3304E4C1A6445AB00314DBF /* RecruitTableViewController.h */,
+				D3304E4D1A6445AB00314DBF /* RecruitTableViewController.m */,
 				D3C4A1031A3EA0B0009B8E67 /* Main.storyboard */,
 				D3C4A1081A3EA0B0009B8E67 /* LaunchScreen.xib */,
 				D3C4A1061A3EA0B0009B8E67 /* Images.xcassets */,
@@ -386,6 +391,7 @@
 				D3AB621F1A579659001C08D4 /* SignUpTableViewController.m in Sources */,
 				D3C4A0FC1A3EA0B0009B8E67 /* AppDelegate.m in Sources */,
 				D3AB61F81A4F3FE9001C08D4 /* UIAlertView+Blocks.m in Sources */,
+				D3304E4E1A6445AB00314DBF /* RecruitTableViewController.m in Sources */,
 				D3AB621C1A572101001C08D4 /* UIFloatLabelTextField.m in Sources */,
 				D3C4A0FF1A3EA0B0009B8E67 /* rivalryapp.xcdatamodeld in Sources */,
 				D33A76021A40ED010080D572 /* TeamSelectTableViewCell.m in Sources */,

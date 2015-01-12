@@ -92,6 +92,7 @@
         cell.backgroundColor = [DataHelper colorFromHex:friendTeam[@"PrimaryColor"]];
         cell.teamNameLabel.textColor = [DataHelper colorFromHex:friendTeam[@"SecondaryColor"]];
         
+        //Get User callouts
         NSArray *callouts = [helper calloutCountsWithUser:friend];
         
         cell.meLabel.text = [callouts[0] stringValue];
@@ -320,6 +321,11 @@
 #pragma mark - Unwind Segues
 
 - (IBAction)unwindFromSettings:(UIStoryboardSegue *)segue
+{
+    
+}
+
+- (IBAction)unwindFromRecruit:(UIStoryboardSegue *)segue
 {
     
 }

@@ -279,6 +279,8 @@ static DataHelper *instance = nil;
 - (NSArray *)calloutCountsWithUser:(PFUser *)user;
 {
     PFUser *currentUser = [PFUser currentUser];
+    
+    //Get the interaction for the given user
     NSUInteger index = [interactions indexOfObjectPassingTest:^BOOL(PFObject *obj, NSUInteger idx, BOOL *stop)
                         {
                             PFUser *user1 = obj[@"User1"];
@@ -290,8 +292,11 @@ static DataHelper *instance = nil;
                             }
                             return NO;
                         }];
+    
+    //If the interaction exists
     if (index != NSNotFound)
     {
+        //Get the counts from the interaction and return them in an array
         PFObject *interaction = [interactions objectAtIndex:index];
         PFUser *user1 = interaction[@"User1"];
         NSNumber *myCount, *theirCount;
@@ -309,6 +314,7 @@ static DataHelper *instance = nil;
     }
     else
     {
+        //If the interaciton doesn't exist return zerosc
         NSNumber *zero = [NSNumber numberWithLongLong:0];
         return @[zero, zero];
     }
@@ -319,6 +325,8 @@ static DataHelper *instance = nil;
 - (void)updateUserCallout:(PFUser *)user
 {
     PFUser *currentUser = [PFUser currentUser];
+    
+    //Get interaction for user
     NSUInteger index = [interactions indexOfObjectPassingTest:^BOOL(PFObject *obj, NSUInteger idx, BOOL *stop)
                         {
                             PFUser *user1 = obj[@"User1"];
@@ -332,9 +340,12 @@ static DataHelper *instance = nil;
                             }
                             return NO;
                         }];
+    
+    //If the interaction exists update it
     PFObject *interaction;
     if (index != NSNotFound)
     {
+        //Find out which count to update and incriment it
         interaction = [interactions objectAtIndex:index];
         PFUser *user1 = (PFUser *)interaction[@"User1"];
         PFUser *user2 = (PFUser *)interaction[@"User2"];
@@ -352,10 +363,12 @@ static DataHelper *instance = nil;
             interaction[@"Count2"] = newCount;
         }
         
+        //Save the interaction
         [interaction saveInBackground];
     }
     else
     {
+        //Create a new interaction if it doesn't exist and save it
         interaction = [PFObject objectWithClassName:@"Interaction"];
         interaction[@"User1"] = currentUser;
         interaction[@"User2"] = user;

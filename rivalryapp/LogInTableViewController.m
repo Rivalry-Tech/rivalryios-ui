@@ -30,6 +30,11 @@
     [self setViewStyles];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [usernameField becomeFirstResponder];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

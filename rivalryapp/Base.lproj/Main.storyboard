@@ -201,29 +201,45 @@
         <scene sceneID="xeX-B5-yyV">
             <objects>
                 <tableViewController id="7Ha-YQ-n48" customClass="RecruitTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="85" sectionHeaderHeight="10" sectionFooterHeight="10" id="fz4-sv-tjI">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="85" sectionHeaderHeight="10" sectionFooterHeight="10" id="fz4-sv-tjI">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.097916666669999999" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="searchCell" id="vvq-Gp-guh">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="searchCell" id="vvq-Gp-guh">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vvq-Gp-guh" id="FrI-0e-eT7">
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="SEARCH" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ffm-zt-qva">
-                                            <rect key="frame" x="8" y="8" width="584" height="69"/>
-                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-DemiBold" family="Avenir Next Condensed" pointSize="30"/>
-                                            <textInputTraits key="textInputTraits"/>
-                                        </textField>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="ffm-zt-qva" firstAttribute="trailing" secondItem="FrI-0e-eT7" secondAttribute="trailingMargin" id="GEe-qh-HfR"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="ffm-zt-qva" secondAttribute="bottom" constant="-0.5" id="QRP-xS-GQM"/>
-                                        <constraint firstItem="ffm-zt-qva" firstAttribute="top" secondItem="FrI-0e-eT7" secondAttribute="topMargin" id="Rsx-FZ-bPt"/>
-                                        <constraint firstItem="ffm-zt-qva" firstAttribute="leading" secondItem="FrI-0e-eT7" secondAttribute="leadingMargin" id="SPP-vr-D3a"/>
-                                    </constraints>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" red="0.034077175414364613" green="0.034077175414364613" blue="0.034077175414364613" alpha="1" colorSpace="calibratedRGB"/>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="contactCell" id="B0t-og-1gS" customClass="TeamSelectTableViewCell">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="B0t-og-1gS" id="eVL-ij-xqJ">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" red="0.03407717541" green="0.03407717541" blue="0.03407717541" alpha="1" colorSpace="calibratedRGB"/>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="socialCell" id="aBo-Cj-Ehr" customClass="TeamSelectTableViewCell">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aBo-Cj-Ehr" id="wVa-eG-tli">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" red="0.03407717541" green="0.03407717541" blue="0.03407717541" alpha="1" colorSpace="calibratedRGB"/>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="inviteCell" id="CVQ-3R-rfl" customClass="TeamSelectTableViewCell">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CVQ-3R-rfl" id="keP-BJ-08v">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" red="0.03407717541" green="0.03407717541" blue="0.03407717541" alpha="1" colorSpace="calibratedRGB"/>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="requestCell" id="sS1-mu-CMf" customClass="TeamSelectTableViewCell">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sS1-mu-CMf" id="IIS-YS-nn4">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" red="0.03407717541" green="0.03407717541" blue="0.03407717541" alpha="1" colorSpace="calibratedRGB"/>
                             </tableViewCell>
                         </prototypes>
                         <sections/>

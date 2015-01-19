@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import "DataHelper.h"
+#import "TeamSelectTableViewCell.h"
 
 @interface RecruitTableViewController : UITableViewController
 {
@@ -18,6 +19,25 @@
     //Save Button
     UIBarButtonItem *doneBarButton;
     UIButton *doneButton;
+    
+    //Interface Properties
+    UITextField *searchField;
+    
+    //Section Numbers
+    NSInteger numOfSections;
+    NSInteger searchSection;
+    NSInteger requestSection;
+    NSInteger contactsSection;
+    NSInteger inviteSection;
+    NSInteger socialSection;
+    
+    //Data Source
+    NSArray *contactFriends;
+    NSArray *friendRequests;
+    
+    //Data Timing
+    BOOL contactsDone;
+    BOOL requestsDone;
 }
 
 @end

@@ -22,6 +22,22 @@
     
     //Get DataHelper instance
     helper = [DataHelper getInstance];
+    
+    //Set UITableViewCell class
+    [self.tableView registerClass:[TeamSelectTableViewCell class] forCellReuseIdentifier:@"contactCell"];
+    [self.tableView registerClass:[TeamSelectTableViewCell class] forCellReuseIdentifier:@"socialCell"];
+    [self.tableView registerClass:[TeamSelectTableViewCell class] forCellReuseIdentifier:@"inviteCell"];
+    [self.tableView registerClass:[TeamSelectTableViewCell class] forCellReuseIdentifier:@"requestCell"];
+    
+    //Section Numbers
+    numOfSections = 5;
+    searchSection = 0;
+    contactsSection = 1;
+    requestSection = 2;
+    inviteSection = 3;
+    socialSection = 4;
+    
+    [self getData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -39,24 +55,218 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 0;
+    return numOfSections;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
+    if (section == searchSection)
+    {
+        return 1;
+    }
+    else if (section == contactsSection)
+    {
+        return [contactFriends count];
+    }
+    else if (section == inviteSection)
+    {
+        return 1;
+    }
+    else if (section == socialSection)
+    {
+        return 2;
+    }
+    else if (section == requestSection)
+    {
+        return [friendRequests count];
+    }
+    
     return 0;
 }
 
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
-    return cell;
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == searchSection)
+    {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"searchCell" forIndexPath:indexPath];
+        
+        [self createSearchField:cell];
+        
+        return cell;
+    }
+    else if (indexPath.section == contactsSection)
+    {
+        TeamSelectTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell" forIndexPath:indexPath];
+        
+        //Get Team for Row
+        PFUser *friend = [contactFriends objectAtIndex:indexPath.row];
+        
+        //Add Team Name to Cell
+        cell.teamNameLabel.text = friend.username;
+        
+        PFObject *friendTeam = friend[@"primaryTeam"];
+        
+        //Set Cell Styles
+        cell.backgroundColor = [DataHelper colorFromHex:friendTeam[@"PrimaryColor"]];
+        cell.teamNameLabel.textColor = [DataHelper colorFromHex:friendTeam[@"SecondaryColor"]];
+        
+        cell.meLabel.text = @"";
+        cell.themLabel.text = @"";
+        
+        return cell;
+    }
+    else if (indexPath.section == socialSection)
+    {
+        TeamSelectTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"socialCell" forIndexPath:indexPath];
+        
+        if (indexPath.row == 0)
+        {
+            cell.teamNameLabel.text = @"FACEBOOK";
+            cell.backgroundColor = [DataHelper colorFromHex:@"#3B5998"];
+        }
+        else
+        {
+            cell.teamNameLabel.text = @"TWITTER";
+            cell.backgroundColor = [DataHelper colorFromHex:@"#55ACEE"];
+        }
+        
+        cell.teamNameLabel.textColor = [UIColor whiteColor];
+        cell.meLabel.text = @"";
+        cell.themLabel.text = @"";
+        
+        return cell;
+    }
+    else if (indexPath.section == inviteSection)
+    {
+        TeamSelectTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"inviteCell" forIndexPath:indexPath];
+        
+        cell.backgroundColor = [DataHelper colorFromHex:@"#262A2C"];
+        cell.teamNameLabel.text = @"CONTACTS";
+        cell.teamNameLabel.textColor = [UIColor whiteColor];
+        cell.meLabel.text = @"";
+        cell.themLabel.text = @"";
+        
+        return cell;
+    }
+    else if (indexPath.section == requestSection)
+    {
+        TeamSelectTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"requestCell" forIndexPath:indexPath];
+        
+        //Get Team for Row
+        PFUser *friend = [friendRequests objectAtIndex:indexPath.row];
+        
+        //Add Team Name to Cell
+        cell.teamNameLabel.text = friend.username;
+        
+        PFObject *friendTeam = friend[@"primaryTeam"];
+        
+        //Set Cell Styles
+        cell.backgroundColor = [DataHelper colorFromHex:friendTeam[@"PrimaryColor"]];
+        cell.teamNameLabel.textColor = [DataHelper colorFromHex:friendTeam[@"SecondaryColor"]];
+        
+        cell.meLabel.text = @"";
+        cell.themLabel.text = @"";
+        
+        return cell;
+    }
+    else
+    {
+        return [tableView dequeueReusableCellWithIdentifier:@"searchCell" forIndexPath:indexPath];
+    }
 }
-*/
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (section == searchSection)
+    {
+        return 0.00001f;
+    }
+    else if (section == contactsSection)
+    {
+        return 50;
+    }
+    else if (section == socialSection)
+    {
+        return 50;
+    }
+    else if (section == inviteSection)
+    {
+        return 50;
+    }
+    else if (section == requestSection)
+    {
+        return 50;
+    }
+    
+    return 0.0;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if (section == contactsSection)
+    {
+        UIView *headerView = [[UIView alloc] initWithFrame:[tableView rectForHeaderInSection:contactsSection]];
+        headerView.backgroundColor = [self.tableView.backgroundColor colorWithAlphaComponent:0.8];
+        
+        //Create the contacts header Label
+        UILabel *contactsLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, headerView.frame.size.height - 25, headerView.frame.size.width, 20)];
+        contactsLabel.text = @"Contacts already using Rivalry!";
+        contactsLabel.textAlignment = NSTextAlignmentCenter;
+        contactsLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:18.0];
+        contactsLabel.textColor = [DataHelper colorFromHex:@"#5C5C5C"];
+        [headerView addSubview:contactsLabel];
+        
+        return headerView;
+    }
+    else if (section == socialSection)
+    {
+        UIView *headerView = [[UIView alloc] initWithFrame:[tableView rectForHeaderInSection:socialSection]];
+        headerView.backgroundColor = [self.tableView.backgroundColor colorWithAlphaComponent:0.8];
+        
+        //Create the contacts header Label
+        UILabel *socialLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, headerView.frame.size.height - 25, headerView.frame.size.width, 20)];
+        socialLabel.text = @"Invite friends online";
+        socialLabel.textAlignment = NSTextAlignmentCenter;
+        socialLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:18.0];
+        socialLabel.textColor = [DataHelper colorFromHex:@"#5C5C5C"];
+        [headerView addSubview:socialLabel];
+        
+        return headerView;
+    }
+    else if (section == inviteSection)
+    {
+        UIView *headerView = [[UIView alloc] initWithFrame:[tableView rectForHeaderInSection:inviteSection]];
+        headerView.backgroundColor = [self.tableView.backgroundColor colorWithAlphaComponent:0.8];
+        
+        //Create the contacts header Label
+        UILabel *inviteLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, headerView.frame.size.height - 25, headerView.frame.size.width, 20)];
+        inviteLabel.text = @"Invite friends from your contacts";
+        inviteLabel.textAlignment = NSTextAlignmentCenter;
+        inviteLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:18.0];
+        inviteLabel.textColor = [DataHelper colorFromHex:@"#5C5C5C"];
+        [headerView addSubview:inviteLabel];
+        
+        return headerView;
+    }
+    else if (section == requestSection)
+    {
+        UIView *headerView = [[UIView alloc] initWithFrame:[tableView rectForHeaderInSection:requestSection]];
+        headerView.backgroundColor = [self.tableView.backgroundColor colorWithAlphaComponent:0.8];
+        
+        //Create the contacts header Label
+        UILabel *requestLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, headerView.frame.size.height - 25, headerView.frame.size.width, 20)];
+        requestLabel.text = @"Actice Friend Requests";
+        requestLabel.textAlignment = NSTextAlignmentCenter;
+        requestLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:18.0];
+        requestLabel.textColor = [DataHelper colorFromHex:@"#5C5C5C"];
+        [headerView addSubview:requestLabel];
+        
+        return headerView;
+    }
+    
+    return nil;
+}
 
 #pragma mark - Navigation
 
@@ -67,6 +277,49 @@
 }
 
 #pragma mark - Custom Methods
+
+- (void)getData
+{
+    contactsDone = NO;
+    requestsDone = NO;
+    
+    //Add progress indicator
+    [MBProgressHUD showHUDAddedTo:self.tableView animated:YES];
+    
+    [helper getContactFriends:^(BOOL successful)
+    {
+        contactsDone = YES;
+        
+        //If friends are fetched, reload data
+        if (successful)
+        {
+            contactFriends = helper.contactFriends;
+        }
+        
+        if (requestsDone)
+        {
+            [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
+            [MBProgressHUD hideAllHUDsForView:self.tableView animated:YES];
+        }
+    }];
+    
+    [helper getFriendRequests:^(BOOL successful)
+    {
+        requestsDone = YES;
+        
+        //If friends are fetched, reload data
+        if (successful)
+        {
+            friendRequests = helper.requests;
+        }
+        
+        if (contactsDone)
+        {
+            [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
+            [MBProgressHUD hideAllHUDsForView:self.tableView animated:YES];
+        }
+    }];
+}
 
 - (void)setViewStyles
 {
@@ -122,6 +375,21 @@
 - (void)doneClicked
 {
     [self performSegueWithIdentifier:@"exitRecruit" sender:self];
+}
+
+- (void)createSearchField:(UITableViewCell *)cell
+{
+    searchField = [[UITextField alloc] initWithFrame:cell.contentView.frame];
+    searchField.textAlignment = NSTextAlignmentCenter;
+    searchField.textColor = [UIColor whiteColor];
+    searchField.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
+    searchField.autocorrectionType = UITextAutocorrectionTypeNo;
+    searchField.spellCheckingType = UITextSpellCheckingTypeNo;
+    searchField.font = [UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:30.0];
+    searchField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    NSAttributedString *searchPlaceholder = [[NSAttributedString alloc] initWithString:@"SEARCH" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:30.0], NSForegroundColorAttributeName:[DataHelper colorFromHex:@"#545454"]}];
+    searchField.attributedPlaceholder = searchPlaceholder;
+    [cell addSubview:searchField];
 }
 
 @end

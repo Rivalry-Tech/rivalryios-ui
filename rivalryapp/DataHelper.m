@@ -12,7 +12,7 @@
 
 #pragma mark - Singleton Object Method
 
-@synthesize teams, myTeam, bots, tutorialComplete, friends, interactions;
+@synthesize teams, myTeam, bots, tutorialComplete, friends, interactions, contactFriends, requests;
 
 static DataHelper *instance = nil;
 
@@ -320,6 +320,108 @@ static DataHelper *instance = nil;
     }
 }
 
+- (void)getContactFriends:(void (^)(BOOL successful))callback
+{
+    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, nil);
+    ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error)
+    {
+        if (error || !granted)
+        {
+            NSLog(@"Address Book Error: %@", error);
+            callback(NO);
+            return;
+        }
+        
+        CFArrayRef peopleFromAddressBook = ABAddressBookCopyArrayOfAllPeople(addressBook);
+        CFIndex numberOfPeople = ABAddressBookGetPersonCount(addressBook);
+        NSMutableDictionary *contactData = [[NSMutableDictionary alloc] initWithObjectsAndKeys:nil];
+        
+        for (int i = 0; i < numberOfPeople; i++)
+        {
+            ABRecordRef personRecord = CFArrayGetValueAtIndex(peopleFromAddressBook, i);
+            ABMutableMultiValueRef phonelist = ABRecordCopyValue(personRecord, kABPersonPhoneProperty);
+            CFIndex numPhones = ABMultiValueGetCount(phonelist);
+            CFStringRef nameRef = ABRecordCopyCompositeName(personRecord);
+            NSString *name = CFBridgingRelease(nameRef);
+            for (int j=0; j < numPhones; j++)
+            {
+                CFTypeRef numberRef = ABMultiValueCopyValueAtIndex(phonelist, j);
+                NSString *number = CFBridgingRelease(numberRef);
+                NSCharacterSet *charactersToRemove = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
+                NSString *plainNumber = [[number componentsSeparatedByCharactersInSet:charactersToRemove] componentsJoinedByString:@""];
+                if (plainNumber.length >= 10)
+                {
+                    plainNumber = [plainNumber substringFromIndex:plainNumber.length - 10];
+                }
+                [contactData setValue:name forKey:plainNumber];
+            }
+        }
+        
+        NSMutableArray *phoneNumbers = [[contactData allKeys] mutableCopy];
+        [phoneNumbers enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            NSString *plainNumber = obj;
+            NSNumber *phoneNumber = [NSNumber numberWithLongLong:[plainNumber longLongValue]];
+            if ([phoneNumber longLongValue] == 0)
+            {
+                [phoneNumbers removeObjectAtIndex:idx];
+                [contactData removeObjectForKey:plainNumber];
+            }
+            else
+            {
+                [phoneNumbers replaceObjectAtIndex:idx withObject:phoneNumber];
+            }
+        }];
+        
+        PFUser *currentUser = [PFUser currentUser];
+        PFQuery *phoneQuery = [PFUser query];
+        [phoneQuery whereKey:@"phone" containedIn:phoneNumbers];
+        [phoneQuery includeKey:@"primaryTeam"];
+        PFRelation *friendsRelation = [currentUser relationForKey:@"friends"];
+        PFQuery *friendsQuery = [friendsRelation query];
+        friendsQuery.limit = 1000;
+        [phoneQuery whereKey:@"objectId" doesNotMatchKey:@"objectId" inQuery:friendsQuery];
+        [phoneQuery whereKey:@"username" notEqualTo:currentUser.username];
+        [phoneQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if (error)
+            {
+                [DataHelper handleError:error];
+                callback(NO);
+            }
+            else
+            {
+                contactFriends = objects;
+                callback(YES);
+            }
+        }];
+    });
+}
+
+- (void)getFriendRequests:(void (^)(BOOL successful))callback
+{
+    //Create query for friends
+    PFUser *currentUser = [PFUser currentUser];
+    PFRelation *requestRelation = [currentUser relationForKey:@"requests"];
+    PFQuery *requestQuery = [requestRelation query];
+    requestQuery.limit = 1000;
+    [requestQuery includeKey:@"primaryTeam"];
+    [requestQuery orderByAscending:@"username"];
+    
+    //Retrieve friends from Parse
+    [requestQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+     {
+         if (!error)
+         {
+             requests = objects;
+             callback(YES);
+         }
+         else
+         {
+             [DataHelper handleError:error];
+             callback(NO);
+         }
+     }];
+}
+
 #pragma mark - Hidden Helper Methods
 
 - (void)updateUserCallout:(PFUser *)user
@@ -328,18 +430,18 @@ static DataHelper *instance = nil;
     
     //Get interaction for user
     NSUInteger index = [interactions indexOfObjectPassingTest:^BOOL(PFObject *obj, NSUInteger idx, BOOL *stop)
-                        {
-                            PFUser *user1 = obj[@"User1"];
-                            PFUser *user2 = obj[@"User2"];
-                            BOOL user1Bool = ([user1.objectId isEqualToString:user.objectId] || [user1.objectId isEqualToString:currentUser.objectId]);
-                            BOOL user2Bool = ([user2.objectId isEqualToString:user.objectId] || [user2.objectId isEqualToString:currentUser.objectId]);
-                            if (user1Bool && user2Bool)
-                            {
-                                *stop = YES;
-                                return *stop;
-                            }
-                            return NO;
-                        }];
+    {
+        PFUser *user1 = obj[@"User1"];
+        PFUser *user2 = obj[@"User2"];
+        BOOL user1Bool = ([user1.objectId isEqualToString:user.objectId] || [user1.objectId isEqualToString:currentUser.objectId]);
+        BOOL user2Bool = ([user2.objectId isEqualToString:user.objectId] || [user2.objectId isEqualToString:currentUser.objectId]);
+        if (user1Bool && user2Bool)
+        {
+            *stop = YES;
+            return *stop;
+        }
+        return NO;
+    }];
     
     //If the interaction exists update it
     PFObject *interaction;

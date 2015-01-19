@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
+#import <AddressBook/AddressBook.h>
+#import <AddressBookUI/AddressBookUI.h>
 
 #import "MBProgressHUD.h"
 #import "UIAlertView+Blocks.h"
@@ -21,6 +23,8 @@
     NSArray *bots;
     NSArray *friends;
     NSArray *interactions;
+    NSArray *contactFriends;
+    NSArray *requests;
     
     //User Data Storage
     PFObject *myTeam;
@@ -34,6 +38,8 @@
 @property (nonatomic, strong) NSArray *bots;
 @property (nonatomic, strong) NSArray *friends;
 @property (nonatomic, strong) NSArray *interactions;
+@property (nonatomic, strong) NSArray *contactFriends;
+@property (nonatomic, strong) NSArray *requests;
 
 //User Data Storage Properties
 @property (nonatomic, strong) PFObject *myTeam;
@@ -54,6 +60,8 @@
 - (void)deleteFriend:(PFUser *)user callback:(void (^)(BOOL successful))callback;
 - (void)updateProfile:(NSString *)username password:(NSString *)password email:(NSString *)email phone:(NSString *)phone callback:(void (^)(BOOL successful))callback;
 - (NSArray *)calloutCountsWithUser:(PFUser *)user;
+- (void)getContactFriends:(void (^)(BOOL successful))callback;
+- (void)getFriendRequests:(void (^)(BOOL successful))callback;
 
 //Error Handling
 + (void)handleError:(NSError *)error;

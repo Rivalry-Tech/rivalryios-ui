@@ -11,6 +11,7 @@
 #import <Parse/Parse.h>
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
+#import <Social/Social.h>
 
 #import "MBProgressHUD.h"
 #import "UIAlertView+Blocks.h"
@@ -62,6 +63,8 @@
 - (NSArray *)calloutCountsWithUser:(PFUser *)user;
 - (void)getContactFriends:(void (^)(BOOL successful))callback;
 - (void)getFriendRequests:(void (^)(BOOL successful))callback;
+- (void)confirmFriendRequest:(PFUser *)newFriend callback:(void (^)(BOOL successful))callback;
+- (void)sendFriendRequest:(NSString *)username callback:(void (^)(BOOL successful))callback;
 
 //Error Handling
 + (void)handleError:(NSError *)error;

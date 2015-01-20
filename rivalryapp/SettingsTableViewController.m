@@ -196,6 +196,7 @@
     NSNumber *phone = (NSNumber *)currentUser[@"phone"];
     phoneField.text = [phone stringValue];
     teamField.text = [helper.myTeam[@"name"] uppercaseString];
+    passwordField.text = @"AAAAAAAAAAAA";
 }
 
 - (void)cancelClicked

@@ -30,12 +30,12 @@
     [self.tableView registerClass:[TeamSelectTableViewCell class] forCellReuseIdentifier:@"requestCell"];
     
     //Section Numbers
-    numOfSections = 5;
+    numOfSections = 3;
     searchSection = 0;
-    contactsSection = 1;
-    requestSection = 2;
-    inviteSection = 3;
-    socialSection = 4;
+    contactsSection = -1;
+    requestSection = -1;
+    inviteSection = 1;
+    socialSection = 2;
     
     [self getData];
 }
@@ -268,10 +268,33 @@
     return nil;
 }
 
+#pragma mark - UITableViewDelegate Methods
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == socialSection)
+    {
+        if (indexPath.row == 0)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^
+            {
+                [self shareWithService:SLServiceTypeFacebook];
+            });
+        }
+        else
+        {
+            dispatch_async(dispatch_get_main_queue(), ^
+            {
+                [self shareWithService:SLServiceTypeTwitter];
+            });
+        }
+    }
+}
+
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 }
@@ -298,8 +321,7 @@
         
         if (requestsDone)
         {
-            [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
-            [MBProgressHUD hideAllHUDsForView:self.tableView animated:YES];
+            [self setupSectionsAndReload];
         }
     }];
     
@@ -315,10 +337,36 @@
         
         if (contactsDone)
         {
-            [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
-            [MBProgressHUD hideAllHUDsForView:self.tableView animated:YES];
+            [self setupSectionsAndReload];
         }
     }];
+}
+
+- (void)setupSectionsAndReload
+{
+    if ([contactFriends count] > 0)
+    {
+        numOfSections ++;
+        contactsSection = searchSection + 1;
+        inviteSection ++;
+        socialSection ++;
+    }
+    
+    if ([friendRequests count] > 0)
+    {
+        numOfSections ++;
+        requestSection = searchSection + 1;
+        if (contactsSection != -1)
+        {
+            contactsSection ++;
+        }
+        inviteSection ++;
+        socialSection ++;
+    }
+    
+    
+    [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
+    [MBProgressHUD hideAllHUDsForView:self.tableView animated:YES];
 }
 
 - (void)setViewStyles
@@ -390,6 +438,35 @@
     NSAttributedString *searchPlaceholder = [[NSAttributedString alloc] initWithString:@"SEARCH" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:30.0], NSForegroundColorAttributeName:[DataHelper colorFromHex:@"#545454"]}];
     searchField.attributedPlaceholder = searchPlaceholder;
     [cell addSubview:searchField];
+}
+
+- (void)shareWithService:(NSString *)serviceType
+{
+    SLComposeViewController *shareController = [SLComposeViewController composeViewControllerForServiceType:serviceType];
+    
+    SLComposeViewControllerCompletionHandler __block completionHandler = ^(SLComposeViewControllerResult result)
+    {
+        [shareController dismissViewControllerAnimated:YES completion:^{
+            //Share Controller Dismissed
+        }];
+        
+        if (result == SLComposeViewControllerResultCancelled)
+        {
+            //Canceled
+        }
+        else if (result == SLComposeViewControllerResultDone)
+        {
+            //Posted
+        }
+    };
+    
+    PFUser *currentUser = [PFUser currentUser];
+    [shareController setInitialText:[NSString stringWithFormat:@"This is so cool! Download 'Rivalry!' and add me as %@!", currentUser.username]];
+    [shareController addURL:[NSURL URLWithString:@"https://itunes.apple.com/us/app/rivalry!/id931709155?mt=8&uo=4"]];
+    [shareController setCompletionHandler:completionHandler];
+    [self presentViewController:shareController animated:YES completion:^{
+        //Share Controller Shown
+    }];
 }
 
 @end

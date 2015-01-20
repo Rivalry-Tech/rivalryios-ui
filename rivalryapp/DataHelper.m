@@ -249,7 +249,7 @@ static DataHelper *instance = nil;
     
     //Update currentUser
     currentUser.username = username;
-    if (![password isEqualToString:@""])
+    if (![password isEqualToString:@"AAAAAAAAAAAA"])
     {
         currentUser.password = password;
     }

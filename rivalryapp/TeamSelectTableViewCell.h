@@ -30,6 +30,9 @@
     UIView *flipView;
     UILabel *timerLabel;
     void (^flipCallback)();
+    BOOL useTimer;
+    NSString *customFlipText;
+    NSString *customSubText;
 }
 
 //Interface Properties
@@ -41,6 +44,9 @@
 @property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic) NSInteger timeLeft;
 @property (nonatomic) BOOL flipped;
+@property (nonatomic) BOOL useTimer;
+@property (nonatomic, strong) NSString *customFlipText;
+@property (nonatomic, strong) NSString *customSubText;
 
 //Flip Timer Methods
 - (void)flip:(void (^)())callback;

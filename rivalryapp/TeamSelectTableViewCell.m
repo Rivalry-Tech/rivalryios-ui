@@ -10,7 +10,7 @@
 
 @implementation TeamSelectTableViewCell
 
-@synthesize teamNameLabel, meLabel, themLabel, timer, timeLeft, flipped;
+@synthesize teamNameLabel, meLabel, themLabel, timer, timeLeft, flipped, useTimer, customFlipText, customSubText;
 
 #pragma mark - UITableViewCell Methods
 
@@ -133,8 +133,11 @@
         //Create animation
         [UIView transitionFromView:self.contentView toView:flipView duration:0.4 options:UIViewAnimationOptionTransitionFlipFromBottom completion:^(BOOL finished)
         {
-            //Create timer
-            timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(tick) userInfo:nil repeats:YES];
+            if (useTimer)
+            {
+                //Create timer
+                timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(tick) userInfo:nil repeats:YES];
+                }
         }];
     }
 }
@@ -188,7 +191,14 @@
     calloutLabel.textAlignment = NSTextAlignmentCenter;
     calloutLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:30.0];
     calloutLabel.textColor = [DataHelper colorFromHex:helper.myTeam[@"SecondaryColor"]];
-    calloutLabel.text = [NSString stringWithFormat:@"%@ SENT!", callout];
+    if (customFlipText)
+    {
+        calloutLabel.text = customFlipText;
+    }
+    else
+    {
+        calloutLabel.text = [NSString stringWithFormat:@"%@ SENT!", callout];
+    }
     [flipView addSubview:calloutLabel];
     
     //Create timer label
@@ -199,7 +209,14 @@
     timerLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:14.0];
     timerLabel.textColor = [DataHelper colorFromHex:helper.myTeam[@"SecondaryColor"]];
     timerLabel.alpha = 0.5;
-    timerLabel.text = [DataHelper formatFlipTimer:timeLeft];
+    if (useTimer)
+    {
+        timerLabel.text = [DataHelper formatFlipTimer:timeLeft];
+    }
+    else
+    {
+        timerLabel.text = customSubText;
+    }
     [flipView addSubview:timerLabel];
 }
 

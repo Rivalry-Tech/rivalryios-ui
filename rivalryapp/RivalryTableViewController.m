@@ -210,6 +210,8 @@
         //Get Selected cell and flip it
         TeamSelectTableViewCell *selectedCell = (TeamSelectTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
         
+        selectedCell.useTimer = YES;
+        
         //Flip cell
         [selectedCell flip:^
         {

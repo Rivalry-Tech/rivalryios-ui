@@ -67,6 +67,18 @@
 }
 */
 
+#pragma mark - UITableViewDelegate Methods
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == 0)
+    {
+        TeamSelectTableViewController *controller = [[TeamSelectTableViewController alloc] init];
+        controller.fromSettings = YES;
+        [self.navigationController pushViewController:controller animated:YES];
+    }
+}
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -201,6 +213,8 @@
 
 - (void)cancelClicked
 {
+    PFUser *currentUser = [PFUser currentUser];
+    helper.myTeam = currentUser[@"primaryTeam"];
     [self performSegueWithIdentifier:@"exitSettings" sender:self];
 }
 

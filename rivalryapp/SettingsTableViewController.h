@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import "DataHelper.h"
+#import "TeamSelectTableViewController.h"
 
 @interface SettingsTableViewController : UITableViewController <UITextFieldDelegate>
 {

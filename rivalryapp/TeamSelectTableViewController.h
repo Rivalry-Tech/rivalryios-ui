@@ -21,6 +21,11 @@
     
     //Data Source
     NSArray *teams;
+    
+    //Settings Page
+    BOOL fromSettings;
 }
+
+@property (nonatomic) BOOL fromSettings;
 
 @end

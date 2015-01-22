@@ -246,6 +246,7 @@ static DataHelper *instance = nil;
     NSString *oldPassword = currentUser.password;
     NSString *oldEmail = currentUser.email;
     NSNumber *oldPhone = (NSNumber *)currentUser[@"phone"];
+    PFObject *oldTeam = currentUser[@"primaryTeam"];
     
     //Update currentUser
     currentUser.username = username;
@@ -269,7 +270,8 @@ static DataHelper *instance = nil;
             currentUser.password = oldPassword;
             currentUser.email = oldEmail;
             currentUser[@"phone"] = oldPhone;
-            currentUser[@"primaryTeam"] = myTeam;
+            currentUser[@"primaryTeam"] = oldTeam;
+            myTeam = oldTeam;
             [DataHelper handleError:error];
             callback(NO);
         }

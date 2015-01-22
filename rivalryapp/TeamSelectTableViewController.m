@@ -14,6 +14,8 @@
 
 @implementation TeamSelectTableViewController
 
+@synthesize fromSettings;
+
 #pragma mark - UIViewController Methods
 
 - (void)viewDidLoad
@@ -27,6 +29,12 @@
     [self.tableView registerClass:[TeamSelectTableViewCell class] forCellReuseIdentifier:@"teamCell"];
     
     helper.tutorialComplete = NO;
+    
+    self.title = @"PICK YOUR TEAM";
+    if (fromSettings)
+    {
+        self.title = @"PICK NEW TEAM";
+    }
     
     //Get Data for Table
     [self getData];
@@ -80,13 +88,26 @@
     return cell;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 85.0;
+}
+
 #pragma mark - UITableViewController Delegate Methods
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //Custom call to segue from custom UITableViewCell
-    helper.myTeam = [teams objectAtIndex:indexPath.row];
-    [self performSegueWithIdentifier:@"showRivalry" sender:self];
+    if (fromSettings)
+    {
+        helper.myTeam = [teams objectAtIndex:indexPath.row];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+    else
+    {
+        //Custom call to segue from custom UITableViewCell
+        helper.myTeam = [teams objectAtIndex:indexPath.row];
+        [self performSegueWithIdentifier:@"showRivalry" sender:self];
+    }
 }
 
 #pragma mark - Navigation
@@ -118,6 +139,7 @@
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor], NSForegroundColorAttributeName, [UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:20.0],NSFontAttributeName, nil];
     [self.navigationController.navigationBar setTitleTextAttributes:attributes];
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.tintColor = [DataHelper colorFromHex:@"#0099FF"];
     
     //Login Button Styles
     [loginButton setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:15.0],NSFontAttributeName, nil] forState:UIControlStateNormal];
@@ -128,6 +150,9 @@
     
     //Set status bar to black
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
+    
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.rowHeight = 85.0;
 }
 
 #pragma mark - Unwind Segues

@@ -374,6 +374,25 @@
     [self.tableView endUpdates];
 }
 
+#pragma mark - UITextFieldDelegate Methods
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    NSString *username = searchField.text;
+    searchField.text = @"";
+    [searchField resignFirstResponder];
+    
+    [helper sendFriendRequest:username or:nil callback:^(BOOL successful)
+    {
+        if (successful)
+        {
+            [UIAlertView showWithTitle:@"Success!" message:[NSString stringWithFormat:@"You have sent a friend request to %@", username] cancelButtonTitle:@"Done" otherButtonTitles:nil tapBlock:nil];
+        }
+    }];
+    
+    return YES;
+}
+
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -510,17 +529,23 @@
 
 - (void)createSearchField:(UITableViewCell *)cell
 {
-    searchField = [[UITextField alloc] initWithFrame:cell.contentView.frame];
-    searchField.textAlignment = NSTextAlignmentCenter;
-    searchField.textColor = [UIColor whiteColor];
-    searchField.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
-    searchField.autocorrectionType = UITextAutocorrectionTypeNo;
-    searchField.spellCheckingType = UITextSpellCheckingTypeNo;
-    searchField.font = [UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:30.0];
-    searchField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-    NSAttributedString *searchPlaceholder = [[NSAttributedString alloc] initWithString:@"SEARCH" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:30.0], NSForegroundColorAttributeName:[DataHelper colorFromHex:@"#545454"]}];
-    searchField.attributedPlaceholder = searchPlaceholder;
-    [cell addSubview:searchField];
+    if (searchField == nil)
+    {
+        searchField = [[UITextField alloc] initWithFrame:cell.contentView.frame];
+        searchField.textAlignment = NSTextAlignmentCenter;
+        searchField.textColor = [UIColor whiteColor];
+        searchField.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
+        searchField.autocorrectionType = UITextAutocorrectionTypeNo;
+        searchField.spellCheckingType = UITextSpellCheckingTypeNo;
+        searchField.returnKeyType = UIReturnKeySearch;
+        searchField.enablesReturnKeyAutomatically = YES;
+        searchField.font = [UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:30.0];
+        searchField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+        searchField.delegate = self;
+        NSAttributedString *searchPlaceholder = [[NSAttributedString alloc] initWithString:@"SEARCH" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:30.0], NSForegroundColorAttributeName:[DataHelper colorFromHex:@"#545454"]}];
+        searchField.attributedPlaceholder = searchPlaceholder;
+        [cell addSubview:searchField];
+    }
 }
 
 - (void)shareWithService:(NSString *)serviceType

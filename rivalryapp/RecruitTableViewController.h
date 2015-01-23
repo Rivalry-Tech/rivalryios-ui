@@ -11,7 +11,7 @@
 #import "DataHelper.h"
 #import "TeamSelectTableViewCell.h"
 
-@interface RecruitTableViewController : UITableViewController
+@interface RecruitTableViewController : UITableViewController <UITextFieldDelegate>
 {
     //DataHelper instance
     DataHelper *helper;

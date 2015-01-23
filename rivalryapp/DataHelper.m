@@ -85,7 +85,7 @@ static DataHelper *instance = nil;
         }
         else
         {
-            [DataHelper handleError:error];
+            [DataHelper handleError:error message:nil];
             callback(NO);
         }
     }];
@@ -110,7 +110,7 @@ static DataHelper *instance = nil;
         }
         else
         {
-            [DataHelper handleError:error];
+            [DataHelper handleError:error message:nil];
             callback(NO);
         }
     }];
@@ -152,14 +152,14 @@ static DataHelper *instance = nil;
                 }
                 else
                 {
-                    [DataHelper handleError:error];
+                    [DataHelper handleError:error message:nil];
                     callback(NO);
                 }
             }];
         }
         else
         {
-            [DataHelper handleError:error];
+            [DataHelper handleError:error message:nil];
             callback(NO);
         }
     }];
@@ -209,14 +209,14 @@ static DataHelper *instance = nil;
                 }
                 else
                 {
-                    [DataHelper handleError:error];
+                    [DataHelper handleError:error message:nil];
                     callback(NO);
                 }
             }];
         }
         else
         {
-            [DataHelper handleError:error];
+            [DataHelper handleError:error message:nil];
             callback(NO);
         }
     }];
@@ -274,7 +274,7 @@ static DataHelper *instance = nil;
             currentUser[@"phone"] = oldPhone;
             currentUser[@"primaryTeam"] = oldTeam;
             myTeam = oldTeam;
-            [DataHelper handleError:error];
+            [DataHelper handleError:error message:nil];
             callback(NO);
         }
     }];
@@ -388,7 +388,7 @@ static DataHelper *instance = nil;
         [phoneQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (error)
             {
-                [DataHelper handleError:error];
+                [DataHelper handleError:error message:nil];
                 callback(NO);
             }
             else
@@ -420,7 +420,7 @@ static DataHelper *instance = nil;
          }
          else
          {
-             [DataHelper handleError:error];
+             [DataHelper handleError:error message:nil];
              callback(NO);
          }
      }];
@@ -443,7 +443,7 @@ static DataHelper *instance = nil;
     {
         if (error)
         {
-            [DataHelper handleError:error];
+            [DataHelper handleError:error message:nil];
             callback(NO);
         }
         else
@@ -455,7 +455,6 @@ static DataHelper *instance = nil;
 
 - (void)sendFriendRequest:(NSString *)username or:(PFUser *)user callback:(void (^)(BOOL successful))callback
 {
-    NSError *error = nil;
     PFUser *currentUser = [PFUser currentUser];
     
     if (user == nil)
@@ -467,16 +466,16 @@ static DataHelper *instance = nil;
         
         if (friendIndex != NSNotFound)
         {
-            [error.userInfo setValue:[NSString stringWithFormat:@"You and %@ are already friends.", username] forKey:@"error"];
-            [DataHelper handleError:error];
+            NSString *message = [NSString stringWithFormat:@"You and %@ are already friends.", username];
+            [DataHelper handleError:nil message:message];
             callback(NO);
             return;
         }
         
         if ([username isEqualToString:currentUser.username])
         {
-            [error.userInfo setValue:@"You can't add yourself as a friend." forKey:@"error"];
-            [DataHelper handleError:error];
+            NSString *message = @"You can't add yourself as a friend";
+            [DataHelper handleError:nil message:message];
             callback(NO);
             return;
         }
@@ -492,8 +491,7 @@ static DataHelper *instance = nil;
              }
              else
              {
-                 [error.userInfo setValue:[NSString stringWithFormat:@"%@ does not exist in our system", username] forKey:@"error"];
-                 [DataHelper handleError:error];
+                 [DataHelper handleError:error message:nil];
                  callback(NO);
              }
          }];
@@ -529,7 +527,7 @@ static DataHelper *instance = nil;
              [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                  if(error)
                  {
-                     [DataHelper handleError:error];
+                     [DataHelper handleError:error message:nil];
                      callback(NO);
                  }
                  else
@@ -537,7 +535,12 @@ static DataHelper *instance = nil;
                      callback(YES);
                  }
              }];
-             
+         }
+         else
+         {
+             NSString *message = [NSString stringWithFormat:@"Your request to %@ is still pending", friend.username];
+             [DataHelper handleError:nil message:message];
+             callback(NO);
          }
      }];
 }
@@ -602,9 +605,13 @@ static DataHelper *instance = nil;
 
 #pragma mark - Error Handling
 
-+ (void)handleError:(NSError *)error
++ (void)handleError:(NSError *)error message:(NSString *)message
 {
-    if (error.userInfo[@"error"])
+    if (message)
+    {
+        [UIAlertView showWithTitle:@"ERROR" message:message cancelButtonTitle:@"Done" otherButtonTitles:nil tapBlock:nil];
+    }
+    else if (error.userInfo[@"error"])
     {
         [UIAlertView showWithTitle:@"ERROR" message:[NSString stringWithFormat:@"Server - %@", error.userInfo[@"error"]] cancelButtonTitle:@"Done" otherButtonTitles:nil tapBlock:nil];
     }

@@ -67,7 +67,7 @@
 - (void)sendFriendRequest:(NSString *)username or:(PFUser *)user callback:(void (^)(BOOL successful))callback;
 
 //Error Handling
-+ (void)handleError:(NSError *)error;
++ (void)handleError:(NSError *)error message:(NSString *)message;
 
 //Helper Methods
 + (UIColor *)colorFromHex:(NSString *)hexString;

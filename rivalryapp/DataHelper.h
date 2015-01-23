@@ -64,7 +64,7 @@
 - (void)getContactFriends:(void (^)(BOOL successful))callback;
 - (void)getFriendRequests:(void (^)(BOOL successful))callback;
 - (void)confirmFriendRequest:(PFUser *)newFriend callback:(void (^)(BOOL successful))callback;
-- (void)sendFriendRequest:(NSString *)username callback:(void (^)(BOOL successful))callback;
+- (void)sendFriendRequest:(NSString *)username or:(PFUser *)user callback:(void (^)(BOOL successful))callback;
 
 //Error Handling
 + (void)handleError:(NSError *)error;

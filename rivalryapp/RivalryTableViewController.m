@@ -236,10 +236,10 @@
 
 - (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewRowAction *muteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"MUTE" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
-    {
-        //TODO - MUTE PEOPLE
-    }];
+//    UITableViewRowAction *muteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"MUTE" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
+//    {
+//        //TODO - MUTE PEOPLE
+//    }];
     
     UITableViewRowAction *unfriendAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"UNFRIEND" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
     {
@@ -258,7 +258,7 @@
         [tableView endUpdates];
     }];
     
-    return @[unfriendAction, muteAction];
+    return @[unfriendAction];
 }
 
 #pragma mark - Navigation

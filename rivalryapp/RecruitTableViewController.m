@@ -304,22 +304,64 @@
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
                     [self performSelectorOnMainThread:@selector(removeFriendRequest:) withObject:indexPath waitUntilDone:NO];
                 });
-                
+            }
+        }];
+    }
+    else if (indexPath.section == contactsSection)
+    {
+        PFUser *friend = [contactFriends objectAtIndex:indexPath.row];
+        TeamSelectTableViewCell *selectedCell = (TeamSelectTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+        selectedCell.useTimer = NO;
+        selectedCell.customFlipText = @"ADDED!";
+        selectedCell.customSubText = @"";
+        [selectedCell flip:nil];
+        [helper sendFriendRequest:nil or:friend callback:^(BOOL successful) {
+            if (successful)
+            {
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                    [self performSelectorOnMainThread:@selector(removeContactFriend:) withObject:indexPath waitUntilDone:NO];
+                });
             }
         }];
     }
 }
 
+- (void)removeContactFriend:(NSIndexPath *)indexPath
+{
+    [self.tableView beginUpdates];
+    
+    NSMutableArray *contactFriends_m = [contactFriends mutableCopy];
+    [contactFriends_m removeObjectAtIndex:indexPath.row];
+    contactFriends = [NSArray arrayWithArray:contactFriends_m];
+    
+    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+    
+    if (contactFriends.count == 0)
+    {
+        [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:contactsSection] withRowAnimation:UITableViewRowAnimationLeft];
+        
+        numOfSections --;
+        contactsSection = -1;
+        socialSection --;
+        inviteSection --;
+    }
+    [self.tableView endUpdates];
+}
+
 - (void)removeFriendRequest:(NSIndexPath *)indexPath
 {
     [self.tableView beginUpdates];
+    
     NSMutableArray *friendRequests_m = [friendRequests mutableCopy];
     [friendRequests_m removeObjectAtIndex:indexPath.row];
     friendRequests = [NSArray arrayWithArray:friendRequests_m];
-    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
+    
+    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+    
     if (friendRequests.count == 0)
     {
         [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:requestSection] withRowAnimation:UITableViewRowAnimationLeft];
+        
         numOfSections --;
         requestSection = -1;
         if (contactsSection != -1)

@@ -231,7 +231,9 @@ static DataHelper *instance = nil;
     [currentUser saveEventually];
     
     //Remove friend locally
-    [[friends mutableCopy] removeObject:user];
+    NSMutableArray *friends_m = [friends mutableCopy];
+    [friends_m removeObject:user];
+    friends = [NSArray arrayWithArray:friends_m];
     
     callback(YES);
 }
@@ -451,79 +453,93 @@ static DataHelper *instance = nil;
     }];
 }
 
-- (void)sendFriendRequest:(NSString *)username callback:(void (^)(BOOL successful))callback
+- (void)sendFriendRequest:(NSString *)username or:(PFUser *)user callback:(void (^)(BOOL successful))callback
 {
     NSError *error = nil;
-    
-    NSUInteger friendIndex = [friends indexOfObjectPassingTest:^BOOL(PFUser *user, NSUInteger idx, BOOL *stop) {
-        *stop = [user.username isEqualToString:username];
-        return *stop;
-    }];
-    if (friendIndex != NSNotFound)
-    {
-        [error.userInfo setValue:[NSString stringWithFormat:@"You and %@ are already friends.", username] forKey:@"error"];
-        [DataHelper handleError:error];
-        callback(NO);
-        return;
-    }
-    
     PFUser *currentUser = [PFUser currentUser];
-    if ([username isEqualToString:currentUser.username])
-    {
-        [error.userInfo setValue:@"You can't add yourself as a friend." forKey:@"error"];
-        [DataHelper handleError:error];
-        callback(NO);
-        return;
-    }
     
-    PFQuery *userQuery = [PFUser query];
-    [userQuery whereKey:@"username" equalTo:username];
-    [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error)
+    if (user == nil)
     {
-        PFUser *friend = (PFUser *)object;
-        if (friend != nil)
+        NSUInteger friendIndex = [friends indexOfObjectPassingTest:^BOOL(PFUser *user, NSUInteger idx, BOOL *stop) {
+            *stop = [user.username isEqualToString:username];
+            return *stop;
+        }];
+        
+        if (friendIndex != NSNotFound)
         {
-            NSDictionary *cloudParams = [NSDictionary dictionaryWithObjectsAndKeys:friend.username, @"friendUsername", nil];
-            [PFCloud callFunctionInBackground:@"sendRequest" withParameters:cloudParams block:^(id object, NSError *error)
-            {
-                NSString *response = (NSString *)object;
-                if (![response isEqualToString:@"Friend request already sent!"])
-                {
-                    PFQuery *pushQuery = [PFInstallation query];
-                    [pushQuery whereKey:@"user" equalTo:friend];
-                    
-                    NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:
-                                          [NSString stringWithFormat:@"%@ has sent you a friend request.", currentUser.username], @"alert",
-                                          @"Increment", @"badge",
-                                          @"default", @"sound",
-                                          [currentUser username], @"username",
-                                          nil];
-                    
-                    PFPush *push = [[PFPush alloc] init];
-                    [push setQuery:pushQuery];
-                    [push setData:data];
-                    [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                        if(error)
-                        {
-                            [DataHelper handleError:error];
-                            callback(NO);
-                        }
-                        else
-                        {
-                            callback(YES);
-                        }
-                    }];
-                    
-                }
-            }];
-        }
-        else
-        {
-            [error.userInfo setValue:[NSString stringWithFormat:@"%@ does not exist in our system", username] forKey:@"error"];
+            [error.userInfo setValue:[NSString stringWithFormat:@"You and %@ are already friends.", username] forKey:@"error"];
             [DataHelper handleError:error];
             callback(NO);
+            return;
         }
-    }];
+        
+        if ([username isEqualToString:currentUser.username])
+        {
+            [error.userInfo setValue:@"You can't add yourself as a friend." forKey:@"error"];
+            [DataHelper handleError:error];
+            callback(NO);
+            return;
+        }
+        
+        PFQuery *userQuery = [PFUser query];
+        [userQuery whereKey:@"username" equalTo:username];
+        [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error)
+         {
+             PFUser *friend = (PFUser *)object;
+             if (friend != nil)
+             {
+                 [self sendRequestHelper:friend callback:callback];
+             }
+             else
+             {
+                 [error.userInfo setValue:[NSString stringWithFormat:@"%@ does not exist in our system", username] forKey:@"error"];
+                 [DataHelper handleError:error];
+                 callback(NO);
+             }
+         }];
+    }
+    else
+    {
+        [self sendRequestHelper:user callback:callback];
+    }
+}
+
+- (void)sendRequestHelper:(PFUser *)friend callback:(void (^)(BOOL successful))callback
+{
+    PFUser *currentUser = [PFUser currentUser];
+    NSDictionary *cloudParams = [NSDictionary dictionaryWithObjectsAndKeys:friend.username, @"friendUsername", nil];
+    [PFCloud callFunctionInBackground:@"sendRequest" withParameters:cloudParams block:^(id object, NSError *error)
+     {
+         NSString *response = (NSString *)object;
+         if (![response isEqualToString:@"Friend request already sent!"])
+         {
+             PFQuery *pushQuery = [PFInstallation query];
+             [pushQuery whereKey:@"user" equalTo:friend];
+             
+             NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   [NSString stringWithFormat:@"%@ has sent you a friend request.", currentUser.username], @"alert",
+                                   @"Increment", @"badge",
+                                   @"default", @"sound",
+                                   [currentUser username], @"username",
+                                   nil];
+             
+             PFPush *push = [[PFPush alloc] init];
+             [push setQuery:pushQuery];
+             [push setData:data];
+             [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                 if(error)
+                 {
+                     [DataHelper handleError:error];
+                     callback(NO);
+                 }
+                 else
+                 {
+                     callback(YES);
+                 }
+             }];
+             
+         }
+     }];
 }
 
 #pragma mark - Hidden Helper Methods

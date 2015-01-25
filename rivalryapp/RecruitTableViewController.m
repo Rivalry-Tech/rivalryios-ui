@@ -675,7 +675,16 @@
     };
     
     PFUser *currentUser = [PFUser currentUser];
-    [shareController setInitialText:[NSString stringWithFormat:@"This is so cool! Download 'Rivalry!' and add me as %@!", currentUser.username]];
+    
+    if (serviceType == SLServiceTypeFacebook)
+    {
+        [shareController setInitialText:[NSString stringWithFormat:@"I'm using the Rivalry! App to say %@! to my friends. Get it at http://rivalryapp.com and add me as %@.", helper.myTeam[@"callout"], currentUser.username]];
+    }
+    else
+    {
+        [shareController setInitialText:[NSString stringWithFormat:@"I'm using the Rivalry! App to say %@! to my friends. Get it at http://rivalryapp.com and add me as %@. #RivalryApp", helper.myTeam[@"callout"], currentUser.username]];
+    }
+    
     [shareController addURL:[NSURL URLWithString:@"https://itunes.apple.com/us/app/rivalry!/id931709155?mt=8&uo=4"]];
     [shareController setCompletionHandler:completionHandler];
     [self presentViewController:shareController animated:YES completion:^{

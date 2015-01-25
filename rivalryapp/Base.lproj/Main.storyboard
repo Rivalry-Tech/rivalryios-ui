@@ -109,9 +109,25 @@
                                                         <outlet property="delegate" destination="D22-Q4-Csm" id="6fW-Zj-Tj1"/>
                                                     </connections>
                                                 </textField>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hW8-Io-GOc">
+                                                    <rect key="frame" x="546" y="8" width="46" height="68"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="46" id="EJr-Gd-Hh9"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Bold" family="Avenir Next Condensed" pointSize="50"/>
+                                                    <state key="normal" title="?">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="forgotPasswordClicked:" destination="D22-Q4-Csm" eventType="touchUpInside" id="N4J-ww-5hr"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="hW8-Io-GOc" firstAttribute="top" secondItem="Uvn-Eb-7HY" secondAttribute="topMargin" id="9x8-UO-TMW"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="JBa-OV-E2Q" secondAttribute="bottom" constant="1" id="A0Y-nY-Uos"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="hW8-Io-GOc" secondAttribute="bottom" constant="1" id="KR9-t2-eJT"/>
+                                                <constraint firstItem="hW8-Io-GOc" firstAttribute="trailing" secondItem="Uvn-Eb-7HY" secondAttribute="trailingMargin" id="RS9-PW-u7Y"/>
                                                 <constraint firstItem="JBa-OV-E2Q" firstAttribute="trailing" secondItem="Uvn-Eb-7HY" secondAttribute="trailingMargin" id="aUO-di-7kz"/>
                                                 <constraint firstItem="JBa-OV-E2Q" firstAttribute="top" secondItem="Uvn-Eb-7HY" secondAttribute="topMargin" id="hav-e9-RDv"/>
                                                 <constraint firstItem="JBa-OV-E2Q" firstAttribute="leading" secondItem="Uvn-Eb-7HY" secondAttribute="leadingMargin" constant="7" id="i9N-hL-vEc"/>

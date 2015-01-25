@@ -77,6 +77,7 @@
 - (BOOL)followingProvider:(PFObject *)provider;
 - (void)followProvider:(PFObject *)provider callback:(void (^)(BOOL successful))callback;
 - (void)unfollowProvider:(PFObject *)provider callback:(void (^)(BOOL successful))callback;
+- (void)forgotPassword:(void (^)(BOOL successful))callback;
 
 //Error Handling
 + (void)handleError:(NSError *)error message:(NSString *)message;

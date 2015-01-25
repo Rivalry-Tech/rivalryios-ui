@@ -670,6 +670,29 @@ static DataHelper *instance = nil;
     }];
 }
 
+- (void)forgotPassword:(void (^)(BOOL successful))callback
+{
+    [UIAlertView showWithTitle:@"Forgot Passowrd" message:@"Please enter your email to reset your password" style:UIAlertViewStylePlainTextInput cancelButtonTitle:@"Cancel" otherButtonTitles:@[@"Done"] tapBlock:^(UIAlertView *alertView, NSInteger buttonIndex)
+     {
+        if (buttonIndex == 1)
+        {
+            NSString *email = [alertView textFieldAtIndex:0].text;
+            [PFUser requestPasswordResetForEmailInBackground:email block:^(BOOL succeeded, NSError *error)
+            {
+                if (error)
+                {
+                    [DataHelper handleError:error message:nil];
+                    callback(NO);
+                }
+                else
+                {
+                    callback(YES);
+                }
+            }];
+        }
+    }];
+}
+
 #pragma mark - Hidden Helper Methods
 
 - (void)updateUserCallout:(PFUser *)user

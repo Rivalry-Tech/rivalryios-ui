@@ -251,6 +251,16 @@
     loginButton.backgroundColor = [loginButton.backgroundColor colorWithAlphaComponent:0.5];
 }
 
+- (IBAction)forgotPasswordClicked:(id)sender
+{
+    [helper forgotPassword:^(BOOL successful) {
+        if (successful)
+        {
+            [UIAlertView showWithTitle:@"Password Reset Sent!" message:@"You should recieve an email shortly with instructions on how to reset your password." cancelButtonTitle:@"Done" otherButtonTitles:nil tapBlock:nil];
+        }
+    }];
+}
+
 #pragma mark - Unwind Segues
 
 - (IBAction)unwindFromLogout:(UIStoryboardSegue *)segue

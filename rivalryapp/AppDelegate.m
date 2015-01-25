@@ -35,10 +35,9 @@
         [currentInstallation saveEventually];
     }
     
-    if (!currentInstallation[@"reset"])
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"reset"])
     {
-        currentInstallation[@"reset"] = [NSNumber numberWithBool:YES];
-        [currentInstallation saveEventually];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"reset"];
         [PFUser logOut];
     }
     
@@ -53,12 +52,13 @@
         PFQuery *teamQuery = [PFQuery queryWithClassName:@"Team"];
         [teamQuery whereKey:@"objectId" equalTo:team.objectId];
         teamQuery.cachePolicy = kPFCachePolicyCacheElseNetwork;
-        helper.myTeam = [teamQuery getFirstObject];
-        
-        UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
-        UIViewController *start = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"rivalry"];
-        [start.navigationItem setHidesBackButton:YES];
-        [navController pushViewController:start animated:NO];
+        [teamQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+            helper.myTeam = object;
+            UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+            UIViewController *start = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"rivalry"];
+            [start.navigationItem setHidesBackButton:YES];
+            [navController pushViewController:start animated:NO];
+        }];
     }
     
     return YES;

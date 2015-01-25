@@ -35,6 +35,13 @@
         [currentInstallation saveEventually];
     }
     
+    if (!currentInstallation[@"reset"])
+    {
+        currentInstallation[@"reset"] = [NSNumber numberWithBool:YES];
+        [currentInstallation saveEventually];
+        [PFUser logOut];
+    }
+    
     PFUser *currentUser = [PFUser currentUser];
     if (currentUser)
     {

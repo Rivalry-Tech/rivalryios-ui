@@ -35,6 +35,18 @@
         [currentInstallation saveEventually];
     }
     
+    NSDictionary *notificaiton = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    if (notificaiton)
+    {
+        if ([notificaiton.allKeys indexOfObject:@"contentUrl"] != NSNotFound)
+        {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:notificaiton[@"contentUrl"]]];
+                exit(0);
+            });
+        }
+    }
+    
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"reset"])
     {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"reset"];
@@ -94,7 +106,16 @@
     NSDictionary *aps = [userInfo objectForKey:@"aps"];
     NSString *alert = [aps objectForKey:@"alert"];
     [JCNotificationCenter enqueueNotificationWithTitle:title message:alert tapHandler:^{
-         //Tapped
+        if (userInfo)
+        {
+            if ([userInfo.allKeys indexOfObject:@"contentUrl"] != NSNotFound)
+            {
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:userInfo[@"contentUrl"]]];
+                    exit(0);
+                });
+            }
+        }
      }];
     
     //Clear badge

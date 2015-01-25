@@ -275,6 +275,11 @@
 - (void)cancelClicked
 {
     helper.myTeam = oldTeam;
+    [self exitSettings];
+}
+
+- (void)exitSettings
+{
     [self performSegueWithIdentifier:@"exitSettings" sender:self];
 }
 
@@ -285,12 +290,13 @@
     NSString *email = emailField.text;
     NSString *phone = phoneField.text;
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.tableView animated:YES];
-    [helper updateProfile:username password:password email:email phone:phone callback:^(BOOL successful) {
+    [helper updateProfile:username password:password email:email phone:phone callback:^(BOOL successful)
+    {
         if (successful)
         {
             hud.mode = MBProgressHUDModeText;
             hud.labelText = @"Settings Saved!";
-            [self performSelector:@selector(cancelClicked) withObject:nil afterDelay:1.0];
+            [self performSelector:@selector(exitSettings) withObject:nil afterDelay:1.0];
         }
         [hud hide:YES afterDelay:1.0];
     }];

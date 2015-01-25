@@ -194,6 +194,11 @@
         
         cell.tintColor = [DataHelper colorFromHex:providerTeam[@"SecondaryColor"]];
         
+        if ([helper followingProvider:provider])
+        {
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        }
+        
         cell.meLabel.text = @"";
         cell.themLabel.text = @"";
         

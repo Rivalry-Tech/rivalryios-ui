@@ -19,6 +19,7 @@
     //Data Source
     NSMutableDictionary *contacts;
     NSMutableArray *sendNumbers;
+    NSArray *sortedContactKeys;
     
     //Send Button
     UIButton *sendButton;

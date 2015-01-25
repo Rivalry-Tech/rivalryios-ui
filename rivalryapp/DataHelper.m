@@ -589,7 +589,7 @@ static DataHelper *instance = nil;
 - (BOOL)followingProvider:(PFObject *)provider
 {
     PFUser *currentUser = [PFUser currentUser];
-    NSArray *array = [currentUser objectForKey:provider[@"following"]];
+    NSArray *array = [currentUser objectForKey:@"following"];
     
     NSIndexSet *matchingIndexes = [array indexesOfObjectsPassingTest:^BOOL(NSString *channel, NSUInteger idx, BOOL *stop)
     {

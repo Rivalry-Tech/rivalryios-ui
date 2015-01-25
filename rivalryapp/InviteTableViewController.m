@@ -56,7 +56,7 @@
     TeamSelectTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell" forIndexPath:indexPath];
     
     //Get Team for Row
-    NSString *plainNumber = [[contacts allKeys] objectAtIndex:indexPath.row];
+    NSString *plainNumber = [sortedContactKeys objectAtIndex:indexPath.row];
     NSString *name = [contacts objectForKey:plainNumber];
     
     //Add Team Name to Cell
@@ -80,12 +80,12 @@
     if (cell.accessoryType == UITableViewCellAccessoryNone)
     {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
-        [sendNumbers addObject:[[contacts allKeys] objectAtIndex:indexPath.row]];
+        [sendNumbers addObject:[sortedContactKeys objectAtIndex:indexPath.row]];
     }
     else
     {
         cell.accessoryType = UITableViewCellAccessoryNone;
-        [sendNumbers removeObject:[[contacts allKeys] objectAtIndex:indexPath.row]];
+        [sendNumbers removeObject:[sortedContactKeys objectAtIndex:indexPath.row]];
     }
 }
 
@@ -102,6 +102,12 @@
 - (void)getData
 {
     contacts = [[NSMutableDictionary alloc] initWithDictionary:helper.contactData];
+    sortedContactKeys = [contacts keysSortedByValueUsingComparator:^NSComparisonResult(id obj1, id obj2)
+    {
+        NSString *name1 = (NSString *)obj1;
+        NSString *name2 = (NSString *)obj2;
+        return [name1 compare:name2];
+    }];
 }
 
 - (void)setViewStyles

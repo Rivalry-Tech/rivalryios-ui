@@ -45,11 +45,8 @@
         PFObject *team = currentUser[@"primaryTeam"];
         PFQuery *teamQuery = [PFQuery queryWithClassName:@"Team"];
         [teamQuery whereKey:@"objectId" equalTo:team.objectId];
-        teamQuery.cachePolicy = kPFCachePolicyCacheOnly;
-        dispatch_async(dispatch_queue_create("teamQueue",NULL), ^
-        {
-            helper.myTeam = [teamQuery getFirstObject];
-        });
+        teamQuery.cachePolicy = kPFCachePolicyCacheElseNetwork;
+        helper.myTeam = [teamQuery getFirstObject];
         
         UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
         UIViewController *start = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"rivalry"];

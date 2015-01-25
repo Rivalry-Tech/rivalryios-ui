@@ -262,13 +262,14 @@
        //Get Selected cell and flip it
        TeamSelectTableViewCell *selectedCell = (TeamSelectTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
        [selectedCell flip:^{
+           PFObject *bot = [bots objectAtIndex:indexPath.row];
            //If this is the first callout, start the tutorial
            if (!firstCalloutSent)
            {
                firstCalloutSent = YES;
-               PFObject *bot = [bots objectAtIndex:indexPath.row];
                [self performSelector:@selector(notificaitonTutorial:) withObject:bot afterDelay:1.0];
            }
+           [self sendBotCallout:bot];
        }];
    }
    else if (indexPath.section == instructionsSection)
@@ -283,6 +284,14 @@
    }
 }
 
+- (void)sendBotCallout:(PFObject *)bot
+{
+    UILocalNotification *botCallout = [[UILocalNotification alloc] init];
+    botCallout.alertBody = bot[@"callout"];
+    botCallout.fireDate = [NSDate date];
+    botCallout.soundName = bot[@"audioFile"];
+    [[UIApplication sharedApplication] scheduleLocalNotification: botCallout];
+}
 
 #pragma mark - Navigation
 
@@ -343,6 +352,7 @@
     //Show recieving alert and register for notificaitons
     [UIAlertView showWithTitle:@"Recieving..." message:[NSString stringWithFormat:@"%@ BOT is trying to send you %@!\nEnable notifications on the next screen to recieve callouts from your friends!", botName, callout] cancelButtonTitle:@"Okay!" otherButtonTitles:nil tapBlock:^(UIAlertView *alertView, NSInteger buttonIndex) {
         [DataHelper registerNotificaitons];
+        [self sendBotCallout:bot];
     }];
 }
 

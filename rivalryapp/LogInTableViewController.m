@@ -251,4 +251,11 @@
     loginButton.backgroundColor = [loginButton.backgroundColor colorWithAlphaComponent:0.5];
 }
 
+#pragma mark - Unwind Segues
+
+- (IBAction)unwindFromLogout:(UIStoryboardSegue *)segue
+{
+    
+}
+
 @end

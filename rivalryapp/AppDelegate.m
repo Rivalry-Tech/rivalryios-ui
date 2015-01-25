@@ -35,6 +35,28 @@
         [currentInstallation saveEventually];
     }
     
+    PFUser *currentUser = [PFUser currentUser];
+    if (currentUser)
+    {
+        currentInstallation[@"user"] = currentUser;
+        [currentInstallation saveInBackground];
+        
+        DataHelper *helper = [DataHelper getInstance];
+        PFObject *team = currentUser[@"primaryTeam"];
+        PFQuery *teamQuery = [PFQuery queryWithClassName:@"Team"];
+        [teamQuery whereKey:@"objectId" equalTo:team.objectId];
+        teamQuery.cachePolicy = kPFCachePolicyCacheOnly;
+        dispatch_async(dispatch_queue_create("teamQueue",NULL), ^
+        {
+            helper.myTeam = [teamQuery getFirstObject];
+        });
+        
+        UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+        UIViewController *start = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"rivalry"];
+        [start.navigationItem setHidesBackButton:YES];
+        [navController pushViewController:start animated:NO];
+    }
+    
     return YES;
 }
 
@@ -64,7 +86,12 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    //[PFPush handlePush:userInfo];
+    NSString *title = @"Notification";
+    NSDictionary *aps = [userInfo objectForKey:@"aps"];
+    NSString *alert = [aps objectForKey:@"alert"];
+    [JCNotificationCenter enqueueNotificationWithTitle:title message:alert tapHandler:^{
+         //Tapped
+     }];
     
     //Clear badge
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
@@ -72,6 +99,15 @@
         currentInstallation.badge = 0;
         [currentInstallation saveEventually];
     }
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+    NSString *title = @"Notification";
+    NSString *alert = notification.alertBody;
+    [JCNotificationCenter enqueueNotificationWithTitle:title message:alert tapHandler:^{
+        //Tapped
+    }];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

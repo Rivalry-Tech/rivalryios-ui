@@ -31,6 +31,8 @@
                                              selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
+    
+    oldTeam = helper.myTeam;
 }
 
 - (void)didReceiveMemoryWarning
@@ -48,13 +50,22 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 5;
+    if (section == 0)
+    {
+        return 5;
+    }
+    else if (section == 1)
+    {
+        return 1;
+    }
+    
+    return 0;
 }
 
 /*
@@ -67,15 +78,65 @@
 }
 */
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (section == 1)
+    {
+        return 30.0;
+    }
+    
+    return 0.0;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    if (section == 1)
+    {
+        return 30.0;
+    }
+    
+    return 0.0;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if (section == 1)
+    {
+        UIView *headerView = [[UIView alloc] initWithFrame:[tableView rectForHeaderInSection:1]];
+        headerView.backgroundColor = tableView.backgroundColor;
+        return headerView;
+    }
+    
+    return nil;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    if (section == 1)
+    {
+        UIView *footerView = [[UIView alloc] initWithFrame:[tableView rectForFooterInSection:1]];
+        footerView.backgroundColor = tableView.backgroundColor;
+        return footerView;
+    }
+    
+    return nil;
+}
+
 #pragma mark - UITableViewDelegate Methods
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0)
+    if (indexPath.row == 0 && indexPath.section == 0)
     {
         TeamSelectTableViewController *controller = [[TeamSelectTableViewController alloc] init];
         controller.fromSettings = YES;
         [self.navigationController pushViewController:controller animated:YES];
+    }
+    else if (indexPath.section == 1 && indexPath.row == 0)
+    {
+        [helper logout:^(BOOL successful) {
+            [self performSegueWithIdentifier:@"logoutSegue" sender:self];
+        }];
     }
 }
 
@@ -213,8 +274,7 @@
 
 - (void)cancelClicked
 {
-    PFUser *currentUser = [PFUser currentUser];
-    helper.myTeam = currentUser[@"primaryTeam"];
+    helper.myTeam = oldTeam;
     [self performSegueWithIdentifier:@"exitSettings" sender:self];
 }
 

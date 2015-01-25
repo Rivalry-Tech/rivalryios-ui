@@ -28,12 +28,14 @@
     [self.tableView registerClass:[TeamSelectTableViewCell class] forCellReuseIdentifier:@"socialCell"];
     [self.tableView registerClass:[TeamSelectTableViewCell class] forCellReuseIdentifier:@"inviteCell"];
     [self.tableView registerClass:[TeamSelectTableViewCell class] forCellReuseIdentifier:@"requestCell"];
+    [self.tableView registerClass:[TeamSelectTableViewCell class] forCellReuseIdentifier:@"contentCell"];
     
     //Section Numbers
     numOfSections = 3;
     searchSection = 0;
     contactsSection = -1;
     requestSection = -1;
+    contentSection = -1;
     inviteSection = 1;
     socialSection = 2;
     
@@ -80,6 +82,10 @@
     else if (section == requestSection)
     {
         return [friendRequests count];
+    }
+    else if (section == contentSection)
+    {
+        return [contentProviders count];
     }
     
     return 0;
@@ -170,6 +176,29 @@
         
         return cell;
     }
+    else if (indexPath.section == contentSection)
+    {
+        TeamSelectTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"requestCell" forIndexPath:indexPath];
+        
+        //Get Team for Row
+        PFObject *provider = [contentProviders objectAtIndex:indexPath.row];
+        
+        //Add Team Name to Cell
+        cell.teamNameLabel.text = provider[@"name"];
+        
+        PFObject *providerTeam = provider[@"team"];
+        
+        //Set Cell Styles
+        cell.backgroundColor = [DataHelper colorFromHex:providerTeam[@"PrimaryColor"]];
+        cell.teamNameLabel.textColor = [DataHelper colorFromHex:providerTeam[@"SecondaryColor"]];
+        
+        cell.tintColor = [DataHelper colorFromHex:providerTeam[@"SecondaryColor"]];
+        
+        cell.meLabel.text = @"";
+        cell.themLabel.text = @"";
+        
+        return cell;
+    }
     else
     {
         return [tableView dequeueReusableCellWithIdentifier:@"searchCell" forIndexPath:indexPath];
@@ -198,6 +227,10 @@
     {
         return 50;
     }
+    else if (section == contentSection)
+    {
+        return 50;
+    }
     
     return 0.0;
 }
@@ -211,7 +244,7 @@
         
         //Create the contacts header Label
         UILabel *contactsLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, headerView.frame.size.height - 25, headerView.frame.size.width, 20)];
-        contactsLabel.text = @"Contacts already using Rivalry!";
+        contactsLabel.text = @"Contacts on Rivalry! - Tap to Send a Request";
         contactsLabel.textAlignment = NSTextAlignmentCenter;
         contactsLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:18.0];
         contactsLabel.textColor = [DataHelper colorFromHex:@"#5C5C5C"];
@@ -256,11 +289,26 @@
         
         //Create the contacts header Label
         UILabel *requestLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, headerView.frame.size.height - 25, headerView.frame.size.width, 20)];
-        requestLabel.text = @"Actice Friend Requests";
+        requestLabel.text = @"Friend Requests - Tap to Accept";
         requestLabel.textAlignment = NSTextAlignmentCenter;
         requestLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:18.0];
         requestLabel.textColor = [DataHelper colorFromHex:@"#5C5C5C"];
         [headerView addSubview:requestLabel];
+        
+        return headerView;
+    }
+    else if (section == contentSection)
+    {
+        UIView *headerView = [[UIView alloc] initWithFrame:[tableView rectForHeaderInSection:contentSection]];
+        headerView.backgroundColor = [self.tableView.backgroundColor colorWithAlphaComponent:0.8];
+        
+        //Create the contacts header Label
+        UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, headerView.frame.size.height - 25, headerView.frame.size.width, 20)];
+        contentLabel.text = @"Content Providers - Tap to Subscribe";
+        contentLabel.textAlignment = NSTextAlignmentCenter;
+        contentLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:18.0];
+        contentLabel.textColor = [DataHelper colorFromHex:@"#5C5C5C"];
+        [headerView addSubview:contentLabel];
         
         return headerView;
     }
@@ -323,6 +371,40 @@
                 });
             }
         }];
+    }
+    else if (indexPath.section == inviteSection)
+    {
+        dispatch_async(dispatch_get_main_queue(), ^
+        {
+            [self performSegueWithIdentifier:@"showContactInvites" sender:self];
+        });
+    }
+    else if (indexPath.section == contentSection)
+    {
+        TeamSelectTableViewCell *selectedCell = (TeamSelectTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+        if (selectedCell.accessoryType == UITableViewCellAccessoryNone)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^
+            {
+                [UIAlertView showWithTitle:@"Content Subscription" message:@"You are subsribing to recieve notificaitons for articles from DawgPost. This is a free service. Would you like to continue?" cancelButtonTitle:@"NO" otherButtonTitles:@[@"YES"] tapBlock:^(UIAlertView *alertView, NSInteger buttonIndex)
+                {
+                    if (buttonIndex == 1)
+                    {
+                        PFObject *provider = [contentProviders objectAtIndex:indexPath.row];
+                        [helper followProvider:provider callback:^(BOOL successful) {
+                            selectedCell.accessoryType = UITableViewCellAccessoryCheckmark;
+                        }];
+                    }
+                }];
+            });
+        }
+        else
+        {
+            PFObject *provider = [contentProviders objectAtIndex:indexPath.row];
+            [helper unfollowProvider:provider callback:^(BOOL successful) {
+                selectedCell.accessoryType = UITableViewCellAccessoryNone;
+            }];
+        }
     }
 }
 
@@ -407,6 +489,7 @@
 {
     contactsDone = NO;
     requestsDone = NO;
+    contentDone = NO;
     
     //Add progress indicator
     [MBProgressHUD showHUDAddedTo:self.tableView animated:YES];
@@ -421,7 +504,7 @@
             contactFriends = helper.contactFriends;
         }
         
-        if (requestsDone)
+        if (requestsDone && contentDone)
         {
             [self setupSectionsAndReload];
         }
@@ -437,7 +520,22 @@
             friendRequests = helper.requests;
         }
         
-        if (contactsDone)
+        if (contactsDone && contentDone)
+        {
+            [self setupSectionsAndReload];
+        }
+    }];
+    
+    [helper getContentProviders:^(BOOL successful)
+    {
+        contentDone = YES;
+        
+        if (successful)
+        {
+            contentProviders = helper.contentProviders;
+        }
+        
+        if (contactsDone && requestsDone)
         {
             [self setupSectionsAndReload];
         }
@@ -446,18 +544,34 @@
 
 - (void)setupSectionsAndReload
 {
-    if ([contactFriends count] > 0)
+    if ([contentProviders count] > 0 && contentSection == -1)
     {
         numOfSections ++;
-        contactsSection = searchSection + 1;
+        contentSection = searchSection + 1;
         inviteSection ++;
         socialSection ++;
     }
     
-    if ([friendRequests count] > 0)
+    if ([contactFriends count] > 0 && contactsSection == -1)
+    {
+        numOfSections ++;
+        contactsSection = searchSection + 1;
+        if (contentSection != -1)
+        {
+            contentSection ++;
+        }
+        inviteSection ++;
+        socialSection ++;
+    }
+    
+    if ([friendRequests count] > 0 && requestSection == -1)
     {
         numOfSections ++;
         requestSection = searchSection + 1;
+        if (contentSection != -1)
+        {
+            contentSection ++;
+        }
         if (contactsSection != -1)
         {
             contactsSection ++;
@@ -492,19 +606,6 @@
     [self.navigationController.navigationBar setTitleTextAttributes:attributes];
     self.navigationController.navigationBar.barTintColor = primary;
     self.navigationController.navigationBar.tintColor = secondary;
-    
-    //Create Login Button
-    doneButton = [[UIButton alloc] init];
-    doneButton.frame = CGRectMake(0, 0, 68, 30);
-    doneButton.backgroundColor = [secondary colorWithAlphaComponent:1.0];
-    [doneButton setTitle:@"DONE" forState:UIControlStateNormal];
-    doneButton.titleLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:15.0];
-    [doneButton setTitleColor:primary forState:UIControlStateNormal];
-    [doneButton setTitleColor:[primary colorWithAlphaComponent:1.0] forState:UIControlStateDisabled];
-    doneButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-    doneButton.layer.cornerRadius = 3.0;
-    doneButton.layer.masksToBounds = YES;
-    [doneButton addTarget:self action:@selector(doneClicked) forControlEvents:UIControlEventTouchUpInside];
     
     //Padding
     UIBarButtonItem *space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];

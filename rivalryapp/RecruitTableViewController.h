@@ -30,14 +30,17 @@
     NSInteger contactsSection;
     NSInteger inviteSection;
     NSInteger socialSection;
+    NSInteger contentSection;
     
     //Data Source
     NSArray *contactFriends;
     NSArray *friendRequests;
+    NSArray *contentProviders;
     
     //Data Timing
     BOOL contactsDone;
     BOOL requestsDone;
+    BOOL contentDone;
 }
 
 @end

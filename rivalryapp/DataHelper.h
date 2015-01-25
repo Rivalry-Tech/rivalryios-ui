@@ -12,10 +12,13 @@
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
 #import <Social/Social.h>
+#import <MessageUI/MFMessageComposeViewController.h>
 
 #import "MBProgressHUD.h"
 #import "UIAlertView+Blocks.h"
 #import "UIFloatLabelTextField.h"
+#import "JCNotificationBannerPresenter.h"
+#import "JCNotificationCenter.h"
 
 @interface DataHelper : NSObject
 {
@@ -26,6 +29,8 @@
     NSArray *interactions;
     NSArray *contactFriends;
     NSArray *requests;
+    NSArray *contentProviders;
+    NSMutableDictionary *contactData;
     
     //User Data Storage
     PFObject *myTeam;
@@ -41,6 +46,8 @@
 @property (nonatomic, strong) NSArray *interactions;
 @property (nonatomic, strong) NSArray *contactFriends;
 @property (nonatomic, strong) NSArray *requests;
+@property (nonatomic, strong) NSArray *contentProviders;
+@property (nonatomic, strong) NSMutableDictionary *contactData;
 
 //User Data Storage Properties
 @property (nonatomic, strong) PFObject *myTeam;
@@ -63,8 +70,13 @@
 - (NSArray *)calloutCountsWithUser:(PFUser *)user;
 - (void)getContactFriends:(void (^)(BOOL successful))callback;
 - (void)getFriendRequests:(void (^)(BOOL successful))callback;
+- (void)getContentProviders:(void (^)(BOOL successful))callback;
 - (void)confirmFriendRequest:(PFUser *)newFriend callback:(void (^)(BOOL successful))callback;
 - (void)sendFriendRequest:(NSString *)username or:(PFUser *)user callback:(void (^)(BOOL successful))callback;
+- (void)logout:(void (^)(BOOL successful))callback;
+- (BOOL)followingProvider:(PFObject *)provider;
+- (void)followProvider:(PFObject *)provider callback:(void (^)(BOOL successful))callback;
+- (void)unfollowProvider:(PFObject *)provider callback:(void (^)(BOOL successful))callback;
 
 //Error Handling
 + (void)handleError:(NSError *)error message:(NSString *)message;

@@ -29,6 +29,9 @@
     
     //Keyboard moving properties
     NSIndexPath *editingIndexPath;
+    
+    //Keep track of old team
+    PFObject *oldTeam;
 }
 
 @end

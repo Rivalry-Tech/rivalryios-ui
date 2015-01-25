@@ -153,6 +153,11 @@
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.rowHeight = 85.0;
+    
+    if (!fromSettings)
+    {
+        helper.myTeam = nil;
+    }
 }
 
 #pragma mark - Unwind Segues

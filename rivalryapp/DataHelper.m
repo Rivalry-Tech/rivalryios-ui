@@ -12,7 +12,7 @@
 
 #pragma mark - Singleton Object Method
 
-@synthesize teams, myTeam, bots, tutorialComplete, friends, interactions, contactFriends, requests;
+@synthesize teams, myTeam, bots, tutorialComplete, friends, interactions, contactFriends, requests, contentProviders, contactData;
 
 static DataHelper *instance = nil;
 
@@ -78,7 +78,12 @@ static DataHelper *instance = nil;
     {
         if (user)
         {
-            [user[@"primaryTeam"] fetchInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+            PFObject *team = user[@"primaryTeam"];
+            PFQuery *teamQuery = [PFQuery queryWithClassName:@"Team"];
+            [teamQuery whereKey:@"objectId" equalTo:team.objectId];
+            teamQuery.cachePolicy = kPFCachePolicyNetworkOnly;
+            [teamQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error)
+            {
                 myTeam = object;
                 callback(YES);
             }];
@@ -101,6 +106,15 @@ static DataHelper *instance = nil;
     newUser[@"phone"] = [NSNumber numberWithLongLong:[phone longLongValue]];
     newUser[@"messageCounter"] = @{};
     newUser[@"primaryTeam"] = myTeam;
+    
+    //Cache myTeam
+    PFQuery *teamQuery = [PFQuery queryWithClassName:@"Team"];
+    [teamQuery whereKey:@"objectId" equalTo:myTeam.objectId];
+    teamQuery.cachePolicy = kPFCachePolicyNetworkOnly;
+    [teamQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error)
+    {
+        myTeam = object;
+    }];
     
     //Signup new user with Parse
     [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
@@ -338,7 +352,7 @@ static DataHelper *instance = nil;
         
         CFArrayRef peopleFromAddressBook = ABAddressBookCopyArrayOfAllPeople(addressBook);
         CFIndex numberOfPeople = ABAddressBookGetPersonCount(addressBook);
-        NSMutableDictionary *contactData = [[NSMutableDictionary alloc] initWithObjectsAndKeys:nil];
+        contactData = [[NSMutableDictionary alloc] initWithObjectsAndKeys:nil];
         
         for (int i = 0; i < numberOfPeople; i++)
         {
@@ -412,18 +426,36 @@ static DataHelper *instance = nil;
     
     //Retrieve friends from Parse
     [requestQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-     {
-         if (!error)
-         {
-             requests = objects;
-             callback(YES);
-         }
-         else
-         {
-             [DataHelper handleError:error message:nil];
-             callback(NO);
-         }
-     }];
+    {
+        if (!error)
+        {
+            requests = objects;
+            callback(YES);
+        }
+        else
+        {
+            [DataHelper handleError:error message:nil];
+            callback(NO);
+        }
+    }];
+}
+
+- (void)getContentProviders:(void (^)(BOOL successful))callback
+{
+    PFQuery *contentQuery = [PFQuery queryWithClassName:@"ContentProvider"];
+    [contentQuery includeKey:@"team"];
+    [contentQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (error)
+        {
+            [DataHelper handleError:error message:nil];
+            callback(NO);
+        }
+        else
+        {
+            contentProviders = objects;
+            callback(YES);
+        }
+    }];
 }
 
 - (void)confirmFriendRequest:(PFUser *)newFriend callback:(void (^)(BOOL successful))callback
@@ -538,11 +570,104 @@ static DataHelper *instance = nil;
          }
          else
          {
-             NSString *message = [NSString stringWithFormat:@"Your request to %@ is still pending", friend.username];
-             [DataHelper handleError:nil message:message];
-             callback(NO);
+             //NSString *message = [NSString stringWithFormat:@"Your request to %@ is still pending", friend.username];
+             //[DataHelper handleError:nil message:message];
+             callback(YES);
          }
      }];
+}
+
+- (void)logout:(void (^)(BOOL successful))callback
+{
+    [PFUser logOut];
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    currentInstallation[@"user"] = [NSNull null];
+    [currentInstallation saveInBackground];
+    callback(YES);
+}
+
+- (BOOL)followingProvider:(PFObject *)provider
+{
+    PFUser *currentUser = [PFUser currentUser];
+    NSArray *array = [currentUser objectForKey:provider[@"following"]];
+    
+    NSIndexSet *matchingIndexes = [array indexesOfObjectsPassingTest:^BOOL(NSString *channel, NSUInteger idx, BOOL *stop)
+    {
+        return [channel isEqualToString:provider[@"rssId"]];
+    }];
+    return [matchingIndexes count] != 0;
+}
+
+- (void)followProvider:(PFObject *)provider callback:(void (^)(BOOL successful))callback
+{
+    PFUser *currentUser = [PFUser currentUser];
+    [currentUser addUniqueObject:provider[@"rssId"] forKey:@"following"];
+    [currentUser saveEventually:^(BOOL succeeded, NSError *error)
+    {
+        if (error)
+        {
+            [DataHelper handleError:error message:nil];
+            callback(NO);
+        }
+        else
+        {
+            PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+            
+            NSArray *user_followings = [currentUser objectForKey:@"following"];
+            if (user_followings)
+            {
+                [currentInstallation addUniqueObjectsFromArray:user_followings forKey:@"channels"];
+                
+                [currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+                 {
+                     if (error)
+                     {
+                         [DataHelper handleError:error message:nil];
+                         callback(NO);
+                     }
+                     else
+                     {
+                         callback(YES);
+                     }
+                }];
+            }
+        }
+    }];
+}
+
+- (void)unfollowProvider:(PFObject *)provider callback:(void (^)(BOOL successful))callback
+{
+    PFUser *currentUser = [PFUser currentUser];
+    [currentUser removeObject:provider[@"rssId"] forKey:@"following"];
+    [currentUser saveEventually:^(BOOL succeeded, NSError *error) {
+        if (error)
+        {
+            [DataHelper handleError:error message:nil];
+            callback(NO);
+        }
+        else
+        {
+            PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+            
+            NSArray *user_followings = [currentUser objectForKey:@"following"];
+            if (user_followings) {
+                [currentInstallation removeObject:provider[@"rssId"] forKey:@"channels"];
+                
+                [currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+                {
+                    if (error)
+                    {
+                        [DataHelper handleError:error message:nil];
+                        callback(NO);
+                    }
+                    else
+                    {
+                        callback(YES);
+                    }
+                }];
+            }
+        }
+    }];
 }
 
 #pragma mark - Hidden Helper Methods

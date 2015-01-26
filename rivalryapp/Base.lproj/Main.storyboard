@@ -491,7 +491,7 @@
                                                 <constraint firstItem="VxW-9K-aWa" firstAttribute="leading" secondItem="1SK-gD-saH" secondAttribute="leadingMargin" id="km3-Qg-ysv"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.21626812849999999" green="0.21626812849999999" blue="0.21626812849999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.20784313730000001" green="0.20784313730000001" blue="0.20784313730000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>

@@ -17,8 +17,6 @@
 #import "MBProgressHUD.h"
 #import "UIAlertView+Blocks.h"
 #import "UIFloatLabelTextField.h"
-#import "JCNotificationBannerPresenter.h"
-#import "JCNotificationCenter.h"
 
 @interface DataHelper : NSObject
 {

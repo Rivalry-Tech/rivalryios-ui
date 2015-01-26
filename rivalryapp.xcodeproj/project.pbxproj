@@ -9,17 +9,6 @@
 /* Begin PBXBuildFile section */
 		D3304E4E1A6445AB00314DBF /* RecruitTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3304E4D1A6445AB00314DBF /* RecruitTableViewController.m */; };
 		D3304E601A72DAE300314DBF /* InviteTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3304E5F1A72DAE300314DBF /* InviteTableViewController.m */; };
-		D3304E7A1A758A1900314DBF /* JCNotificationBanner.m in Sources */ = {isa = PBXBuildFile; fileRef = D3304E641A758A1900314DBF /* JCNotificationBanner.m */; };
-		D3304E7B1A758A1900314DBF /* JCNotificationBannerPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = D3304E671A758A1900314DBF /* JCNotificationBannerPresenter.m */; };
-		D3304E7C1A758A1900314DBF /* JCNotificationBannerPresenterIOS7Style.m in Sources */ = {isa = PBXBuildFile; fileRef = D3304E691A758A1900314DBF /* JCNotificationBannerPresenterIOS7Style.m */; };
-		D3304E7D1A758A1900314DBF /* JCNotificationBannerPresenterIOSStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = D3304E6B1A758A1900314DBF /* JCNotificationBannerPresenterIOSStyle.m */; };
-		D3304E7E1A758A1900314DBF /* JCNotificationBannerPresenterSmokeStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = D3304E6D1A758A1900314DBF /* JCNotificationBannerPresenterSmokeStyle.m */; };
-		D3304E7F1A758A1900314DBF /* JCNotificationBannerView.m in Sources */ = {isa = PBXBuildFile; fileRef = D3304E6F1A758A1900314DBF /* JCNotificationBannerView.m */; };
-		D3304E801A758A1900314DBF /* JCNotificationBannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3304E711A758A1900314DBF /* JCNotificationBannerViewController.m */; };
-		D3304E811A758A1900314DBF /* JCNotificationBannerViewIOS7Style.m in Sources */ = {isa = PBXBuildFile; fileRef = D3304E731A758A1900314DBF /* JCNotificationBannerViewIOS7Style.m */; };
-		D3304E821A758A1900314DBF /* JCNotificationBannerViewIOSStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = D3304E751A758A1900314DBF /* JCNotificationBannerViewIOSStyle.m */; };
-		D3304E831A758A1900314DBF /* JCNotificationBannerWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = D3304E771A758A1900314DBF /* JCNotificationBannerWindow.m */; };
-		D3304E841A758A1900314DBF /* JCNotificationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = D3304E791A758A1900314DBF /* JCNotificationCenter.m */; };
 		D3304F111A76BC3500314DBF /* AAAAAA.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D3304EDA1A76BC3500314DBF /* AAAAAA.m4a */; };
 		D3304F121A76BC3500314DBF /* AnchorDown.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D3304EDB1A76BC3500314DBF /* AnchorDown.m4a */; };
 		D3304F131A76BC3500314DBF /* BoomerSooner.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D3304EDC1A76BC3500314DBF /* BoomerSooner.m4a */; };
@@ -128,29 +117,6 @@
 		D3304E4D1A6445AB00314DBF /* RecruitTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecruitTableViewController.m; sourceTree = "<group>"; };
 		D3304E5E1A72DAE300314DBF /* InviteTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InviteTableViewController.h; sourceTree = "<group>"; };
 		D3304E5F1A72DAE300314DBF /* InviteTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InviteTableViewController.m; sourceTree = "<group>"; };
-		D3304E631A758A1900314DBF /* JCNotificationBanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCNotificationBanner.h; sourceTree = "<group>"; };
-		D3304E641A758A1900314DBF /* JCNotificationBanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCNotificationBanner.m; sourceTree = "<group>"; };
-		D3304E651A758A1900314DBF /* JCNotificationBannerPresenter_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCNotificationBannerPresenter_Private.h; sourceTree = "<group>"; };
-		D3304E661A758A1900314DBF /* JCNotificationBannerPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCNotificationBannerPresenter.h; sourceTree = "<group>"; };
-		D3304E671A758A1900314DBF /* JCNotificationBannerPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCNotificationBannerPresenter.m; sourceTree = "<group>"; };
-		D3304E681A758A1900314DBF /* JCNotificationBannerPresenterIOS7Style.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCNotificationBannerPresenterIOS7Style.h; sourceTree = "<group>"; };
-		D3304E691A758A1900314DBF /* JCNotificationBannerPresenterIOS7Style.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCNotificationBannerPresenterIOS7Style.m; sourceTree = "<group>"; };
-		D3304E6A1A758A1900314DBF /* JCNotificationBannerPresenterIOSStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCNotificationBannerPresenterIOSStyle.h; sourceTree = "<group>"; };
-		D3304E6B1A758A1900314DBF /* JCNotificationBannerPresenterIOSStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCNotificationBannerPresenterIOSStyle.m; sourceTree = "<group>"; };
-		D3304E6C1A758A1900314DBF /* JCNotificationBannerPresenterSmokeStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCNotificationBannerPresenterSmokeStyle.h; sourceTree = "<group>"; };
-		D3304E6D1A758A1900314DBF /* JCNotificationBannerPresenterSmokeStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCNotificationBannerPresenterSmokeStyle.m; sourceTree = "<group>"; };
-		D3304E6E1A758A1900314DBF /* JCNotificationBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCNotificationBannerView.h; sourceTree = "<group>"; };
-		D3304E6F1A758A1900314DBF /* JCNotificationBannerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCNotificationBannerView.m; sourceTree = "<group>"; };
-		D3304E701A758A1900314DBF /* JCNotificationBannerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCNotificationBannerViewController.h; sourceTree = "<group>"; };
-		D3304E711A758A1900314DBF /* JCNotificationBannerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCNotificationBannerViewController.m; sourceTree = "<group>"; };
-		D3304E721A758A1900314DBF /* JCNotificationBannerViewIOS7Style.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCNotificationBannerViewIOS7Style.h; sourceTree = "<group>"; };
-		D3304E731A758A1900314DBF /* JCNotificationBannerViewIOS7Style.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCNotificationBannerViewIOS7Style.m; sourceTree = "<group>"; };
-		D3304E741A758A1900314DBF /* JCNotificationBannerViewIOSStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCNotificationBannerViewIOSStyle.h; sourceTree = "<group>"; };
-		D3304E751A758A1900314DBF /* JCNotificationBannerViewIOSStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCNotificationBannerViewIOSStyle.m; sourceTree = "<group>"; };
-		D3304E761A758A1900314DBF /* JCNotificationBannerWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCNotificationBannerWindow.h; sourceTree = "<group>"; };
-		D3304E771A758A1900314DBF /* JCNotificationBannerWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCNotificationBannerWindow.m; sourceTree = "<group>"; };
-		D3304E781A758A1900314DBF /* JCNotificationCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCNotificationCenter.h; sourceTree = "<group>"; };
-		D3304E791A758A1900314DBF /* JCNotificationCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCNotificationCenter.m; sourceTree = "<group>"; };
 		D3304EDA1A76BC3500314DBF /* AAAAAA.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = AAAAAA.m4a; sourceTree = "<group>"; };
 		D3304EDB1A76BC3500314DBF /* AnchorDown.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = AnchorDown.m4a; sourceTree = "<group>"; };
 		D3304EDC1A76BC3500314DBF /* BoomerSooner.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = BoomerSooner.m4a; sourceTree = "<group>"; };
@@ -324,29 +290,6 @@
 		D3AB61EA1A426524001C08D4 /* Added Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D3304E631A758A1900314DBF /* JCNotificationBanner.h */,
-				D3304E641A758A1900314DBF /* JCNotificationBanner.m */,
-				D3304E651A758A1900314DBF /* JCNotificationBannerPresenter_Private.h */,
-				D3304E661A758A1900314DBF /* JCNotificationBannerPresenter.h */,
-				D3304E671A758A1900314DBF /* JCNotificationBannerPresenter.m */,
-				D3304E681A758A1900314DBF /* JCNotificationBannerPresenterIOS7Style.h */,
-				D3304E691A758A1900314DBF /* JCNotificationBannerPresenterIOS7Style.m */,
-				D3304E6A1A758A1900314DBF /* JCNotificationBannerPresenterIOSStyle.h */,
-				D3304E6B1A758A1900314DBF /* JCNotificationBannerPresenterIOSStyle.m */,
-				D3304E6C1A758A1900314DBF /* JCNotificationBannerPresenterSmokeStyle.h */,
-				D3304E6D1A758A1900314DBF /* JCNotificationBannerPresenterSmokeStyle.m */,
-				D3304E6E1A758A1900314DBF /* JCNotificationBannerView.h */,
-				D3304E6F1A758A1900314DBF /* JCNotificationBannerView.m */,
-				D3304E701A758A1900314DBF /* JCNotificationBannerViewController.h */,
-				D3304E711A758A1900314DBF /* JCNotificationBannerViewController.m */,
-				D3304E721A758A1900314DBF /* JCNotificationBannerViewIOS7Style.h */,
-				D3304E731A758A1900314DBF /* JCNotificationBannerViewIOS7Style.m */,
-				D3304E741A758A1900314DBF /* JCNotificationBannerViewIOSStyle.h */,
-				D3304E751A758A1900314DBF /* JCNotificationBannerViewIOSStyle.m */,
-				D3304E761A758A1900314DBF /* JCNotificationBannerWindow.h */,
-				D3304E771A758A1900314DBF /* JCNotificationBannerWindow.m */,
-				D3304E781A758A1900314DBF /* JCNotificationCenter.h */,
-				D3304E791A758A1900314DBF /* JCNotificationCenter.m */,
 				D3AB621A1A572101001C08D4 /* UIFloatLabelTextField.h */,
 				D3AB621B1A572101001C08D4 /* UIFloatLabelTextField.m */,
 				D3AB61F61A4F3FE9001C08D4 /* UIAlertView+Blocks.h */,
@@ -666,29 +609,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3AB62251A58F9FE001C08D4 /* SettingsTableViewController.m in Sources */,
-				D3304E801A758A1900314DBF /* JCNotificationBannerViewController.m in Sources */,
 				D33A75FF1A40E3EB0080D572 /* DataHelper.m in Sources */,
-				D3304E831A758A1900314DBF /* JCNotificationBannerWindow.m in Sources */,
 				D3AB62161A563CB7001C08D4 /* LogInTableViewController.m in Sources */,
 				D3AB62221A588314001C08D4 /* RivalryTableViewController.m in Sources */,
 				D33A75FC1A40E3CC0080D572 /* TeamSelectTableViewController.m in Sources */,
 				D3AB621F1A579659001C08D4 /* SignUpTableViewController.m in Sources */,
 				D3C4A0FC1A3EA0B0009B8E67 /* AppDelegate.m in Sources */,
 				D3AB61F81A4F3FE9001C08D4 /* UIAlertView+Blocks.m in Sources */,
-				D3304E7D1A758A1900314DBF /* JCNotificationBannerPresenterIOSStyle.m in Sources */,
-				D3304E821A758A1900314DBF /* JCNotificationBannerViewIOSStyle.m in Sources */,
 				D3304E4E1A6445AB00314DBF /* RecruitTableViewController.m in Sources */,
 				D3AB621C1A572101001C08D4 /* UIFloatLabelTextField.m in Sources */,
-				D3304E7A1A758A1900314DBF /* JCNotificationBanner.m in Sources */,
 				D3C4A0FF1A3EA0B0009B8E67 /* rivalryapp.xcdatamodeld in Sources */,
-				D3304E841A758A1900314DBF /* JCNotificationCenter.m in Sources */,
-				D3304E811A758A1900314DBF /* JCNotificationBannerViewIOS7Style.m in Sources */,
-				D3304E7C1A758A1900314DBF /* JCNotificationBannerPresenterIOS7Style.m in Sources */,
-				D3304E7B1A758A1900314DBF /* JCNotificationBannerPresenter.m in Sources */,
-				D3304E7E1A758A1900314DBF /* JCNotificationBannerPresenterSmokeStyle.m in Sources */,
 				D33A76021A40ED010080D572 /* TeamSelectTableViewCell.m in Sources */,
 				D3304E601A72DAE300314DBF /* InviteTableViewController.m in Sources */,
-				D3304E7F1A758A1900314DBF /* JCNotificationBannerView.m in Sources */,
 				D3C4A0F91A3EA0B0009B8E67 /* main.m in Sources */,
 				D3AB61E91A42651E001C08D4 /* MBProgressHUD.m in Sources */,
 				D3AB61ED1A4351E6001C08D4 /* TutorialTableViewController.m in Sources */,

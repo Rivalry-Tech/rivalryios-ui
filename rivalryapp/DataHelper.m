@@ -132,6 +132,10 @@ static DataHelper *instance = nil;
 
 - (void)getFriends:(void (^)(BOOL successful))callback
 {
+    //Set timing variables
+    friendsDone = NO;
+    interactionsDone = NO;
+    
     //Create query for friends
     PFUser *currentUser = [PFUser currentUser];
     PFRelation *friendsRelation = [currentUser relationForKey:@"friends"];
@@ -143,34 +147,17 @@ static DataHelper *instance = nil;
     //Retrieve friends from Parse
     [friendsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
     {
+        friendsDone = YES;
+        
         if (objects)
         {
             friends = objects;
             
-            //Create query for interactions
-            PFQuery *interactionQuery1 = [PFQuery queryWithClassName:@"Interaction"];
-            [interactionQuery1 whereKey:@"User1" equalTo:currentUser];
-            PFQuery *interactionQuery2 = [PFQuery queryWithClassName:@"Interaction"];
-            [interactionQuery2 whereKey:@"User2" equalTo:currentUser];
-            PFQuery *interactionQuery = [PFQuery orQueryWithSubqueries:@[interactionQuery1, interactionQuery2]];
-            [interactionQuery includeKey:@"User1"];
-            [interactionQuery includeKey:@"User2"];
-            
-            //Get interactions from Parse
-            [interactionQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+            if (interactionsDone)
             {
-                if (objects)
-                {
-                    interactions = objects;
-                    [self sortFriendsByInteraction];
-                    callback(YES);
-                }
-                else
-                {
-                    [DataHelper handleError:error message:nil];
-                    callback(NO);
-                }
-            }];
+                [self sortFriendsByInteraction];
+                callback(YES);
+            }
         }
         else
         {
@@ -178,6 +165,36 @@ static DataHelper *instance = nil;
             callback(NO);
         }
     }];
+    
+    //Create query for interactions
+    PFQuery *interactionQuery1 = [PFQuery queryWithClassName:@"Interaction"];
+    [interactionQuery1 whereKey:@"User1" equalTo:currentUser];
+    PFQuery *interactionQuery2 = [PFQuery queryWithClassName:@"Interaction"];
+    [interactionQuery2 whereKey:@"User2" equalTo:currentUser];
+    PFQuery *interactionQuery = [PFQuery orQueryWithSubqueries:@[interactionQuery1, interactionQuery2]];
+    [interactionQuery includeKey:@"User1"];
+    [interactionQuery includeKey:@"User2"];
+    
+    //Get interactions from Parse
+    [interactionQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+     {
+         interactionsDone = YES;
+         if (objects)
+         {
+             interactions = objects;
+             
+             if (friendsDone)
+             {
+                 [self sortFriendsByInteraction];
+                 callback(YES);
+             }
+         }
+         else
+         {
+             [DataHelper handleError:error message:nil];
+             callback(NO);
+         }
+     }];
 }
 
 - (void)sortFriendsByInteraction

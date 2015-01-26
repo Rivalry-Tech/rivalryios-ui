@@ -37,6 +37,10 @@
     
     //Global Storage
     BOOL tutorialComplete;
+    
+    //Timing Storage
+    BOOL friendsDone;
+    BOOL interactionsDone;
 }
 
 //Data Storage Properties

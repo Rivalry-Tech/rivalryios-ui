@@ -24,6 +24,9 @@
     //Send Button
     UIButton *sendButton;
     UIBarButtonItem *sendBarButton;
+    
+    //Message sender
+    MFMessageComposeViewController *controller;
 }
 
 @end

@@ -156,7 +156,7 @@
             </objects>
             <point key="canvasLocation" x="2651" y="-410"/>
         </scene>
-        <!--MBOTTONE-->
+        <!--USERNAME-->
         <scene sceneID="Svy-Zn-ngP">
             <objects>
                 <tableViewController storyboardIdentifier="rivalry" id="4ZR-5c-oH3" customClass="RivalryTableViewController" sceneMemberID="viewController">
@@ -198,7 +198,7 @@
                             <outlet property="delegate" destination="4ZR-5c-oH3" id="jlb-94-HEj"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="MBOTTONE" id="Wee-fT-isy">
+                    <navigationItem key="navigationItem" title="USERNAME" id="Wee-fT-isy">
                         <barButtonItem key="leftBarButtonItem" image="SettingsIcon" id="TPA-DU-Mxb">
                             <connections>
                                 <segue destination="Uay-FL-OMG" kind="presentation" id="aCt-8j-4i6"/>

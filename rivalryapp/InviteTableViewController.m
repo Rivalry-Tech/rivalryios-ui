@@ -24,6 +24,18 @@
     
     sendNumbers = [[NSMutableArray alloc] initWithObjects:nil];
     
+    controller = [[MFMessageComposeViewController alloc] init];
+    if([MFMessageComposeViewController canSendText])
+    {
+        PFUser *currentUser = [PFUser currentUser];
+        PFObject *myTeam = helper.myTeam;
+        NSString *rawMessage = [NSString stringWithFormat:@"I'm using the Rivalry! app to say %@ to my friends.  Check it out and add me as %@!  You can download it here: http://www.rivalryapp.com", myTeam[@"callout"], currentUser.username];
+        controller.body = rawMessage;
+        controller.subject = @"Join me on Rivalry!";
+        controller.messageComposeDelegate = self;
+        self.modalPresentationStyle = UIModalPresentationFullScreen;
+    }
+    
     [self getData];
 }
 
@@ -165,21 +177,16 @@
 
 - (void)sendClicked
 {
-    MFMessageComposeViewController *controller = [[MFMessageComposeViewController alloc] init];
-    if([MFMessageComposeViewController canSendText])
+    dispatch_async(dispatch_get_main_queue(), ^
     {
-        PFUser *currentUser = [PFUser currentUser];
-        PFObject *myTeam = helper.myTeam;
-        NSString *rawMessage = [NSString stringWithFormat:@"I'm using the Rivalry! app to say %@ to my friends.  Check it out and add me as %@!  You can download it here: www.appstore.com/rivalrytechnologiesllc/rivalry", myTeam[@"callout"], currentUser.username];
-        controller.recipients = sendNumbers;
-        controller.body = rawMessage;
-        controller.subject = @"Join me on Rivalry!";
-        controller.messageComposeDelegate = self;
-        self.modalPresentationStyle = UIModalPresentationFullScreen;
-        [self presentViewController:controller animated:YES completion:^{
-            //Presenting Done
-        }];
-    }
+        if([MFMessageComposeViewController canSendText])
+        {
+            controller.recipients = sendNumbers;
+            [self presentViewController:controller animated:YES completion:^{
+                //Presenting Done
+            }];
+        }
+    });
 }
 
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result

@@ -253,6 +253,7 @@
 
 - (IBAction)forgotPasswordClicked:(id)sender
 {
+    [self.view endEditing:YES];
     [helper forgotPassword:^(BOOL successful) {
         if (successful)
         {

@@ -429,6 +429,7 @@
         
         numOfSections --;
         contactsSection = -1;
+        contentSection --;
         socialSection --;
         inviteSection --;
     }
@@ -455,6 +456,7 @@
         {
             contactsSection --;
         }
+        contentSection --;
         socialSection --;
         inviteSection --;
     }

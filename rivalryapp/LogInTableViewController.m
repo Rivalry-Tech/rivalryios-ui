@@ -166,6 +166,7 @@
     loginButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     loginButton.layer.cornerRadius = 3.0;
     loginButton.layer.masksToBounds = YES;
+    loginButton.titleEdgeInsets = UIEdgeInsetsMake(1, 0, 0, 0);
     [loginButton addTarget:self action:@selector(loginClicked) forControlEvents:UIControlEventTouchUpInside];
     
     //Padding

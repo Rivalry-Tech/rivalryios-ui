@@ -216,6 +216,7 @@
     saveButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     saveButton.layer.cornerRadius = 3.0;
     saveButton.layer.masksToBounds = YES;
+    saveButton.titleEdgeInsets = UIEdgeInsetsMake(1, 0, 0, 0);
     [saveButton addTarget:self action:@selector(saveClicked) forControlEvents:UIControlEventTouchUpInside];
     
     //Padding

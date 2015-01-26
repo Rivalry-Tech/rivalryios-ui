@@ -618,21 +618,11 @@
     UIBarButtonItem *space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     space.width = -10.0;
     
-    //Add Done Button to Nav Bar
-    doneBarButton = [[UIBarButtonItem alloc] initWithCustomView:doneButton];
-    doneBarButton.enabled = YES;
-    self.navigationItem.rightBarButtonItems = @[space, doneBarButton];
-    
     //Get rid of extra lines
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
     //Make bar opaque to preserve colors
     self.navigationController.navigationBar.translucent = NO;
-}
-
-- (void)doneClicked
-{
-    [self performSegueWithIdentifier:@"exitRecruit" sender:self];
 }
 
 - (void)createSearchField:(UITableViewCell *)cell

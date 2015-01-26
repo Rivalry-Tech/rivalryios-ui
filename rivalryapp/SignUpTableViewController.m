@@ -183,6 +183,7 @@
     signupButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     signupButton.layer.cornerRadius = 3.0;
     signupButton.layer.masksToBounds = YES;
+    signupButton.titleEdgeInsets = UIEdgeInsetsMake(1, 0, 0, 0);
     [signupButton addTarget:self action:@selector(signupClicked) forControlEvents:UIControlEventTouchUpInside];
     
     //Padding

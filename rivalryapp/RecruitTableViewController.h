@@ -14,11 +14,7 @@
 @interface RecruitTableViewController : UITableViewController <UITextFieldDelegate>
 {
     //DataHelper instance
-    DataHelper *helper;
-    
-    //Save Button
-    UIBarButtonItem *doneBarButton;
-    UIButton *doneButton;
+    DataHelper *helper; 
     
     //Interface Properties
     UITextField *searchField;

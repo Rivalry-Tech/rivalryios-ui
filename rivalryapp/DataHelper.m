@@ -162,6 +162,7 @@ static DataHelper *instance = nil;
                 if (objects)
                 {
                     interactions = objects;
+                    [self sortFriendsByInteraction];
                     callback(YES);
                 }
                 else
@@ -175,6 +176,29 @@ static DataHelper *instance = nil;
         {
             [DataHelper handleError:error message:nil];
             callback(NO);
+        }
+    }];
+}
+
+- (void)sortFriendsByInteraction
+{
+    friends = [friends sortedArrayUsingComparator:^NSComparisonResult(PFUser *friend1, PFUser *friend2)
+    {
+        NSArray *callouts1 = [self calloutCountsWithUser:friend1];
+        NSArray *callouts2 = [self calloutCountsWithUser:friend2];
+        NSInteger total1 = [callouts1[0] integerValue] + [callouts1[1] integerValue];
+        NSInteger total2 = [callouts2[0] integerValue] + [callouts2[1] integerValue];
+        if (total1 > total2)
+        {
+            return NSOrderedAscending;
+        }
+        else if (total1 < total2)
+        {
+            return NSOrderedDescending;
+        }
+        else
+        {
+            return NSOrderedSame;
         }
     }];
 }
@@ -300,16 +324,16 @@ static DataHelper *instance = nil;
     
     //Get the interaction for the given user
     NSUInteger index = [interactions indexOfObjectPassingTest:^BOOL(PFObject *obj, NSUInteger idx, BOOL *stop)
-                        {
-                            PFUser *user1 = obj[@"User1"];
-                            PFUser *user2 = obj[@"User2"];
-                            if ([user1.objectId isEqualToString:user.objectId] || [user2.objectId isEqualToString:user.objectId])
-                            {
-                                *stop = YES;
-                                return *stop;
-                            }
-                            return NO;
-                        }];
+    {
+        PFUser *user1 = obj[@"User1"];
+        PFUser *user2 = obj[@"User2"];
+        if ([user1.objectId isEqualToString:user.objectId] || [user2.objectId isEqualToString:user.objectId])
+        {
+            *stop = YES;
+            return *stop;
+        }
+        return NO;
+    }];
     
     //If the interaction exists
     if (index != NSNotFound)

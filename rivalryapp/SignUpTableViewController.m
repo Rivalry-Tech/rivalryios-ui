@@ -281,7 +281,7 @@
 
 - (void)finishSignup
 {
-    NSLog(@"Signup complete");
+    [self performSegueWithIdentifier:@"signupToFriends" sender:self];
 }
 
 - (void)enableSignup

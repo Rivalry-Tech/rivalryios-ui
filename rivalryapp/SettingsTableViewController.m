@@ -268,7 +268,10 @@
     usernameField.text = currentUser.username;
     emailField.text = currentUser.email;
     NSNumber *phone = (NSNumber *)currentUser[@"phone"];
-    phoneField.text = [phone stringValue];
+    if (![phone integerValue] == 0)
+    {
+        phoneField.text = [phone stringValue];
+    }
     teamField.text = [helper.myTeam[@"name"] uppercaseString];
     passwordField.text = @"AAAAAAAAAAAA";
 }
@@ -290,6 +293,32 @@
     NSString *password = passwordField.text;
     NSString *email = emailField.text;
     NSString *phone = phoneField.text;
+    
+    NSCharacterSet *badCharacters = [[NSCharacterSet alphanumericCharacterSet] invertedSet];
+    if ([username rangeOfCharacterFromSet:badCharacters].location != NSNotFound)
+    {
+        [UIAlertView showWithTitle:@"Error" message:@"Username cannot contain special characters." cancelButtonTitle:@"Done" otherButtonTitles:nil tapBlock:nil];
+        return;
+    }
+    
+    if (username.length > 12)
+    {
+        [UIAlertView showWithTitle:@"Error" message:@"Please enter a username with 12 or less characters." cancelButtonTitle:@"Done" otherButtonTitles:nil tapBlock:nil];
+        return;
+    }
+    
+    if (password.length < 6)
+    {
+        [UIAlertView showWithTitle:@"Error" message:@"Please enter a password with more than 6 characters" cancelButtonTitle:@"Done" otherButtonTitles:nil tapBlock:nil];
+        return;
+    }
+    
+    if (phone.length != 10 && phone.length != 0)
+    {
+        [UIAlertView showWithTitle:@"Error" message:@"Please enter a valid phone number with area code and number" cancelButtonTitle:@"Done" otherButtonTitles:nil tapBlock:nil];
+        return;
+    }
+    
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.tableView animated:YES];
     [helper updateProfile:username password:password email:email phone:phone callback:^(BOOL successful)
     {

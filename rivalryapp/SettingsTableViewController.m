@@ -270,7 +270,12 @@
     NSNumber *phone = (NSNumber *)currentUser[@"phone"];
     if (![phone integerValue] == 0)
     {
-        phoneField.text = [phone stringValue];
+        NSMutableString *formatPhone = [[phone stringValue] mutableCopy];
+        [formatPhone insertString:@"(" atIndex:0];
+        [formatPhone insertString:@")" atIndex:4];
+        [formatPhone insertString:@" " atIndex:5];
+        [formatPhone insertString:@"-" atIndex:9];
+        phoneField.text = formatPhone;
     }
     teamField.text = [helper.myTeam[@"name"] uppercaseString];
     passwordField.text = @"AAAAAAAAAAAA";

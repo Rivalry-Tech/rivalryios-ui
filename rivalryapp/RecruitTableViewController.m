@@ -460,7 +460,7 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    NSString *username = searchField.text;
+    NSString *username = [searchField.text uppercaseString];
     searchField.text = @"";
     [searchField resignFirstResponder];
     
@@ -618,7 +618,7 @@
     //Make bar opaque to preserve colors
     self.navigationController.navigationBar.translucent = NO;
     
-    self.refreshControl.tintColor = primary;
+    self.refreshControl.tintColor = [UIColor whiteColor];
     [self.refreshControl addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
 }
 

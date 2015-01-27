@@ -28,8 +28,12 @@
     botsSection = 1;
     numberOfSections = 2;
     
+    botCounts = [[NSMutableArray alloc] initWithObjects:@"0", @"0", @"0", @"0", @"0", @"0", nil];
+    
     //Set cell class for bot cells
     [self.tableView registerClass:[TeamSelectTableViewCell class] forCellReuseIdentifier:@"botCell"];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(registerDone) name:@"pushRegistered" object:nil];
     
     //Setup Tutorial
     firstCalloutSent = helper.tutorialComplete;
@@ -265,6 +269,11 @@
        
        [selectedCell flip:^{
            PFObject *bot = [bots objectAtIndex:indexPath.row];
+           
+           int meCount = [selectedCell.meLabel.text intValue];
+           meCount ++;
+           selectedCell.meLabel.text = [NSString stringWithFormat:@"%d", meCount];
+           
            //If this is the first callout, start the tutorial
            if (!firstCalloutSent)
            {
@@ -274,6 +283,10 @@
            else
            {
                [self sendBotCallout:bot];
+               
+               int themCount = [selectedCell.themLabel.text intValue];
+               themCount ++;
+               selectedCell.themLabel.text = [NSString stringWithFormat:@"%d", themCount];
            }
        }];
    }
@@ -357,8 +370,8 @@
     //Show recieving alert and register for notificaitons
     [UIAlertView showWithTitle:@"Recieving..." message:[NSString stringWithFormat:@"%@ BOT is trying to send you %@!\nEnable notifications on the next screen to recieve callouts from your friends!", botName, callout] cancelButtonTitle:@"Okay!" otherButtonTitles:nil tapBlock:^(UIAlertView *alertView, NSInteger buttonIndex)
     {
+        registerBot = bot;
         [DataHelper registerNotificaitons];
-        [self sendBotCallout:bot];
     }];
 }
 
@@ -371,6 +384,11 @@
        helper.tutorialComplete = YES;
        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:instructionsSection] withRowAnimation:UITableViewRowAnimationFade];
    }
+}
+
+- (void)registerDone
+{
+    [self sendBotCallout:registerBot];
 }
 
 #pragma mark - Unwind Segues

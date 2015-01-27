@@ -234,7 +234,7 @@ static DataHelper *instance = nil;
             NSNumber *calloutCount = (NSNumber *)myTeam[@"calloutCount"];
             calloutCount = [NSNumber numberWithInteger:[calloutCount integerValue] + 1];
             myTeam[@"calloutCount"] = calloutCount;
-            [myTeam saveEventually];
+            [myTeam saveInBackground];
             
             //Update user callout count
             [self updateUserCallout:(PFUser *)user];
@@ -366,8 +366,8 @@ static DataHelper *instance = nil;
         }
         else
         {
-            myCount = interaction[@"Count1"];
-            theirCount = interaction[@"Count2"];
+            myCount = interaction[@"Count2"];
+            theirCount = interaction[@"Count1"];
         }
         return @[myCount, theirCount];
     }
@@ -745,9 +745,9 @@ static DataHelper *instance = nil;
     {
         PFUser *user1 = obj[@"User1"];
         PFUser *user2 = obj[@"User2"];
-        BOOL user1Bool = ([user1.objectId isEqualToString:user.objectId] || [user1.objectId isEqualToString:currentUser.objectId]);
-        BOOL user2Bool = ([user2.objectId isEqualToString:user.objectId] || [user2.objectId isEqualToString:currentUser.objectId]);
-        if (user1Bool && user2Bool)
+        BOOL user1Bool = ([user1.objectId isEqualToString:user.objectId]);
+        BOOL user2Bool = ([user2.objectId isEqualToString:user.objectId]);
+        if (user1Bool || user2Bool)
         {
             *stop = YES;
             return *stop;

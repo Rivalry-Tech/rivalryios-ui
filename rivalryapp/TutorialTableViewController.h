@@ -21,6 +21,7 @@
     
     //Data Source
     NSArray *bots;
+    NSMutableArray *botCounts;
     
     //Section Numbers
     NSInteger numberOfSections;
@@ -30,6 +31,7 @@
     //Tutorial Properties
     BOOL firstCalloutSent;
     BOOL tutorialFinished;
+    PFObject *registerBot;
 }
 
 @end

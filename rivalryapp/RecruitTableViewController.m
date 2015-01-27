@@ -171,7 +171,7 @@
     }
     else if (indexPath.section == contentSection)
     {
-        TeamSelectTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"requestCell" forIndexPath:indexPath];
+        TeamSelectTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"contentCell" forIndexPath:indexPath];
         
         //Get Team for Row
         PFObject *provider = [contentProviders objectAtIndex:indexPath.row];

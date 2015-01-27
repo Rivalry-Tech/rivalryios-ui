@@ -57,7 +57,7 @@
     }
     else if (section == friendsSection)
     {
-        return [friends count];
+        return [friends count] + [bots count];
     }
     
     return 0;
@@ -76,27 +76,46 @@
     {
         TeamSelectTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"friendCell" forIndexPath:indexPath];
         
-        //Get Team for Row
-        PFUser *friend = [friends objectAtIndex:indexPath.row];
-        
-        //Add Team Name to Cell
-        cell.teamNameLabel.text = friend.username;
-        
-        PFObject *friendTeam = friend[@"primaryTeam"];
-        
-        //Set Cell Styles
-        cell.backgroundColor = [DataHelper colorFromHex:friendTeam[@"PrimaryColor"]];
-        cell.teamNameLabel.textColor = [DataHelper colorFromHex:friendTeam[@"SecondaryColor"]];
-        
-        //Get User callouts
-        NSArray *callouts = [helper calloutCountsWithUser:friend];
-        
-        cell.meLabel.text = [callouts[0] stringValue];
-        cell.themLabel.text = [callouts[1] stringValue];
-        cell.meLabel.textColor = [DataHelper colorFromHex:friendTeam[@"SecondaryColor"]];
-        cell.themLabel.textColor = [DataHelper colorFromHex:friendTeam[@"SecondaryColor"]];
-        
-        return cell;
+        if (indexPath.row >= [friends count])
+        {
+            PFObject *bot = [bots objectAtIndex:indexPath.row - friends.count];
+            
+            cell.teamNameLabel.text = [NSString stringWithFormat:@"%@ BOT", [bot[@"name"] uppercaseString]];
+            
+            cell.backgroundColor = [DataHelper colorFromHex:bot[@"PrimaryColor"]];
+            cell.teamNameLabel.textColor = [DataHelper colorFromHex:bot[@"SecondaryColor"]];
+            
+            cell.meLabel.text = @"0";
+            cell.themLabel.text = @"0";
+            cell.meLabel.textColor = [DataHelper colorFromHex:bot[@"SecondaryColor"]];
+            cell.themLabel.textColor = [DataHelper colorFromHex:bot[@"SecondaryColor"]];
+            
+            return cell;
+        }
+        else
+        {
+            //Get Team for Row
+            PFUser *friend = [friends objectAtIndex:indexPath.row];
+            
+            //Add Team Name to Cell
+            cell.teamNameLabel.text = friend.username;
+            
+            PFObject *friendTeam = friend[@"primaryTeam"];
+            
+            //Set Cell Styles
+            cell.backgroundColor = [DataHelper colorFromHex:friendTeam[@"PrimaryColor"]];
+            cell.teamNameLabel.textColor = [DataHelper colorFromHex:friendTeam[@"SecondaryColor"]];
+            
+            //Get User callouts
+            NSArray *callouts = [helper calloutCountsWithUser:friend];
+            
+            cell.meLabel.text = [callouts[0] stringValue];
+            cell.themLabel.text = [callouts[1] stringValue];
+            cell.meLabel.textColor = [DataHelper colorFromHex:friendTeam[@"SecondaryColor"]];
+            cell.themLabel.textColor = [DataHelper colorFromHex:friendTeam[@"SecondaryColor"]];
+            
+            return cell;
+        }
     }
     else
     {
@@ -109,7 +128,10 @@
 {
     if (indexPath.section == friendsSection)
     {
-        return YES;
+        if (indexPath.row < friends.count)
+        {
+            return YES;
+        }
     }
     
     return NO;
@@ -203,25 +225,53 @@
     }
     else if (indexPath.section == friendsSection)
     {
-        //Get Selected cell and flip it
-        TeamSelectTableViewCell *selectedCell = (TeamSelectTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-        
-        selectedCell.useTimer = YES;
-        
-        //Flip cell
-        [selectedCell flip:^
+        if (indexPath.row < friends.count)
         {
-            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-        }];
-        
-        //Send callout
-        [helper sendCallout:[friends objectAtIndex:indexPath.row] callback:^(BOOL successful)
-        {
-            if (successful)
+            //Get Selected cell and flip it
+            TeamSelectTableViewCell *selectedCell = (TeamSelectTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+            
+            selectedCell.useTimer = YES;
+            
+            //Flip cell
+            [selectedCell flip:^
             {
-                //Callout Sent
-            }
-        }];
+                [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+            }];
+            
+            //Send callout
+            [helper sendCallout:[friends objectAtIndex:indexPath.row] callback:^(BOOL successful)
+            {
+                if (successful)
+                {
+                    //Callout Sent
+                }
+            }];
+        }
+        else
+        {
+            TeamSelectTableViewCell *selectedCell = (TeamSelectTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+            
+            selectedCell.useTimer = YES;
+            
+            PFObject *bot = [bots objectAtIndex:indexPath.row - friends.count];
+            
+            [selectedCell flip:^
+            {
+                int meCount = [selectedCell.meLabel.text intValue];
+                meCount ++;
+                selectedCell.meLabel.text = [NSString stringWithFormat:@"%d", meCount];
+                
+                UILocalNotification *botCallout = [[UILocalNotification alloc] init];
+                botCallout.alertBody = [NSString stringWithFormat:@"%@ BOT says %@!", [bot[@"name"] uppercaseString], bot[@"callout"]];
+                botCallout.fireDate = [NSDate date];
+                botCallout.soundName = bot[@"audioFile"];
+                [[UIApplication sharedApplication] scheduleLocalNotification: botCallout];
+                
+                int themCount = [selectedCell.themLabel.text intValue];
+                themCount ++;
+                selectedCell.themLabel.text = [NSString stringWithFormat:@"%d", themCount];
+            }];
+        }
     }
 }
 
@@ -237,24 +287,29 @@
 //        //TODO - MUTE PEOPLE
 //    }];
     
-    UITableViewRowAction *unfriendAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"UNFRIEND" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
+    if (indexPath.row < friends.count)
     {
-        //Delete friend from server
-        [helper deleteFriend:[friends objectAtIndex:indexPath.row] callback:^(BOOL successful)
+        UITableViewRowAction *unfriendAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"UNFRIEND" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
         {
-            //Delete Friend Successful
+            //Delete friend from server
+            [helper deleteFriend:[friends objectAtIndex:indexPath.row] callback:^(BOOL successful)
+            {
+                //Delete Friend Successful
+            }];
+            
+            //Delete row from table view
+            [tableView beginUpdates];
+            NSMutableArray *mutableFriends = [friends mutableCopy];
+            [mutableFriends removeObjectAtIndex:indexPath.row];
+            friends = mutableFriends;
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+            [tableView endUpdates];
         }];
         
-        //Delete row from table view
-        [tableView beginUpdates];
-        NSMutableArray *mutableFriends = [friends mutableCopy];
-        [mutableFriends removeObjectAtIndex:indexPath.row];
-        friends = mutableFriends;
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
-        [tableView endUpdates];
-    }];
+        return @[unfriendAction];
+    }
     
-    return @[unfriendAction];
+    return nil;
 }
 
 #pragma mark - Navigation
@@ -321,17 +376,44 @@
 {
     //Add progress indicator
     [MBProgressHUD showHUDAddedTo:self.tableView animated:YES];
+    
     [helper getFriends:^(BOOL successful)
     {
+        friendsDone = YES;
+        
         //If friends are fetched, reload data
         if (successful)
         {
             friends = helper.friends;
-            [self.tableView reloadData];
         }
-        [MBProgressHUD hideAllHUDsForView:self.tableView animated:YES];
-        [self.refreshControl endRefreshing];
+        
+        if (botsDone)
+        {
+            [self finishLoading];
+        }
     }];
+    
+    [helper getIntroBots:^(BOOL successful)
+    {
+        botsDone = YES;
+        
+        if (successful)
+        {
+            bots = helper.bots;
+        }
+        
+        if (friendsDone)
+        {
+            [self finishLoading];
+        }
+    }];
+}
+
+- (void)finishLoading
+{
+    [self.tableView reloadData];
+    [MBProgressHUD hideAllHUDsForView:self.tableView animated:YES];
+    [self.refreshControl endRefreshing];
 }
 
 #pragma mark - Unwind Segues

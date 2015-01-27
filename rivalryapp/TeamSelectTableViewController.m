@@ -126,7 +126,7 @@
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     //Call data method for intro bots
-    [helper getTeams:^{
+    [helper getTeams:^(BOOL successful) {
         teams = helper.teams;
         [self.tableView reloadData];
         [MBProgressHUD hideHUDForView:self.view animated:YES];

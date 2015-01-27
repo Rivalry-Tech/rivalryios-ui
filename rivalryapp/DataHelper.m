@@ -30,7 +30,7 @@ static DataHelper *instance = nil;
 
 #pragma mark - Data Methods
 
-- (void)getTeams:(void (^)())callback
+- (void)getTeams:(void (^)(BOOL successful))callback
 {
     //Create Query For the List of Teams
     PFQuery *teamQuery = [PFQuery queryWithClassName:@"Team"];
@@ -49,12 +49,20 @@ static DataHelper *instance = nil;
     //Async call to Parse and return with callback
     [teamQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
     {
-        teams = objects;
-        callback();
+        if (error)
+        {
+            [DataHelper handleError:error message:nil];
+            callback(NO);
+        }
+        else
+        {
+            teams = objects;
+            callback(YES);
+        }
     }];
 }
 
-- (void)getIntroBots:(void (^)())callback
+- (void)getIntroBots:(void (^)(BOOL successful))callback
 {
     //Create Query to get the IntroBots from myTeam
     PFRelation *botsRelation = [myTeam relationForKey:@"introBots"];
@@ -66,8 +74,16 @@ static DataHelper *instance = nil;
     //Async call to Parse and return with callback
     [botsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
     {
-        bots = [myTeamArray arrayByAddingObjectsFromArray:objects];
-        callback();
+        if (error)
+        {
+            [DataHelper handleError:error message:nil];
+            callback(NO);
+        }
+        else
+        {
+            bots = [myTeamArray arrayByAddingObjectsFromArray:objects];
+            callback(YES);
+        }
     }];
 }
 

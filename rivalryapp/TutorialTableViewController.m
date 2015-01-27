@@ -328,7 +328,7 @@
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     //Call data method for bots
-    [helper getIntroBots:^{
+    [helper getIntroBots:^(BOOL successful) {
         bots = helper.bots;
         [self.tableView reloadData];
         [MBProgressHUD hideHUDForView:self.view animated:YES];

@@ -61,8 +61,8 @@
 + (DataHelper *)getInstance;
 
 //Data Methods
-- (void)getTeams:(void (^)())callback;
-- (void)getIntroBots:(void (^)())callback;
+- (void)getTeams:(void (^)(BOOL successful))callback;
+- (void)getIntroBots:(void (^)(BOOL successful))callback;
 - (void)login:(NSString *)username password:(NSString *)password callback:(void (^)(BOOL successful))callback;
 - (void)signup:(NSString *)username password:(NSString *)password email:(NSString *)email phone:(NSString *)phone callback:(void (^)(BOOL successful))callback;
 - (void)getFriends:(void (^)(BOOL successful))callback;

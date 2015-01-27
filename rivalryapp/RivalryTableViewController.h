@@ -18,12 +18,16 @@
     
     //Data Source
     NSArray *friends;
+    NSArray *bots;
     
     //Section info
     NSInteger numOfSections;
     NSInteger recruitSection;
     NSInteger friendsSection;
     
+    //Timing Variables
+    BOOL friendsDone;
+    BOOL botsDone;
 }
 
 @end

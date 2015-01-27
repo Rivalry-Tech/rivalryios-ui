@@ -26,6 +26,8 @@
     //Use TeamSelectTableViewCell
     [self.tableView registerClass:[TeamSelectTableViewCell class] forCellReuseIdentifier:@"friendCell"];
     
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    
     [self refreshTable];
 }
 
@@ -300,7 +302,6 @@
     //Get rid of extra lines
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
-    self.refreshControl = [[UIRefreshControl alloc] init];
     self.refreshControl.tintColor = primary;
     [self.refreshControl addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
 }

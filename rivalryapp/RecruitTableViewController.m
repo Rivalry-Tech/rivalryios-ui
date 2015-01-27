@@ -30,16 +30,9 @@
     [self.tableView registerClass:[TeamSelectTableViewCell class] forCellReuseIdentifier:@"requestCell"];
     [self.tableView registerClass:[TeamSelectTableViewCell class] forCellReuseIdentifier:@"contentCell"];
     
-    //Section Numbers
-    numOfSections = 3;
-    searchSection = 0;
-    contactsSection = -1;
-    requestSection = -1;
-    contentSection = -1;
-    inviteSection = 1;
-    socialSection = 2;
+    self.refreshControl = [[UIRefreshControl alloc] init];
     
-    [self getData];
+    [self refreshTable];
 }
 
 - (void)didReceiveMemoryWarning
@@ -590,6 +583,7 @@
     
     [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
     [MBProgressHUD hideAllHUDsForView:self.tableView animated:YES];
+    [self.refreshControl endRefreshing];
 }
 
 - (void)setViewStyles
@@ -623,6 +617,23 @@
     
     //Make bar opaque to preserve colors
     self.navigationController.navigationBar.translucent = NO;
+    
+    self.refreshControl.tintColor = primary;
+    [self.refreshControl addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
+}
+
+- (void)refreshTable
+{
+    //Section Numbers
+    numOfSections = 3;
+    searchSection = 0;
+    contactsSection = -1;
+    requestSection = -1;
+    contentSection = -1;
+    inviteSection = 1;
+    socialSection = 2;
+    
+    [self getData];
 }
 
 - (void)createSearchField:(UITableViewCell *)cell

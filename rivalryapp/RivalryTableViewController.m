@@ -26,13 +26,7 @@
     //Use TeamSelectTableViewCell
     [self.tableView registerClass:[TeamSelectTableViewCell class] forCellReuseIdentifier:@"friendCell"];
     
-    //Set section info
-    numOfSections = 2;
-    recruitSection = 0;
-    friendsSection = 1;
-    
-    //Get data
-    [self getData];
+    [self refreshTable];
 }
 
 - (void)didReceiveMemoryWarning
@@ -305,6 +299,21 @@
     
     //Get rid of extra lines
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    self.refreshControl.tintColor = primary;
+    [self.refreshControl addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
+}
+
+- (void)refreshTable
+{
+    //Set section info
+    numOfSections = 2;
+    recruitSection = 0;
+    friendsSection = 1;
+    
+    //Get data
+    [self getData];
 }
 
 - (void)getData
@@ -320,6 +329,7 @@
             [self.tableView reloadData];
         }
         [MBProgressHUD hideAllHUDsForView:self.tableView animated:YES];
+        [self.refreshControl endRefreshing];
     }];
 }
 

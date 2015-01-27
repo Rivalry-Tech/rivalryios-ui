@@ -23,6 +23,7 @@
     NSInteger numOfSections;
     NSInteger recruitSection;
     NSInteger friendsSection;
+    
 }
 
 @end

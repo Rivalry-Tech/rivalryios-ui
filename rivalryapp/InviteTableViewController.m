@@ -73,6 +73,10 @@
     
     //Add Team Name to Cell
     cell.teamNameLabel.text = [name uppercaseString];
+    if ([sendNumbers containsObject:plainNumber])
+    {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    }
     
     //Set Cell Styles
     cell.backgroundColor = [DataHelper colorFromHex:@"#262A2C"];

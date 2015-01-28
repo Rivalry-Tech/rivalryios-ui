@@ -90,6 +90,7 @@
     [timer invalidate];
     timer = nil;
     timeLeft = 0;
+    self.accessoryType = UITableViewCellAccessoryNone;
     
     //Add layers back to original view
     [self.layer insertSublayer:gradient atIndex:0];

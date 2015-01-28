@@ -685,7 +685,7 @@
     }
     else
     {
-        [shareController setInitialText:[NSString stringWithFormat:@"I'm using the Rivalry! App to say %@! to my friends. Get it at http://rivalryapp.com and add me as %@. #RivalryApp", helper.myTeam[@"callout"], currentUser.username]];
+        [shareController setInitialText:[NSString stringWithFormat:@"I'm using Rivalry! to say %@! to my friends. Get it at http://rivalryapp.com and add me as %@.", helper.myTeam[@"callout"], currentUser.username]];
     }
     
     [shareController addURL:[NSURL URLWithString:@"https://itunes.apple.com/us/app/rivalry!/id931709155?mt=8&uo=4"]];

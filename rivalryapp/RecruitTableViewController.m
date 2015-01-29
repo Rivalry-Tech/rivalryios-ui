@@ -408,8 +408,6 @@
 
 - (void)removeContactFriend:(NSIndexPath *)indexPath
 {
-    [self.tableView beginUpdates];
-    
     NSMutableArray *contactFriends_m = [contactFriends mutableCopy];
     [contactFriends_m removeObjectAtIndex:indexPath.row];
     contactFriends = [NSArray arrayWithArray:contactFriends_m];
@@ -418,21 +416,19 @@
     
     if (contactFriends.count == 0)
     {
-        [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:contactsSection] withRowAnimation:UITableViewRowAnimationLeft];
-        
+        NSInteger delete = contactsSection;
         numOfSections --;
         contactsSection = -1;
         contentSection --;
         socialSection --;
         inviteSection --;
+        
+        [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:delete] withRowAnimation:UITableViewRowAnimationLeft];
     }
-    [self.tableView endUpdates];
 }
 
 - (void)removeFriendRequest:(NSIndexPath *)indexPath
 {
-    [self.tableView beginUpdates];
-    
     NSMutableArray *friendRequests_m = [friendRequests mutableCopy];
     [friendRequests_m removeObjectAtIndex:indexPath.row];
     friendRequests = [NSArray arrayWithArray:friendRequests_m];
@@ -441,8 +437,7 @@
     
     if (friendRequests.count == 0)
     {
-        [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:requestSection] withRowAnimation:UITableViewRowAnimationLeft];
-        
+        NSInteger delete = requestSection;
         numOfSections --;
         requestSection = -1;
         if (contactsSection != -1)
@@ -452,8 +447,9 @@
         contentSection --;
         socialSection --;
         inviteSection --;
+        
+        [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:delete] withRowAnimation:UITableViewRowAnimationLeft];
     }
-    [self.tableView endUpdates];
 }
 
 #pragma mark - UITextFieldDelegate Methods

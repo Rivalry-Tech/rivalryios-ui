@@ -306,7 +306,20 @@ static DataHelper *instance = nil;
     [friends_m removeObject:user];
     friends = [NSArray arrayWithArray:friends_m];
     
-    callback(YES);
+    NSDictionary *cloudParams = [NSDictionary dictionaryWithObjectsAndKeys:user.username, @"friendUsername", nil];
+    
+    [PFCloud callFunctionInBackground:@"removeFriend" withParameters:cloudParams block:^(id object, NSError *error)
+     {
+         if (error)
+         {
+             [DataHelper handleError:error message:nil];
+             callback(NO);
+         }
+         else
+         {
+             callback(YES);
+         }
+     }];
 }
 
 - (void)updateProfile:(NSString *)username password:(NSString *)password email:(NSString *)email phone:(NSString *)phone callback:(void (^)(BOOL successful))callback

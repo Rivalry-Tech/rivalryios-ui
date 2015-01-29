@@ -32,11 +32,6 @@
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)];
-    tap.cancelsTouchesInView = NO;
-    [self.view addGestureRecognizer:tap];
-    [self.navigationController.navigationBar addGestureRecognizer:tap];
-    
     [self refreshTable];
 }
 
@@ -48,6 +43,17 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [self setViewStyles];
+    
+    tap = [[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)];
+    tap.cancelsTouchesInView = NO;
+    [self.view addGestureRecognizer:tap];
+    [self.navigationController.navigationBar addGestureRecognizer:tap];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self.view removeGestureRecognizer:tap];
+    [self.navigationController.navigationBar removeGestureRecognizer:tap];
 }
 
 #pragma mark - UITableViewDataSource Methods

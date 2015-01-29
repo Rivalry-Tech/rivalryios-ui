@@ -37,6 +37,8 @@
     BOOL contactsDone;
     BOOL requestsDone;
     BOOL contentDone;
+    
+    UITapGestureRecognizer *tap;
 }
 
 @end

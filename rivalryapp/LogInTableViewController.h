@@ -23,6 +23,8 @@
     IBOutlet UIFloatLabelTextField *usernameField;
     IBOutlet UIFloatLabelTextField *passwordField;
     IBOutlet UIButton *recoverButton;
+    
+    UITapGestureRecognizer *tap;
 }
 
 @end

@@ -12,7 +12,7 @@
 
 #pragma mark - Singleton Object Method
 
-@synthesize teams, myTeam, bots, tutorialComplete, friends, interactions, contactFriends, requests, contentProviders, contactData;
+@synthesize teams, myTeam, bots, tutorialComplete, friends, interactions, contactFriends, requests, contentProviders, contactData, notifyRegister;
 
 static DataHelper *instance = nil;
 
@@ -857,8 +857,11 @@ static DataHelper *instance = nil;
     return [NSString stringWithFormat:@"%@:%@", minutesString, secondsString];
 }
 
-+ (void)registerNotificaitons
++ (void)registerNotificaitons:(BOOL)doNotification
 {
+    DataHelper *helper = [DataHelper getInstance];
+    helper.notifyRegister = doNotification;
+    
     UIApplication *application = [UIApplication sharedApplication];
     
     //Register for push notifications

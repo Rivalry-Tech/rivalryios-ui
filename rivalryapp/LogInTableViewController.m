@@ -234,7 +234,7 @@
 
 - (void)finishLogin
 {
-    [DataHelper registerNotificaitons];
+    [DataHelper registerNotificaitons:NO];
     [self performSegueWithIdentifier:@"loginToFriends" sender:self];
 }
 

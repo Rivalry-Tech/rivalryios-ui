@@ -39,6 +39,7 @@
     //Timing Storage
     BOOL friendsDone;
     BOOL interactionsDone;
+    BOOL notifyRegister;
 }
 
 //Data Storage Properties
@@ -56,6 +57,7 @@
 
 //Global Stoage Properties
 @property (nonatomic) BOOL tutorialComplete;
+@property (nonatomic) BOOL notifyRegister;
 
 //Singleton Object Method
 + (DataHelper *)getInstance;
@@ -87,6 +89,6 @@
 //Helper Methods
 + (UIColor *)colorFromHex:(NSString *)hexString;
 + (NSString *)formatFlipTimer:(NSInteger)timeLeft;
-+ (void)registerNotificaitons;
++ (void)registerNotificaitons:(BOOL)doNotification;
 
 @end

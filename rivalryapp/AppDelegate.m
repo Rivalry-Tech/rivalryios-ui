@@ -97,7 +97,10 @@
         NSLog(@"application:didFailToRegisterForRemoteNotificationsWithError: %@", error);
     }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"pushRegistered" object:nil];
+    if ([DataHelper getInstance].notifyRegister)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"pushRegistered" object:nil];
+    }
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo

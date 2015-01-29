@@ -371,7 +371,7 @@
     [UIAlertView showWithTitle:@"Receiving..." message:[NSString stringWithFormat:@"%@ BOT is trying to send you %@!\nEnable notifications on the next screen to receive callouts from your friends!", botName, callout] cancelButtonTitle:@"Okay!" otherButtonTitles:nil tapBlock:^(UIAlertView *alertView, NSInteger buttonIndex)
     {
         registerBot = bot;
-        [DataHelper registerNotificaitons];
+        [DataHelper registerNotificaitons:YES];
     }];
 }
 

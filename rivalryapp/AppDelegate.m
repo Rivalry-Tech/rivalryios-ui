@@ -84,7 +84,11 @@
     [currentInstallation setDeviceTokenFromData:deviceToken];
     [currentInstallation saveInBackground];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"pushRegistered" object:nil];
+    DataHelper *helper = [DataHelper getInstance];
+    if (helper.notifyRegister)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"pushRegistered" object:nil];
+    }
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
@@ -98,7 +102,8 @@
         NSLog(@"application:didFailToRegisterForRemoteNotificationsWithError: %@", error);
     }
     
-    if ([DataHelper getInstance].notifyRegister)
+    DataHelper *helper = [DataHelper getInstance];
+    if (helper.notifyRegister)
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"pushRegistered" object:nil];
     }

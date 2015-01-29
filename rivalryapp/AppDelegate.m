@@ -27,6 +27,7 @@
     
     //Set Global Navigation Bar Styles
     [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:15.0],NSFontAttributeName, nil] forState:UIControlStateNormal];
+    [[UITextField appearance] setKeyboardAppearance:UIKeyboardAppearanceDark];
     
     //Clear badge
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];

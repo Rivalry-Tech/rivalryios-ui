@@ -37,6 +37,7 @@
     BOOL contactsDone;
     BOOL requestsDone;
     BOOL contentDone;
+    BOOL didRefresh;
     
     UITapGestureRecognizer *viewTap;
     UITapGestureRecognizer *barTap;

@@ -521,7 +521,6 @@ static DataHelper *instance = nil;
     PFRelation *friendsRelation = [currentUser relationForKey:@"friends"];
     PFRelation *requestsRelation = [currentUser relationForKey:@"requests"];
     
-    [[requests mutableCopy] removeObject:newFriend];
     [friendsRelation addObject:newFriend];
     [requestsRelation removeObject:newFriend];
     [currentUser saveEventually];

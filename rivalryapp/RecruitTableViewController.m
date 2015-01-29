@@ -32,6 +32,8 @@
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     
+    didRefresh = NO;
+    
     [self refreshTable];
 }
 
@@ -351,7 +353,13 @@
     else if (indexPath.section == requestSection)
     {
         PFUser *friend = [friendRequests objectAtIndex:indexPath.row];
+        
         TeamSelectTableViewCell *selectedCell = (TeamSelectTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+        
+        NSMutableArray *friendRequests_m = [friendRequests mutableCopy];
+        [friendRequests_m removeObjectAtIndex:indexPath.row];
+        friendRequests = [NSArray arrayWithArray:friendRequests_m];
+        
         selectedCell.useTimer = NO;
         selectedCell.customFlipText = @"ACCEPTED!";
         selectedCell.customSubText = @"";
@@ -360,8 +368,16 @@
         {
             if (successful)
             {
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                    [self performSelectorOnMainThread:@selector(removeFriendRequest:) withObject:indexPath waitUntilDone:NO];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^
+                {
+                    if (!didRefresh)
+                    {
+                        [self performSelectorOnMainThread:@selector(removeFriendRequest:) withObject:indexPath waitUntilDone:NO];
+                    }
+                    else
+                    {
+                        didRefresh = NO;
+                    }
                 });
             }
         }];
@@ -369,7 +385,13 @@
     else if (indexPath.section == contactsSection)
     {
         PFUser *friend = [contactFriends objectAtIndex:indexPath.row];
+        
         TeamSelectTableViewCell *selectedCell = (TeamSelectTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+        
+        NSMutableArray *contactFriends_m = [contactFriends mutableCopy];
+        [contactFriends_m removeObjectAtIndex:indexPath.row];
+        contactFriends = [NSArray arrayWithArray:contactFriends_m];
+        
         selectedCell.useTimer = NO;
         selectedCell.customFlipText = @"ADDED!";
         selectedCell.customSubText = @"";
@@ -377,7 +399,8 @@
         [helper sendFriendRequest:nil or:friend callback:^(BOOL successful) {
             if (successful)
             {
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^
+                {
                     [self performSelectorOnMainThread:@selector(removeContactFriend:) withObject:indexPath waitUntilDone:NO];
                 });
             }
@@ -421,10 +444,6 @@
 
 - (void)removeContactFriend:(NSIndexPath *)indexPath
 {
-    NSMutableArray *contactFriends_m = [contactFriends mutableCopy];
-    [contactFriends_m removeObjectAtIndex:indexPath.row];
-    contactFriends = [NSArray arrayWithArray:contactFriends_m];
-    
     [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
     
     if (contactFriends.count == 0)
@@ -442,10 +461,6 @@
 
 - (void)removeFriendRequest:(NSIndexPath *)indexPath
 {
-    NSMutableArray *friendRequests_m = [friendRequests mutableCopy];
-    [friendRequests_m removeObjectAtIndex:indexPath.row];
-    friendRequests = [NSArray arrayWithArray:friendRequests_m];
-    
     [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
     
     if (friendRequests.count == 0)
@@ -633,6 +648,8 @@
 
 - (void)refreshTable
 {
+    didRefresh = YES;
+    
     //Section Numbers
     numOfSections = 3;
     searchSection = 0;

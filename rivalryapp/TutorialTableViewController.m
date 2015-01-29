@@ -365,10 +365,9 @@
 {
     //Get Bot data
     NSString *botName = [bot[@"name"] uppercaseString];
-    NSString *callout = bot[@"callout"];
     
     //Show recieving alert and register for notificaitons
-    [UIAlertView showWithTitle:@"Receiving..." message:[NSString stringWithFormat:@"%@ BOT is trying to send you %@!\nEnable notifications on the next screen to receive callouts from your friends!", botName, callout] cancelButtonTitle:@"Okay!" otherButtonTitles:nil tapBlock:^(UIAlertView *alertView, NSInteger buttonIndex)
+    [UIAlertView showWithTitle:[NSString stringWithFormat:@"%@ BOT wants to send you a callout!", botName] message:@"Enable notifications on the next screen and let the rivlary begin!" cancelButtonTitle:@"Bring it on!" otherButtonTitles:nil tapBlock:^(UIAlertView *alertView, NSInteger buttonIndex)
     {
         registerBot = bot;
         [DataHelper registerNotificaitons:YES];

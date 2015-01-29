@@ -22,6 +22,11 @@
     
     //Get DataHelper instance
     helper = [DataHelper getInstance];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)];
+    tap.cancelsTouchesInView = NO;
+    [self.view addGestureRecognizer:tap];
+    [self.navigationController.navigationBar addGestureRecognizer:tap];
 }
 
 - (void)viewWillAppear:(BOOL)animated

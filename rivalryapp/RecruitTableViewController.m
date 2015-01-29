@@ -32,6 +32,11 @@
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)];
+    tap.cancelsTouchesInView = NO;
+    [self.view addGestureRecognizer:tap];
+    [self.navigationController.navigationBar addGestureRecognizer:tap];
+    
     [self refreshTable];
 }
 

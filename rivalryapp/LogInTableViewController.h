@@ -24,7 +24,8 @@
     IBOutlet UIFloatLabelTextField *passwordField;
     IBOutlet UIButton *recoverButton;
     
-    UITapGestureRecognizer *tap;
+    UITapGestureRecognizer *viewTap;
+    UITapGestureRecognizer *barTap;
 }
 
 @end

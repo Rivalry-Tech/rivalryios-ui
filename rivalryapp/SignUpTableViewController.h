@@ -28,7 +28,8 @@
     //Keyboard moving properties
     NSIndexPath *editingIndexPath;
     
-    UITapGestureRecognizer *tap;
+    UITapGestureRecognizer *viewTap;
+    UITapGestureRecognizer *barTap;
 }
 
 @end

@@ -44,16 +44,18 @@
 {
     [self setViewStyles];
     
-    tap = [[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)];
-    tap.cancelsTouchesInView = NO;
-    [self.view addGestureRecognizer:tap];
-    [self.navigationController.navigationBar addGestureRecognizer:tap];
+    viewTap = [[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)];
+    viewTap.cancelsTouchesInView = NO;
+    [self.view addGestureRecognizer:viewTap];
+    barTap = [[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)];
+    barTap.cancelsTouchesInView = NO;
+    [self.navigationController.navigationBar addGestureRecognizer:barTap];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [self.view removeGestureRecognizer:tap];
-    [self.navigationController.navigationBar removeGestureRecognizer:tap];
+    [self.view removeGestureRecognizer:viewTap];
+    [self.navigationController.navigationBar removeGestureRecognizer:barTap];
 }
 
 #pragma mark - Keyboard Methods

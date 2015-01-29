@@ -33,7 +33,8 @@
     //Keep track of old team
     PFObject *oldTeam;
     
-    UITapGestureRecognizer *tap;
+    UITapGestureRecognizer *viewTap;
+    UITapGestureRecognizer *barTap;
 }
 
 @end

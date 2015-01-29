@@ -38,7 +38,8 @@
     BOOL requestsDone;
     BOOL contentDone;
     
-    UITapGestureRecognizer *tap;
+    UITapGestureRecognizer *viewTap;
+    UITapGestureRecognizer *barTap;
 }
 
 @end

@@ -258,7 +258,7 @@
     [helper forgotPassword:^(BOOL successful) {
         if (successful)
         {
-            [UIAlertView showWithTitle:@"Password Reset Sent!" message:@"You should recieve an email shortly with instructions on how to reset your password." cancelButtonTitle:@"Done" otherButtonTitles:nil tapBlock:nil];
+            [UIAlertView showWithTitle:@"Password Reset Sent!" message:@"You should receive an email shortly with instructions on how to reset your password." cancelButtonTitle:@"Done" otherButtonTitles:nil tapBlock:nil];
         }
     }];
 }

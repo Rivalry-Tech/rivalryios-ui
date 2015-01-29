@@ -329,14 +329,17 @@
         return;
     }
     
-    if (phone.length != 10 && phone.length != 0)
+    NSCharacterSet *charactersToRemove = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
+    NSString *plainNumber = [[phone componentsSeparatedByCharactersInSet:charactersToRemove] componentsJoinedByString:@""];
+    
+    if (plainNumber.length != 10 && plainNumber.length != 0)
     {
         [UIAlertView showWithTitle:@"Error" message:@"Please enter a valid phone number with area code and number" cancelButtonTitle:@"Done" otherButtonTitles:nil tapBlock:nil];
         return;
     }
     
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.tableView animated:YES];
-    [helper updateProfile:username password:password email:email phone:phone callback:^(BOOL successful)
+    [helper updateProfile:username password:password email:email phone:plainNumber callback:^(BOOL successful)
     {
         if (successful)
         {

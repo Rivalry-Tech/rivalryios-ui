@@ -384,7 +384,7 @@
         {
             dispatch_async(dispatch_get_main_queue(), ^
             {
-                [UIAlertView showWithTitle:@"Content Subscription" message:@"You are subsribing to recieve notificaitons for articles from DawgPost. This is a free service. Would you like to continue?" cancelButtonTitle:@"NO" otherButtonTitles:@[@"YES"] tapBlock:^(UIAlertView *alertView, NSInteger buttonIndex)
+                [UIAlertView showWithTitle:@"Content Subscription" message:@"You are subsribing to receive notifications for articles from DawgPost. This is a free service. Would you like to continue?" cancelButtonTitle:@"NO" otherButtonTitles:@[@"YES"] tapBlock:^(UIAlertView *alertView, NSInteger buttonIndex)
                 {
                     if (buttonIndex == 1)
                     {

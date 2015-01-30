@@ -282,7 +282,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9Pg-fA-IIi" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="kXQ-6b-0K0" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4933" y="338"/>
+            <point key="canvasLocation" x="4081" y="338"/>
         </scene>
         <!--INVITE CONTACTS-->
         <scene sceneID="dmi-r1-MYi">
@@ -309,7 +309,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gjk-Qt-aXA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5650" y="338"/>
+            <point key="canvasLocation" x="4798" y="338"/>
         </scene>
         <!--SETTINGS-->
         <scene sceneID="aUa-rB-n7s">

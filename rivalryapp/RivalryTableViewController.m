@@ -253,7 +253,7 @@
             {
                 if (successful)
                 {
-                    //Callout Sent
+                    //Callout
                 }
             }];
         }

@@ -267,7 +267,8 @@
        TeamSelectTableViewCell *selectedCell = (TeamSelectTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
        selectedCell.useTimer = YES;
        
-       [selectedCell flip:^{
+       [selectedCell flip:^
+       {
            PFObject *bot = [bots objectAtIndex:indexPath.row];
            
            int meCount = [selectedCell.meLabel.text intValue];

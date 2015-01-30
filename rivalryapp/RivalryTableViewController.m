@@ -111,6 +111,16 @@
             
             cell.meLabel.text = [callouts[0] stringValue];
             cell.themLabel.text = [callouts[1] stringValue];
+            if (callouts[0] > callouts[1])
+            {
+                cell.meCircleView.backgroundColor = [DataHelper colorFromHex:friendTeam[@"SecondaryColor"]];
+                cell.meCircleView.hidden = NO;
+            }
+            else if (callouts[0] < callouts[1])
+            {
+                cell.themCircleView.backgroundColor = [DataHelper colorFromHex:friendTeam[@"SecondaryColor"]];
+                cell.themCircleView.hidden = NO;
+            }
             cell.meLabel.textColor = [DataHelper colorFromHex:friendTeam[@"SecondaryColor"]];
             cell.themLabel.textColor = [DataHelper colorFromHex:friendTeam[@"SecondaryColor"]];
             

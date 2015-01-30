@@ -10,7 +10,7 @@
 
 @implementation TeamSelectTableViewCell
 
-@synthesize teamNameLabel, meLabel, themLabel, timer, timeLeft, flipped, useTimer, customFlipText, customSubText;
+@synthesize teamNameLabel, meLabel, themLabel, timer, timeLeft, flipped, useTimer, customFlipText, customSubText, meCircleView, themCircleView;
 
 #pragma mark - UITableViewCell Methods
 
@@ -54,12 +54,30 @@
         meLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, 40, self.bounds.size.height)];
         meLabel.textAlignment = NSTextAlignmentCenter;
         meLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:15.0];
+        
+        meCircleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
+        meCircleView.layer.cornerRadius = 12.5;
+        meCircleView.layer.masksToBounds = YES;
+        meCircleView.alpha = 0.15;
+        meCircleView.center = meLabel.center;
+        meCircleView.hidden = YES;
+        
+        [self.contentView addSubview:meCircleView];
         [self.contentView addSubview:meLabel];
         
         //Create Them Label
         themLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.bounds.size.width - 45, 0, 40, self.bounds.size.height)];
         themLabel.textAlignment = NSTextAlignmentCenter;
         themLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:15.0];
+        
+        themCircleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
+        themCircleView.layer.cornerRadius = 12.5;
+        themCircleView.layer.masksToBounds = YES;
+        themCircleView.alpha = 0.15;
+        themCircleView.center = themLabel.center;
+        themCircleView.hidden = YES;
+        
+        [self.contentView addSubview:themCircleView];
         [self.contentView addSubview:themLabel];
         
         //Create seperators
@@ -83,6 +101,8 @@
     meLabel.frame = CGRectMake(5, 0, 40, self.bounds.size.height);
     themLabel.frame = CGRectMake(self.bounds.size.width - 45, 0, 40, self.bounds.size.height);
     seperator.frame = CGRectMake(0, 84, self.bounds.size.width, 1);
+    meCircleView.center = meLabel.center;
+    themCircleView.center = themLabel.center;
 }
 
 - (void)prepareForReuse
@@ -91,6 +111,8 @@
     timer = nil;
     timeLeft = 0;
     self.accessoryType = UITableViewCellAccessoryNone;
+    meCircleView.hidden = YES;
+    themCircleView.hidden = YES;
     
     //Add layers back to original view
     [self.layer insertSublayer:gradient atIndex:0];

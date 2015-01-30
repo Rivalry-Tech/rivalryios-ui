@@ -14,6 +14,9 @@
 #import "DataHelper.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
+{
+    BOOL becomingActive;
+}
 
 @property (strong, nonatomic) UIWindow *window;
 

@@ -111,6 +111,21 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
+    if (becomingActive)
+    {
+        becomingActive = NO;
+        if (userInfo)
+        {
+            if ([userInfo.allKeys indexOfObject:@"contentUrl"] != NSNotFound)
+            {
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:userInfo[@"contentUrl"]]];
+                    exit(0);
+                });
+            }
+        }
+    }
+    
     [PFPush handlePush:userInfo];
     
     //Clear badge
@@ -148,6 +163,8 @@
         currentInstallation.badge = 0;
         [currentInstallation saveEventually];
     }
+    
+    becomingActive = YES;
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

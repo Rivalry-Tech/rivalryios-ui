@@ -242,20 +242,25 @@
             
             selectedCell.useTimer = YES;
             
+            if (!selectedCell.flipped)
+            {
+                //Send callout
+                [helper sendCallout:[friends objectAtIndex:indexPath.row] callback:^(BOOL successful)
+                 {
+                     if (successful)
+                     {
+                         //Callout
+                     }
+                 }];
+            }
+            
             //Flip cell
             [selectedCell flip:^
             {
                 [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
             }];
             
-            //Send callout
-            [helper sendCallout:[friends objectAtIndex:indexPath.row] callback:^(BOOL successful)
-            {
-                if (successful)
-                {
-                    //Callout
-                }
-            }];
+            
         }
         else
         {

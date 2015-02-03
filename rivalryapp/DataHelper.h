@@ -13,6 +13,7 @@
 #import <AddressBookUI/AddressBookUI.h>
 #import <Social/Social.h>
 #import <MessageUI/MFMessageComposeViewController.h>
+#import <malloc/malloc.h>
 
 #import "MBProgressHUD.h"
 #import "UIAlertView+Blocks.h"

@@ -23,9 +23,6 @@
     //Cell Seperator
     UIView *seperator;
     
-    UIView *meCircleView;
-    UIView *themCircleView;
-    
     //Flipping Properties
     NSTimer *timer;
     NSInteger timeLeft;
@@ -42,9 +39,6 @@
 @property (nonatomic, strong) UILabel *teamNameLabel;
 @property (nonatomic, strong) UILabel *meLabel;
 @property (nonatomic, strong) UILabel *themLabel;
-
-@property (nonatomic, strong) UIView *meCircleView;
-@property (nonatomic, strong) UIView *themCircleView;
 
 //Flipping Properties
 @property (nonatomic, strong) NSTimer *timer;

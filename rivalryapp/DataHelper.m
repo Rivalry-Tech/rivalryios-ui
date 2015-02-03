@@ -246,49 +246,109 @@ static DataHelper *instance = nil;
     [friendsQuery getFirstObjectInBackgroundWithBlock:^(PFObject *user, NSError *error) {
         if (user)
         {
-            //Update team callout count
-            NSNumber *calloutCount = (NSNumber *)myTeam[@"calloutCount"];
-            calloutCount = [NSNumber numberWithInteger:[calloutCount integerValue] + 1];
-            myTeam[@"calloutCount"] = calloutCount;
-            [myTeam saveInBackground];
-            
             //Update user callout count
-            [self updateUserCallout:(PFUser *)user];
+            NSUInteger index = [interactions indexOfObjectPassingTest:^BOOL(PFObject *obj, NSUInteger idx, BOOL *stop)
+                                {
+                                    PFUser *user1 = obj[@"User1"];
+                                    PFUser *user2 = obj[@"User2"];
+                                    BOOL user1Bool = ([user1.objectId isEqualToString:user.objectId]);
+                                    BOOL user2Bool = ([user2.objectId isEqualToString:user.objectId]);
+                                    if (user1Bool || user2Bool)
+                                    {
+                                        *stop = YES;
+                                        return *stop;
+                                    }
+                                    return NO;
+                                }];
             
-            //Generate push payload
-            NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:
-                                  [NSString stringWithFormat:@"%@ says %@!", currentUser.username, myTeam[@"callout"]], @"alert",
-                                  @"Increment", @"badge",
-                                  myTeam[@"audioFile"], @"sound",
-                                  [currentUser username], @"username",
-                                  nil];
-            
-            //Which phone to send notificaiton to
-            PFQuery *pushQuery = [PFInstallation query];
-            [pushQuery whereKey:@"user" matchesQuery:friendsQuery];
-            
-            //Create push
-            PFPush *push = [[PFPush alloc] init];
-            [push setQuery:pushQuery];
-            [push setData:data];
-            
-            //Send push
-            [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                if (succeeded)
+            //If the interaction exists update it
+            PFObject *interaction;
+            if (index != NSNotFound)
+            {
+                //Find out which count to update and incriment it
+                interaction = [interactions objectAtIndex:index];
+                PFUser *user1 = (PFUser *)interaction[@"User1"];
+                PFUser *user2 = (PFUser *)interaction[@"User2"];
+                NSNumber *count, *newCount;
+                
+                if ([user1.objectId isEqualToString:currentUser.objectId])
                 {
-                    callback(YES);
+                    count = (NSNumber *)interaction[@"Count1"];
+                    newCount = [NSNumber numberWithLongLong:[count longLongValue] + 1];
+                    interaction[@"Count1"] = newCount;
                 }
-                else
+                else if ([user2.objectId isEqualToString:currentUser.objectId])
+                {
+                    count = (NSNumber *)interaction[@"Count2"];
+                    newCount = [NSNumber numberWithLongLong:[count longLongValue] + 1];
+                    interaction[@"Count2"] = newCount;
+                }
+                
+                NSMutableArray *mutableInteractions = [interactions mutableCopy];
+                [mutableInteractions setObject:interaction atIndexedSubscript:index];
+                interactions = mutableInteractions;
+            }
+            else
+            {
+                //Create a new interaction if it doesn't exist and save it
+                interaction = [PFObject objectWithClassName:@"Interaction"];
+                interaction[@"User1"] = currentUser;
+                interaction[@"User2"] = user;
+                interaction[@"Count1"] = [NSNumber numberWithInt:1];
+                interaction[@"Count2"] = [NSNumber numberWithInt:0];
+                
+                NSMutableArray *mutableInteractions = [interactions mutableCopy];
+                [mutableInteractions addObject:interaction];
+                interactions = mutableInteractions;
+            }
+            
+            [interaction saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+            {
+                if (error)
                 {
                     [DataHelper handleError:error message:nil];
                     callback(NO);
                 }
+                else
+                {
+                    //TODO - Fix this. This can cause the counts to reset.
+                    //Update team callout count
+                    NSNumber *calloutCount = (NSNumber *)myTeam[@"calloutCount"];
+                    calloutCount = [NSNumber numberWithInteger:[calloutCount integerValue] + 1];
+                    myTeam[@"calloutCount"] = calloutCount;
+                    [myTeam saveInBackground];
+                    
+                    //Generate push payload
+                    NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:
+                                          [NSString stringWithFormat:@"%@ says %@!", currentUser.username, myTeam[@"callout"]], @"alert",
+                                          @"Increment", @"badge",
+                                          myTeam[@"audioFile"], @"sound",
+                                          [currentUser username], @"username",
+                                          nil];
+                    
+                    //Which phone to send notificaiton to
+                    PFQuery *pushQuery = [PFInstallation query];
+                    [pushQuery whereKey:@"user" matchesQuery:friendsQuery];
+                    
+                    //Create push
+                    PFPush *push = [[PFPush alloc] init];
+                    [push setQuery:pushQuery];
+                    [push setData:data];
+                    
+                    //Send push
+                    [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                        if (succeeded)
+                        {
+                            callback(YES);
+                        }
+                        else
+                        {
+                            [DataHelper handleError:error message:nil];
+                            callback(NO);
+                        }
+                    }];
+                }
             }];
-        }
-        else
-        {
-            [DataHelper handleError:error message:nil];
-            callback(NO);
         }
     }];
 }
@@ -760,64 +820,6 @@ static DataHelper *instance = nil;
             }];
         }
     }];
-}
-
-#pragma mark - Hidden Helper Methods
-
-- (void)updateUserCallout:(PFUser *)user
-{
-    PFUser *currentUser = [PFUser currentUser];
-    
-    //Get interaction for user
-    NSUInteger index = [interactions indexOfObjectPassingTest:^BOOL(PFObject *obj, NSUInteger idx, BOOL *stop)
-    {
-        PFUser *user1 = obj[@"User1"];
-        PFUser *user2 = obj[@"User2"];
-        BOOL user1Bool = ([user1.objectId isEqualToString:user.objectId]);
-        BOOL user2Bool = ([user2.objectId isEqualToString:user.objectId]);
-        if (user1Bool || user2Bool)
-        {
-            *stop = YES;
-            return *stop;
-        }
-        return NO;
-    }];
-    
-    //If the interaction exists update it
-    PFObject *interaction;
-    if (index != NSNotFound)
-    {
-        //Find out which count to update and incriment it
-        interaction = [interactions objectAtIndex:index];
-        PFUser *user1 = (PFUser *)interaction[@"User1"];
-        PFUser *user2 = (PFUser *)interaction[@"User2"];
-        NSNumber *count, *newCount;
-        if ([user1.objectId isEqualToString:currentUser.objectId])
-        {
-            count = (NSNumber *)interaction[@"Count1"];
-            newCount = [NSNumber numberWithLongLong:[count longLongValue] + 1];
-            interaction[@"Count1"] = newCount;
-        }
-        else if ([user2.objectId isEqualToString:currentUser.objectId])
-        {
-            count = (NSNumber *)interaction[@"Count2"];
-            newCount = [NSNumber numberWithLongLong:[count longLongValue] + 1];
-            interaction[@"Count2"] = newCount;
-        }
-        
-        //Save the interaction
-        [interaction saveInBackground];
-    }
-    else
-    {
-        //Create a new interaction if it doesn't exist and save it
-        interaction = [PFObject objectWithClassName:@"Interaction"];
-        interaction[@"User1"] = currentUser;
-        interaction[@"User2"] = user;
-        interaction[@"Count1"] = [NSNumber numberWithInt:1];
-        interaction[@"Count2"] = [NSNumber numberWithInt:0];
-        [interaction saveInBackground];
-    }
 }
 
 #pragma mark - Error Handling

@@ -109,17 +109,30 @@
             //Get User callouts
             NSArray *callouts = [helper calloutCountsWithUser:friend];
             
-            cell.meLabel.text = [callouts[0] stringValue];
-            cell.themLabel.text = [callouts[1] stringValue];
-            if ([callouts[0] integerValue] > [callouts[1] integerValue])
+            NSNumber *meCallouts = callouts[0];
+            NSNumber *themCallouts = callouts[1];
+            
+            cell.meLabel.text = [meCallouts stringValue];
+            cell.themLabel.text = [themCallouts stringValue];
+            
+            double meDouble = [meCallouts doubleValue];
+            double themDouble = [themCallouts doubleValue];
+            
+            if (meDouble > themDouble)
             {
-                cell.meCircleView.backgroundColor = [DataHelper colorFromHex:friendTeam[@"SecondaryColor"]];
-                cell.meCircleView.hidden = NO;
+                NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:cell.meLabel.text];
+                [attributeString addAttribute:NSUnderlineStyleAttributeName
+                                        value:[NSNumber numberWithInt:1]
+                                        range:(NSRange){0,[attributeString length]}];
+                cell.meLabel.attributedText = attributeString;
             }
-            else if ([callouts[0] integerValue] < [callouts[1] integerValue])
+            else if (meDouble < themDouble)
             {
-                cell.themCircleView.backgroundColor = [DataHelper colorFromHex:friendTeam[@"SecondaryColor"]];
-                cell.themCircleView.hidden = NO;
+                NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:cell.themLabel.text];
+                [attributeString addAttribute:NSUnderlineStyleAttributeName
+                                        value:[NSNumber numberWithInt:1]
+                                        range:(NSRange){0,[attributeString length]}];
+                cell.themLabel.attributedText = attributeString;
             }
             cell.meLabel.textColor = [DataHelper colorFromHex:friendTeam[@"SecondaryColor"]];
             cell.themLabel.textColor = [DataHelper colorFromHex:friendTeam[@"SecondaryColor"]];
@@ -249,7 +262,7 @@
                  {
                      if (successful)
                      {
-                         //Callout
+                         NSLog(@"Callout Sent!");
                      }
                  }];
             }

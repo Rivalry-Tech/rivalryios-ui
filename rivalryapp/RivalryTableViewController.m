@@ -120,19 +120,11 @@
             
             if (meDouble > themDouble)
             {
-                NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:cell.meLabel.text];
-                [attributeString addAttribute:NSUnderlineStyleAttributeName
-                                        value:[NSNumber numberWithInt:1]
-                                        range:(NSRange){0,[attributeString length]}];
-                cell.meLabel.attributedText = attributeString;
+                cell.meLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Bold" size:15.0];
             }
             else if (meDouble < themDouble)
             {
-                NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:cell.themLabel.text];
-                [attributeString addAttribute:NSUnderlineStyleAttributeName
-                                        value:[NSNumber numberWithInt:1]
-                                        range:(NSRange){0,[attributeString length]}];
-                cell.themLabel.attributedText = attributeString;
+                cell.themLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Bold" size:15.0];
             }
             cell.meLabel.textColor = [DataHelper colorFromHex:friendTeam[@"SecondaryColor"]];
             cell.themLabel.textColor = [DataHelper colorFromHex:friendTeam[@"SecondaryColor"]];
@@ -262,7 +254,7 @@
                  {
                      if (successful)
                      {
-                         NSLog(@"Callout Sent!");
+                         //NSLog(@"Callout Sent!");
                      }
                  }];
             }

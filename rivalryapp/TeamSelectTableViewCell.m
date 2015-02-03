@@ -91,6 +91,8 @@
     timer = nil;
     timeLeft = 0;
     self.accessoryType = UITableViewCellAccessoryNone;
+    meLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:15.0];
+    themLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:15.0];
     
     //Add layers back to original view
     [self.layer insertSublayer:gradient atIndex:0];

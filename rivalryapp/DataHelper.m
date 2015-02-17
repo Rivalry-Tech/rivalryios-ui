@@ -190,6 +190,7 @@ static DataHelper *instance = nil;
     PFQuery *interactionQuery = [PFQuery orQueryWithSubqueries:@[interactionQuery1, interactionQuery2]];
     [interactionQuery includeKey:@"User1"];
     [interactionQuery includeKey:@"User2"];
+    interactionQuery.limit = 1000;
     
     //Get interactions from Parse
     [interactionQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)

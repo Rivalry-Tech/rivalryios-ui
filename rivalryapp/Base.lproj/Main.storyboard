@@ -135,6 +135,71 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.12941176470588237" green="0.12941176470588237" blue="0.12941176470588237" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="60" id="cLJ-fw-OSI">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cLJ-fw-OSI" id="wwu-4d-wGX">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Or select an option below" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dmj-sW-6NQ">
+                                                    <rect key="frame" x="8" y="31" width="584" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="hOX-fU-ob1"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="18"/>
+                                                    <color key="textColor" red="0.36078431372549019" green="0.36078431372549019" blue="0.36078431372549019" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Dmj-sW-6NQ" firstAttribute="trailing" secondItem="wwu-4d-wGX" secondAttribute="trailingMargin" id="3Dt-CI-8oB"/>
+                                                <constraint firstItem="Dmj-sW-6NQ" firstAttribute="leading" secondItem="wwu-4d-wGX" secondAttribute="leadingMargin" id="4W5-VZ-74X"/>
+                                                <constraint firstItem="Dmj-sW-6NQ" firstAttribute="bottom" secondItem="wwu-4d-wGX" secondAttribute="bottomMargin" id="DDt-jm-l0C"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="ZCk-2j-UNZ">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZCk-2j-UNZ" id="SsL-2t-rC8">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FACEBOOK" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zFA-J1-Jzg">
+                                                    <rect key="frame" x="8" y="8" width="584" height="69"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-DemiBold" family="Avenir Next Condensed" pointSize="30"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="zFA-J1-Jzg" firstAttribute="trailing" secondItem="SsL-2t-rC8" secondAttribute="trailingMargin" id="0lP-lz-JAs"/>
+                                                <constraint firstItem="zFA-J1-Jzg" firstAttribute="leading" secondItem="SsL-2t-rC8" secondAttribute="leadingMargin" id="AHe-Z5-f18"/>
+                                                <constraint firstItem="zFA-J1-Jzg" firstAttribute="bottom" secondItem="SsL-2t-rC8" secondAttribute="bottomMargin" id="J7c-KU-VWB"/>
+                                                <constraint firstItem="zFA-J1-Jzg" firstAttribute="top" secondItem="SsL-2t-rC8" secondAttribute="topMargin" id="seq-96-ymv"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.23137254901960785" green="0.34901960784313724" blue="0.59607843137254901" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="pyS-lO-B6g">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pyS-lO-B6g" id="Sq6-y6-CjQ">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TWITTER" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Uj-a4-dgu">
+                                                    <rect key="frame" x="8" y="8" width="584" height="69"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-DemiBold" family="Avenir Next Condensed" pointSize="30"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="9Uj-a4-dgu" firstAttribute="bottom" secondItem="Sq6-y6-CjQ" secondAttribute="bottomMargin" id="BU2-hF-fub"/>
+                                                <constraint firstItem="9Uj-a4-dgu" firstAttribute="top" secondItem="Sq6-y6-CjQ" secondAttribute="topMargin" id="DGb-GY-jrE"/>
+                                                <constraint firstItem="9Uj-a4-dgu" firstAttribute="trailing" secondItem="Sq6-y6-CjQ" secondAttribute="trailingMargin" id="Wfi-Bq-2Kk"/>
+                                                <constraint firstItem="9Uj-a4-dgu" firstAttribute="leading" secondItem="Sq6-y6-CjQ" secondAttribute="leadingMargin" id="fWM-u8-wP3"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.33333333333333331" green="0.67450980392156867" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -145,7 +210,9 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="LOG IN" id="Qtn-OP-9ch"/>
                     <connections>
+                        <outlet property="facebookCell" destination="ZCk-2j-UNZ" id="RTl-F3-dLo"/>
                         <outlet property="passwordField" destination="JBa-OV-E2Q" id="YCj-Ja-grR"/>
+                        <outlet property="twitterCell" destination="pyS-lO-B6g" id="AIC-lQ-4Yb"/>
                         <outlet property="usernameField" destination="ZkG-O2-ZUL" id="qS0-XA-7xx"/>
                         <segue destination="N0U-n2-bFq" kind="unwind" identifier="exitLogin" unwindAction="unwindFromLogin:" id="XeR-tN-C91"/>
                         <segue destination="4ZR-5c-oH3" kind="show" identifier="loginToFriends" id="x80-4B-CEK"/>
@@ -897,6 +964,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="3zf-Xc-LZJ"/>
-        <segue reference="s71-4J-One"/>
+        <segue reference="x80-4B-CEK"/>
     </inferredMetricsTieBreakers>
 </document>

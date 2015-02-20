@@ -26,6 +26,9 @@
     
     UITapGestureRecognizer *viewTap;
     UITapGestureRecognizer *barTap;
+    
+    IBOutlet UITableViewCell *facebookCell;
+    IBOutlet UITableViewCell *twitterCell;
 }
 
 @end

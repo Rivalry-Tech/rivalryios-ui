@@ -31,7 +31,8 @@
     
     //Clear badge
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-    if (currentInstallation.badge != 0) {
+    if (currentInstallation.badge != 0)
+    {
         currentInstallation.badge = 0;
         [currentInstallation saveEventually];
     }

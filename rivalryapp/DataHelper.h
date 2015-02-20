@@ -36,6 +36,7 @@
     
     //Global Storage
     BOOL tutorialComplete;
+    NSString *usernameStorage;
     
     //Timing Storage
     BOOL friendsDone;
@@ -59,6 +60,7 @@
 //Global Stoage Properties
 @property (nonatomic) BOOL tutorialComplete;
 @property (nonatomic) BOOL notifyRegister;
+@property (nonatomic, strong) NSString *usernameStorage;
 
 //Singleton Object Method
 + (DataHelper *)getInstance;

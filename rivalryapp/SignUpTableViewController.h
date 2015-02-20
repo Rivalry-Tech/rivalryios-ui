@@ -20,7 +20,6 @@
     UIBarButtonItem *signupBarButton;
     
     //Interface Connections
-    IBOutlet UIFloatLabelTextField *usernameField;
     IBOutlet UIFloatLabelTextField *passwordField;
     IBOutlet UIFloatLabelTextField *emailField;
     IBOutlet UIFloatLabelTextField *phoneField;

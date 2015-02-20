@@ -120,13 +120,9 @@
     //Get next textfield in the order
     if (textField.tag == 1)
     {
-        [usernameField becomeFirstResponder];
-    }
-    else if (textField.tag == 2)
-    {
         [passwordField becomeFirstResponder];
     }
-    else if (textField.tag == 3)
+    else if (textField.tag == 2)
     {
         [phoneField becomeFirstResponder];
     }
@@ -144,12 +140,11 @@
     NSInteger dir = ([string isEqualToString:@""] ? -1 : 1);
     
     //Get the lengths of the text field inputs
-    NSInteger uLength = usernameField.text.length + (usernameField.isEditing ? 1 : 0) * dir;
     NSInteger pLength = passwordField.text.length + (passwordField.isEditing ? 1 : 0) * dir;
     NSInteger eLength = emailField.text.length + (emailField.isEditing ? 1 : 0) * dir;
     
     //If all are greater than zero, enable login button
-    if (uLength > 0 && pLength > 0 && eLength > 0)
+    if (pLength > 0 && eLength > 0)
     {
         [self enableSignup];
     }
@@ -219,23 +214,18 @@
     self.navigationController.navigationBar.translucent = NO;
     
     //Style floating label text fields
-    usernameField.placeholder = @"USERNAME (< 16 char.)";
     passwordField.placeholder = @"PASSWORD";
     emailField.placeholder = @"EMAIL";
     phoneField.placeholder = @"PHONE (optional)";
-    usernameField.floatLabelActiveColor = [DataHelper colorFromHex:@"#0098FF"];
     passwordField.floatLabelActiveColor = [DataHelper colorFromHex:@"#0098FF"];
     emailField.floatLabelActiveColor = [DataHelper colorFromHex:@"#0098FF"];
     phoneField.floatLabelActiveColor = [DataHelper colorFromHex:@"#0098FF"];
-    usernameField.floatLabelPassiveColor = [DataHelper colorFromHex:@"#5C5C5C"];
     passwordField.floatLabelPassiveColor = [DataHelper colorFromHex:@"#5C5C5C"];
     emailField.floatLabelPassiveColor = [DataHelper colorFromHex:@"#5C5C5C"];
     phoneField.floatLabelPassiveColor = [DataHelper colorFromHex:@"#5C5C5C"];
-    usernameField.floatLabelFont = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:14.0];
     passwordField.floatLabelFont = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:14.0];
     emailField.floatLabelFont = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:14.0];
     phoneField.floatLabelFont = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:14.0];
-    usernameField.clearButtonMode = UITextFieldViewModeNever;
     passwordField.clearButtonMode = UITextFieldViewModeNever;
     emailField.clearButtonMode = UITextFieldViewModeNever;
     phoneField.clearButtonMode = UITextFieldViewModeNever;
@@ -248,8 +238,7 @@
 
 - (void)signupClicked
 {
-    usernameField.text = [usernameField.text uppercaseString];
-    NSString *username = usernameField.text;
+    NSString *username = helper.usernameStorage;
     NSString *email = emailField.text;
     NSString *password = passwordField.text;
     NSString *phone = phoneField.text;

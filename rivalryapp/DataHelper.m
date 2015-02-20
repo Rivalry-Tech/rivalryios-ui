@@ -12,7 +12,7 @@
 
 #pragma mark - Singleton Object Method
 
-@synthesize teams, myTeam, bots, tutorialComplete, friends, interactions, contactFriends, requests, contentProviders, contactData, notifyRegister;
+@synthesize teams, myTeam, bots, tutorialComplete, friends, interactions, contactFriends, requests, contentProviders, contactData, notifyRegister, usernameStorage;
 
 static DataHelper *instance = nil;
 

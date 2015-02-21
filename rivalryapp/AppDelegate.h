@@ -6,10 +6,7 @@
 //  Copyright (c) 2014 Rivalry Technologies. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
-#import <Parse/Parse.h>
-#import <ParseCrashReporting/ParseCrashReporting.h>
 
 #import "DataHelper.h"
 

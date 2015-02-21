@@ -823,6 +823,78 @@ static DataHelper *instance = nil;
     }];
 }
 
+- (void)checkUsername:(NSString *)username callback:(void (^)(BOOL successful))callback
+{
+    usernameStorage = username;
+    
+    NSCharacterSet *badCharacters = [[NSCharacterSet alphanumericCharacterSet] invertedSet];
+    if ([username rangeOfCharacterFromSet:badCharacters].location != NSNotFound)
+    {
+        [UIAlertView showWithTitle:@"Error" message:@"Username cannot contain special characters." cancelButtonTitle:@"Done" otherButtonTitles:nil tapBlock:nil];
+        callback(NO);
+        return;
+    }
+    
+    if (username.length > 12)
+    {
+        [UIAlertView showWithTitle:@"Error" message:@"Please enter a username with 12 or less characters." cancelButtonTitle:@"Done" otherButtonTitles:nil tapBlock:nil];
+        callback(NO);
+        return;
+    }
+    
+    callback(YES);
+}
+
+- (void)loginWithFacebook:(void (^)(BOOL successful, BOOL newUser))callback
+{
+    [PFFacebookUtils logInWithPermissions:@[@"public_profile", @"user_friends", @"email"] block:^(PFUser *user, NSError *error)
+     {
+         if (error)
+         {
+             [DataHelper handleError:error message:nil];
+             callback(NO, NO);
+         }
+         else
+         {
+             if (!user)
+             {
+                 //Canceled
+                 callback(NO, NO);
+             }
+             else if (user.isNew)
+             {
+                 PFUser *currentUser = [PFUser currentUser];
+                 currentUser.username = usernameStorage;
+                 currentUser[@"primaryTeam"] = myTeam;
+                 [FBRequestConnection startWithGraphPath:@"me?fields=email" completionHandler:^(FBRequestConnection *connection, id result, NSError *error)
+                 {
+                     if (result)
+                     {
+                         NSDictionary *resultDict = (NSDictionary *)result;
+                         NSString *email = resultDict[@"email"];
+                         currentUser.email = email;
+                     }
+                     [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                         if (error)
+                         {
+                             [DataHelper handleError:error message:nil];
+                             callback(NO, NO);
+                         }
+                         else
+                         {
+                             callback(YES, YES);
+                         }
+                     }];
+                 }];
+             }
+             else
+             {
+                 callback(YES, NO);
+             }
+         }
+     }];
+}
+
 #pragma mark - Error Handling
 
 + (void)handleError:(NSError *)error message:(NSString *)message
@@ -833,7 +905,7 @@ static DataHelper *instance = nil;
     }
     else if (error.userInfo[@"error"])
     {
-        [UIAlertView showWithTitle:@"ERROR" message:[NSString stringWithFormat:@"Server - %@", error.userInfo[@"error"]] cancelButtonTitle:@"Done" otherButtonTitles:nil tapBlock:nil];
+        [UIAlertView showWithTitle:@"ERROR" message:[NSString stringWithFormat:@"%@", error.userInfo[@"error"]] cancelButtonTitle:@"Done" otherButtonTitles:nil tapBlock:nil];
     }
 }
 

@@ -65,15 +65,40 @@
     return 5;
 }
 
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
-    return cell;
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == 3)
+    {
+        TeamSelectTableViewCell *cell = [[TeamSelectTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"facebookCell"];
+        
+        cell.teamNameLabel.text = @"FACEBOOK";
+        cell.backgroundColor = [DataHelper colorFromHex:@"#3B5998"];
+        cell.teamNameLabel.textColor = [UIColor whiteColor];
+        cell.meLabel.text = @"";
+        cell.themLabel.text = @"";
+        
+        return cell;
+    }
+    else if (indexPath.row == 4)
+    {
+        TeamSelectTableViewCell *cell = [[TeamSelectTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"twitterCell"];
+        
+        cell.teamNameLabel.text = @"TWITTER";
+        cell.backgroundColor = [DataHelper colorFromHex:@"#55ACEE"];
+        cell.teamNameLabel.textColor = [UIColor whiteColor];
+        cell.meLabel.text = @"";
+        cell.themLabel.text = @"";
+        
+        return cell;
+    }
+    else
+    {
+        UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
+        return cell;
+    }
 }
-*/
+
 
 #pragma mark - Navigation
 
@@ -215,6 +240,24 @@
     passwordField.floatLabelFont = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:14.0];
     usernameField.clearButtonMode = UITextFieldViewModeNever;
     passwordField.clearButtonMode = UITextFieldViewModeNever;
+    
+    //Create generic gradient
+    UIColor *clear = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.0];
+    UIColor *shade = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.2];
+    
+    NSArray *colors = [NSArray arrayWithObjects:(id)clear.CGColor, (id)shade.CGColor, nil];
+    
+    NSNumber *stop1 = [NSNumber numberWithFloat:0.0];
+    NSNumber *stop2 = [NSNumber numberWithFloat:1.0];
+    
+    NSArray *locations = [NSArray arrayWithObjects:stop1, stop2, nil];
+    
+    gradient = [CAGradientLayer layer];
+    gradient.frame = facebookCell.bounds;
+    gradient.colors = colors;
+    gradient.locations = locations;
+    gradient.startPoint = CGPointMake(0.5, 0);
+    gradient.endPoint = CGPointMake(0.5, 1);
 }
 
 - (void)cancelClicked

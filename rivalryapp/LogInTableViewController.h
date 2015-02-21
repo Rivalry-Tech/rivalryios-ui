@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import "DataHelper.h"
+#import "TeamSelectTableViewCell.h"
 
 @interface LogInTableViewController : UITableViewController <UITextFieldDelegate>
 {
@@ -29,6 +30,8 @@
     
     IBOutlet UITableViewCell *facebookCell;
     IBOutlet UITableViewCell *twitterCell;
+    IBOutlet UITableViewCell *gapCell;
+    CAGradientLayer *gradient;
 }
 
 @end

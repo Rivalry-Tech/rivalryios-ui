@@ -211,6 +211,7 @@
                     <navigationItem key="navigationItem" title="LOG IN" id="Qtn-OP-9ch"/>
                     <connections>
                         <outlet property="facebookCell" destination="ZCk-2j-UNZ" id="RTl-F3-dLo"/>
+                        <outlet property="gapCell" destination="cLJ-fw-OSI" id="xwz-3X-vqT"/>
                         <outlet property="passwordField" destination="JBa-OV-E2Q" id="YCj-Ja-grR"/>
                         <outlet property="twitterCell" destination="pyS-lO-B6g" id="AIC-lQ-4Yb"/>
                         <outlet property="usernameField" destination="ZkG-O2-ZUL" id="qS0-XA-7xx"/>
@@ -858,7 +859,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2ei-Y9-IlU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2651" y="1042"/>
+            <point key="canvasLocation" x="2760" y="1754"/>
         </scene>
         <!--SIGN UP-->
         <scene sceneID="ItE-Yz-znw">
@@ -964,6 +965,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="3zf-Xc-LZJ"/>
-        <segue reference="x80-4B-CEK"/>
+        <segue reference="s71-4J-One"/>
     </inferredMetricsTieBreakers>
 </document>

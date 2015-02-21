@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
+#import <ParseCrashReporting/ParseCrashReporting.h>
+#import <FacebookSDK/FacebookSDK.h>
+#import <ParseFacebookUtils/PFFacebookUtils.h>
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
 #import <Social/Social.h>
@@ -85,6 +88,8 @@
 - (void)followProvider:(PFObject *)provider callback:(void (^)(BOOL successful))callback;
 - (void)unfollowProvider:(PFObject *)provider callback:(void (^)(BOOL successful))callback;
 - (void)forgotPassword:(void (^)(BOOL successful))callback;
+- (void)checkUsername:(NSString *)username callback:(void (^)(BOOL successful))callback;
+- (void)loginWithFacebook:(void (^)(BOOL successful, BOOL newUser))callback;
 
 //Error Handling
 + (void)handleError:(NSError *)error message:(NSString *)message;

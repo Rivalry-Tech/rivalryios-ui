@@ -129,6 +129,35 @@
     return 85.0;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [helper checkUsername:usernameField.text callback:^(BOOL successful)
+    {
+        if (successful)
+        {
+            if (indexPath.row == 2)
+            {
+                dispatch_async(dispatch_get_main_queue(), ^
+                {
+                    [self performSegueWithIdentifier:@"showEmailSignUp" sender:self];
+                });
+            }
+            else if (indexPath.row == 3)
+            {
+                [helper loginWithFacebook:^(BOOL successful, BOOL newUser) {
+                    if (successful)
+                    {
+                        dispatch_async(dispatch_get_main_queue(), ^
+                        {
+                            [self performSegueWithIdentifier:@"signupToRecruit" sender:self];
+                        });
+                    }
+                }];
+            }
+        }
+    }];
+}
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -187,7 +216,7 @@
     usernameField.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
     usernameField.autocorrectionType = UITextAutocorrectionTypeNo;
     usernameField.spellCheckingType = UITextSpellCheckingTypeNo;
-    usernameField.returnKeyType = UIReturnKeySearch;
+    usernameField.returnKeyType = UIReturnKeyDone;
     usernameField.enablesReturnKeyAutomatically = YES;
     usernameField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     usernameField.delegate = self;

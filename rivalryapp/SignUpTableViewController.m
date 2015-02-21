@@ -92,7 +92,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return 4;
+    return 3;
 }
 
 /*
@@ -203,10 +203,6 @@
     signupBarButton.enabled = NO;
     self.navigationItem.rightBarButtonItems = @[space, signupBarButton];
     
-    //Create Cancel Button
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"CANCEL" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelClicked)];
-    self.navigationItem.leftBarButtonItem = cancelButton;
-    
     //Get rid of extra lines
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
@@ -242,19 +238,6 @@
     NSString *email = emailField.text;
     NSString *password = passwordField.text;
     NSString *phone = phoneField.text;
-    
-    NSCharacterSet *badCharacters = [[NSCharacterSet alphanumericCharacterSet] invertedSet];
-    if ([username rangeOfCharacterFromSet:badCharacters].location != NSNotFound)
-    {
-        [UIAlertView showWithTitle:@"Error" message:@"Username cannot contain special characters." cancelButtonTitle:@"Done" otherButtonTitles:nil tapBlock:nil];
-        return;
-    }
-    
-    if (username.length > 12)
-    {
-        [UIAlertView showWithTitle:@"Error" message:@"Please enter a username with 12 or less characters." cancelButtonTitle:@"Done" otherButtonTitles:nil tapBlock:nil];
-        return;
-    }
     
     if (password.length < 6)
     {

@@ -190,6 +190,7 @@ static DataHelper *instance = nil;
     PFQuery *interactionQuery = [PFQuery orQueryWithSubqueries:@[interactionQuery1, interactionQuery2]];
     [interactionQuery includeKey:@"User1"];
     [interactionQuery includeKey:@"User2"];
+    interactionQuery.limit = 1000;
     
     //Get interactions from Parse
     [interactionQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
@@ -269,7 +270,6 @@ static DataHelper *instance = nil;
                 interaction = [interactions objectAtIndex:index];
                 PFUser *user1 = (PFUser *)interaction[@"User1"];
                 PFUser *user2 = (PFUser *)interaction[@"User2"];
-                NSNumber *count, *newCount;
                 
                 if ([user1.objectId isEqualToString:currentUser.objectId])
                 {

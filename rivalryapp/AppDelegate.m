@@ -3,7 +3,7 @@
 //  rivalryapp
 //
 //  Created by Michael Bottone on 12/14/14.
-//  Copyright (c) 2014 Rivalry Technologies. All rights reserved.
+//  Copyright (c) 2015 Rivalry Technologies. All rights reserved.
 //
 
 #import "AppDelegate.h"

@@ -273,15 +273,11 @@ static DataHelper *instance = nil;
                 
                 if ([user1.objectId isEqualToString:currentUser.objectId])
                 {
-                    count = (NSNumber *)interaction[@"Count1"];
-                    newCount = [NSNumber numberWithLongLong:[count longLongValue] + 1];
-                    interaction[@"Count1"] = newCount;
+                    [interaction incrementKey:@"Count1" byAmount:[NSNumber numberWithInt:1]];
                 }
                 else if ([user2.objectId isEqualToString:currentUser.objectId])
                 {
-                    count = (NSNumber *)interaction[@"Count2"];
-                    newCount = [NSNumber numberWithLongLong:[count longLongValue] + 1];
-                    interaction[@"Count2"] = newCount;
+                    [interaction incrementKey:@"Count2" byAmount:[NSNumber numberWithInt:1]];
                 }
                 
                 NSMutableArray *mutableInteractions = [interactions mutableCopy];

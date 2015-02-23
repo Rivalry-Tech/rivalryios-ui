@@ -311,11 +311,7 @@ static DataHelper *instance = nil;
                 }
                 else
                 {
-                    //TODO - Fix this. This can cause the counts to reset.
-                    //Update team callout count
-                    NSNumber *calloutCount = (NSNumber *)myTeam[@"calloutCount"];
-                    calloutCount = [NSNumber numberWithInteger:[calloutCount integerValue] + 1];
-                    myTeam[@"calloutCount"] = calloutCount;
+                    [myTeam incrementKey:@"calloutCount" byAmount:[NSNumber numberWithInt:1]];
                     [myTeam saveInBackground];
                     
                     //Generate push payload

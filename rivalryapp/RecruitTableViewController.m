@@ -608,6 +608,7 @@
     [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
     [MBProgressHUD hideAllHUDsForView:self.tableView animated:YES];
     [self.refreshControl endRefreshing];
+    didRefresh = NO;
 }
 
 - (void)setViewStyles

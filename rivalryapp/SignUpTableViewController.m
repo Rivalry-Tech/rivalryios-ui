@@ -261,9 +261,9 @@
         return;
     }
     
-    if (username.length > 12)
+    if (username.length > 16)
     {
-        [UIAlertView showWithTitle:@"Error" message:@"Please enter a username with 12 or less characters." cancelButtonTitle:@"Done" otherButtonTitles:nil tapBlock:nil];
+        [UIAlertView showWithTitle:@"Error" message:@"Please enter a username with 16 or less characters." cancelButtonTitle:@"Done" otherButtonTitles:nil tapBlock:nil];
         return;
     }
     

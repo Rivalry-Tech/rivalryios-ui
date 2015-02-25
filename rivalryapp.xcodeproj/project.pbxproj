@@ -94,6 +94,8 @@
 		D3A4091A1A9BEAF200D8066A /* Villanova.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D3A409101A9BEAF200D8066A /* Villanova.m4a */; };
 		D3A4091B1A9BEAF200D8066A /* Zags.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D3A409111A9BEAF200D8066A /* Zags.m4a */; };
 		D3A4091E1A9BED2100D8066A /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = D3A4091D1A9BED2100D8066A /* MBProgressHUD.m */; };
+		D3A409211A9E41D800D8066A /* hero.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D3A4091F1A9E41D800D8066A /* hero.m4a */; };
+		D3A409221A9E41D800D8066A /* micracle.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D3A409201A9E41D800D8066A /* micracle.m4a */; };
 		D3AB61ED1A4351E6001C08D4 /* TutorialTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AB61EC1A4351E6001C08D4 /* TutorialTableViewController.m */; };
 		D3AB61F41A477829001C08D4 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D3AB61F21A477829001C08D4 /* libsqlite3.0.dylib */; };
 		D3AB61F51A477829001C08D4 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D3AB61F31A477829001C08D4 /* libstdc++.6.dylib */; };
@@ -216,6 +218,8 @@
 		D3A409111A9BEAF200D8066A /* Zags.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zags.m4a; sourceTree = "<group>"; };
 		D3A4091C1A9BED2100D8066A /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		D3A4091D1A9BED2100D8066A /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		D3A4091F1A9E41D800D8066A /* hero.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = hero.m4a; sourceTree = "<group>"; };
+		D3A409201A9E41D800D8066A /* micracle.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = micracle.m4a; sourceTree = "<group>"; };
 		D3AB61EB1A4351E6001C08D4 /* TutorialTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialTableViewController.h; sourceTree = "<group>"; };
 		D3AB61EC1A4351E6001C08D4 /* TutorialTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialTableViewController.m; sourceTree = "<group>"; };
 		D3AB61F21A477829001C08D4 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
@@ -376,6 +380,8 @@
 		D3C4A0F61A3EA0B0009B8E67 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D3A4091F1A9E41D800D8066A /* hero.m4a */,
+				D3A409201A9E41D800D8066A /* micracle.m4a */,
 				D3A409081A9BEAF200D8066A /* ButlerBulldogs.m4a */,
 				D3A409091A9BEAF200D8066A /* Bzzt.m4a */,
 				D3A4090A1A9BEAF200D8066A /* FearShockers.m4a */,
@@ -559,7 +565,9 @@
 				D3A409191A9BEAF200D8066A /* VCU.m4a in Resources */,
 				D3A409181A9BEAF200D8066A /* SMU.m4a in Resources */,
 				D3304F3C1A76BC3500314DBF /* HookEmHorns.m4a in Resources */,
+				D3A409221A9E41D800D8066A /* micracle.m4a in Resources */,
 				D3304F3F1A76BC3500314DBF /* MIZZOU.m4a in Resources */,
+				D3A409211A9E41D800D8066A /* hero.m4a in Resources */,
 				D3304F111A76BC3500314DBF /* AAAAAA.m4a in Resources */,
 				D3304F271A76BC3500314DBF /* GoDucks.m4a in Resources */,
 				D3304F441A76BC3500314DBF /* ToHellWithGeorgia.m4a in Resources */,

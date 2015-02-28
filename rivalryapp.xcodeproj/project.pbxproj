@@ -86,6 +86,18 @@
 		D3A409021A93121500D8066A /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = D3A409011A93121500D8066A /* MBProgressHUD.m */; };
 		D3A409051A9674C100D8066A /* UsernameSelectTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3A409041A9674C100D8066A /* UsernameSelectTableViewController.m */; };
 		D3A409071A97A06A00D8066A /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3A409061A97A06A00D8066A /* FacebookSDK.framework */; };
+		D3A409121A9BEAF200D8066A /* ButlerBulldogs.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D3A409081A9BEAF200D8066A /* ButlerBulldogs.m4a */; };
+		D3A409131A9BEAF200D8066A /* Bzzt.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D3A409091A9BEAF200D8066A /* Bzzt.m4a */; };
+		D3A409141A9BEAF200D8066A /* FearShockers.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D3A4090A1A9BEAF200D8066A /* FearShockers.m4a */; };
+		D3A409151A9BEAF200D8066A /* GoHero.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D3A4090B1A9BEAF200D8066A /* GoHero.m4a */; };
+		D3A409161A9BEAF200D8066A /* GoMiracle.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D3A4090C1A9BEAF200D8066A /* GoMiracle.m4a */; };
+		D3A409171A9BEAF200D8066A /* NIowa.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D3A4090D1A9BEAF200D8066A /* NIowa.m4a */; };
+		D3A409181A9BEAF200D8066A /* SMU.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D3A4090E1A9BEAF200D8066A /* SMU.m4a */; };
+		D3A409191A9BEAF200D8066A /* VCU.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D3A4090F1A9BEAF200D8066A /* VCU.m4a */; };
+		D3A4091A1A9BEAF200D8066A /* Villanova.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D3A409101A9BEAF200D8066A /* Villanova.m4a */; };
+		D3A4091B1A9BEAF200D8066A /* Zags.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D3A409111A9BEAF200D8066A /* Zags.m4a */; };
+		D3A409211A9E41D800D8066A /* hero.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D3A4091F1A9E41D800D8066A /* hero.m4a */; };
+		D3A409221A9E41D800D8066A /* micracle.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D3A409201A9E41D800D8066A /* micracle.m4a */; };
 		D3AB61ED1A4351E6001C08D4 /* TutorialTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AB61EC1A4351E6001C08D4 /* TutorialTableViewController.m */; };
 		D3AB61F41A477829001C08D4 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D3AB61F21A477829001C08D4 /* libsqlite3.0.dylib */; };
 		D3AB61F51A477829001C08D4 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D3AB61F31A477829001C08D4 /* libstdc++.6.dylib */; };
@@ -201,6 +213,18 @@
 		D3A409031A9674C100D8066A /* UsernameSelectTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UsernameSelectTableViewController.h; sourceTree = "<group>"; };
 		D3A409041A9674C100D8066A /* UsernameSelectTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UsernameSelectTableViewController.m; sourceTree = "<group>"; };
 		D3A409061A97A06A00D8066A /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
+		D3A409081A9BEAF200D8066A /* ButlerBulldogs.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = ButlerBulldogs.m4a; sourceTree = "<group>"; };
+		D3A409091A9BEAF200D8066A /* Bzzt.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bzzt.m4a; sourceTree = "<group>"; };
+		D3A4090A1A9BEAF200D8066A /* FearShockers.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = FearShockers.m4a; sourceTree = "<group>"; };
+		D3A4090B1A9BEAF200D8066A /* GoHero.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = GoHero.m4a; sourceTree = "<group>"; };
+		D3A4090C1A9BEAF200D8066A /* GoMiracle.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = GoMiracle.m4a; sourceTree = "<group>"; };
+		D3A4090D1A9BEAF200D8066A /* NIowa.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = NIowa.m4a; sourceTree = "<group>"; };
+		D3A4090E1A9BEAF200D8066A /* SMU.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = SMU.m4a; sourceTree = "<group>"; };
+		D3A4090F1A9BEAF200D8066A /* VCU.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = VCU.m4a; sourceTree = "<group>"; };
+		D3A409101A9BEAF200D8066A /* Villanova.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Villanova.m4a; sourceTree = "<group>"; };
+		D3A409111A9BEAF200D8066A /* Zags.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zags.m4a; sourceTree = "<group>"; };
+		D3A4091F1A9E41D800D8066A /* hero.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = hero.m4a; sourceTree = "<group>"; };
+		D3A409201A9E41D800D8066A /* micracle.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = micracle.m4a; sourceTree = "<group>"; };
 		D3AB61EB1A4351E6001C08D4 /* TutorialTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialTableViewController.h; sourceTree = "<group>"; };
 		D3AB61EC1A4351E6001C08D4 /* TutorialTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialTableViewController.m; sourceTree = "<group>"; };
 		D3AB61F21A477829001C08D4 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
@@ -303,6 +327,8 @@
 				D3AB621B1A572101001C08D4 /* UIFloatLabelTextField.m */,
 				D3AB61F61A4F3FE9001C08D4 /* UIAlertView+Blocks.h */,
 				D3AB61F71A4F3FE9001C08D4 /* UIAlertView+Blocks.m */,
+				D3A4091C1A9BED2100D8066A /* MBProgressHUD.h */,
+				D3A4091D1A9BED2100D8066A /* MBProgressHUD.m */,
 			);
 			name = "Added Frameworks";
 			sourceTree = "<group>";
@@ -365,6 +391,18 @@
 		D3C4A0F61A3EA0B0009B8E67 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D3A4091F1A9E41D800D8066A /* hero.m4a */,
+				D3A409201A9E41D800D8066A /* micracle.m4a */,
+				D3A409081A9BEAF200D8066A /* ButlerBulldogs.m4a */,
+				D3A409091A9BEAF200D8066A /* Bzzt.m4a */,
+				D3A4090A1A9BEAF200D8066A /* FearShockers.m4a */,
+				D3A4090B1A9BEAF200D8066A /* GoHero.m4a */,
+				D3A4090C1A9BEAF200D8066A /* GoMiracle.m4a */,
+				D3A4090D1A9BEAF200D8066A /* NIowa.m4a */,
+				D3A4090E1A9BEAF200D8066A /* SMU.m4a */,
+				D3A4090F1A9BEAF200D8066A /* VCU.m4a */,
+				D3A409101A9BEAF200D8066A /* Villanova.m4a */,
+				D3A409111A9BEAF200D8066A /* Zags.m4a */,
 				D3304EDA1A76BC3500314DBF /* AAAAAA.m4a */,
 				D3304EDB1A76BC3500314DBF /* AnchorDown.m4a */,
 				D3304EDC1A76BC3500314DBF /* BoomerSooner.m4a */,
@@ -531,14 +569,20 @@
 				D3304F391A76BC3500314DBF /* HailSouthern.m4a in Resources */,
 				D3304F251A76BC3500314DBF /* GoDeacs.m4a in Resources */,
 				D3304F151A76BC3500314DBF /* ForLaurel.m4a in Resources */,
+				D3A409121A9BEAF200D8066A /* ButlerBulldogs.m4a in Resources */,
 				D3304F321A76BC3500314DBF /* GoOwls.m4a in Resources */,
 				D3304F401A76BC3500314DBF /* Output 1-2.m4a in Resources */,
 				D3304F241A76BC3500314DBF /* GoDawgs.m4a in Resources */,
+				D3A409191A9BEAF200D8066A /* VCU.m4a in Resources */,
+				D3A409181A9BEAF200D8066A /* SMU.m4a in Resources */,
 				D3304F3C1A76BC3500314DBF /* HookEmHorns.m4a in Resources */,
+				D3A409221A9E41D800D8066A /* micracle.m4a in Resources */,
 				D3304F3F1A76BC3500314DBF /* MIZZOU.m4a in Resources */,
+				D3A409211A9E41D800D8066A /* hero.m4a in Resources */,
 				D3304F111A76BC3500314DBF /* AAAAAA.m4a in Resources */,
 				D3304F271A76BC3500314DBF /* GoDucks.m4a in Resources */,
 				D3304F441A76BC3500314DBF /* ToHellWithGeorgia.m4a in Resources */,
+				D3A409131A9BEAF200D8066A /* Bzzt.m4a in Resources */,
 				D3C4A1051A3EA0B0009B8E67 /* Main.storyboard in Resources */,
 				D3304F1B1A76BC3500314DBF /* GoBlazers.m4a in Resources */,
 				D3304F2B1A76BC3500314DBF /* GoGators.m4a in Resources */,
@@ -547,9 +591,11 @@
 				D3304F1D1A76BC3500314DBF /* GoBlueDevils.m4a in Resources */,
 				D3304F371A76BC3500314DBF /* GoVols.m4a in Resources */,
 				D3C4A10A1A3EA0B0009B8E67 /* LaunchScreen.xib in Resources */,
+				D3A409171A9BEAF200D8066A /* NIowa.m4a in Resources */,
 				D3304F3A1A76BC3500314DBF /* HailState.m4a in Resources */,
 				D3304F291A76BC3500314DBF /* GoFrogs.m4a in Resources */,
 				D3304F3E1A76BC3500314DBF /* LetsGoMountaineers.m4a in Resources */,
+				D3A4091B1A9BEAF200D8066A /* Zags.m4a in Resources */,
 				D3304F141A76BC3500314DBF /* FightPanthers.m4a in Resources */,
 				D3304F351A76BC3500314DBF /* GoTerps.m4a in Resources */,
 				D3304F231A76BC3500314DBF /* GoCocks.m4a in Resources */,
@@ -557,12 +603,15 @@
 				D3304F301A76BC3500314DBF /* GoNoles.m4a in Resources */,
 				D3304F2C1A76BC3500314DBF /* GoHeels.m4a in Resources */,
 				D3304F311A76BC3500314DBF /* GoOrange.m4a in Resources */,
+				D3A409141A9BEAF200D8066A /* FearShockers.m4a in Resources */,
 				D3304F201A76BC3500314DBF /* GoCanes.m4a in Resources */,
 				D3304F131A76BC3500314DBF /* BoomerSooner.m4a in Resources */,
 				D3304F211A76BC3500314DBF /* GoCards.m4a in Resources */,
 				D3304F191A76BC3500314DBF /* GoBeaversAlt.m4a in Resources */,
 				D3304F2A1A76BC3500314DBF /* GoFrogsForLaurel.m4a in Resources */,
 				D3304F1E1A76BC3500314DBF /* GoBuckeyes.m4a in Resources */,
+				D3A409161A9BEAF200D8066A /* GoMiracle.m4a in Resources */,
+				D3A409151A9BEAF200D8066A /* GoHero.m4a in Resources */,
 				D3C4A1071A3EA0B0009B8E67 /* Images.xcassets in Resources */,
 				D3304F361A76BC3500314DBF /* GoTigersClemson.m4a in Resources */,
 				D3304F3B1A76BC3500314DBF /* HailToPitt.m4a in Resources */,
@@ -584,6 +633,7 @@
 				D3304F261A76BC3500314DBF /* GoDores.m4a in Resources */,
 				D3304F461A76BC3500314DBF /* WarEagle.m4a in Resources */,
 				D3304F381A76BC3500314DBF /* GunsUp.m4a in Resources */,
+				D3A4091A1A9BEAF200D8066A /* Villanova.m4a in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

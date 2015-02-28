@@ -270,19 +270,14 @@ static DataHelper *instance = nil;
                 interaction = [interactions objectAtIndex:index];
                 PFUser *user1 = (PFUser *)interaction[@"User1"];
                 PFUser *user2 = (PFUser *)interaction[@"User2"];
-                NSNumber *count, *newCount;
                 
                 if ([user1.objectId isEqualToString:currentUser.objectId])
                 {
-                    count = (NSNumber *)interaction[@"Count1"];
-                    newCount = [NSNumber numberWithLongLong:[count longLongValue] + 1];
-                    interaction[@"Count1"] = newCount;
+                    [interaction incrementKey:@"Count1" byAmount:[NSNumber numberWithInt:1]];
                 }
                 else if ([user2.objectId isEqualToString:currentUser.objectId])
                 {
-                    count = (NSNumber *)interaction[@"Count2"];
-                    newCount = [NSNumber numberWithLongLong:[count longLongValue] + 1];
-                    interaction[@"Count2"] = newCount;
+                    [interaction incrementKey:@"Count2" byAmount:[NSNumber numberWithInt:1]];
                 }
                 
                 NSMutableArray *mutableInteractions = [interactions mutableCopy];
@@ -312,11 +307,7 @@ static DataHelper *instance = nil;
                 }
                 else
                 {
-                    //TODO - Fix this. This can cause the counts to reset.
-                    //Update team callout count
-                    NSNumber *calloutCount = (NSNumber *)myTeam[@"calloutCount"];
-                    calloutCount = [NSNumber numberWithInteger:[calloutCount integerValue] + 1];
-                    myTeam[@"calloutCount"] = calloutCount;
+                    [myTeam incrementKey:@"calloutCount" byAmount:[NSNumber numberWithInt:1]];
                     [myTeam saveInBackground];
                     
                     //Generate push payload

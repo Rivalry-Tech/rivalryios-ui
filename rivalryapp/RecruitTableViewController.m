@@ -356,10 +356,6 @@
         
         TeamSelectTableViewCell *selectedCell = (TeamSelectTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
         
-        NSMutableArray *friendRequests_m = [friendRequests mutableCopy];
-        [friendRequests_m removeObjectAtIndex:indexPath.row];
-        friendRequests = [NSArray arrayWithArray:friendRequests_m];
-        
         selectedCell.useTimer = NO;
         selectedCell.customFlipText = @"ACCEPTED!";
         selectedCell.customSubText = @"";
@@ -372,7 +368,7 @@
                 {
                     if (!didRefresh)
                     {
-                        [self performSelectorOnMainThread:@selector(removeFriendRequest:) withObject:indexPath waitUntilDone:NO];
+                        [self performSelectorOnMainThread:@selector(removeFriendRequest:) withObject:selectedCell waitUntilDone:NO];
                     }
                     else
                     {
@@ -388,10 +384,6 @@
         
         TeamSelectTableViewCell *selectedCell = (TeamSelectTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
         
-        NSMutableArray *contactFriends_m = [contactFriends mutableCopy];
-        [contactFriends_m removeObjectAtIndex:indexPath.row];
-        contactFriends = [NSArray arrayWithArray:contactFriends_m];
-        
         selectedCell.useTimer = NO;
         selectedCell.customFlipText = @"ADDED!";
         selectedCell.customSubText = @"";
@@ -401,7 +393,7 @@
             {
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^
                 {
-                    [self performSelectorOnMainThread:@selector(removeContactFriend:) withObject:indexPath waitUntilDone:NO];
+                    [self performSelectorOnMainThread:@selector(removeContactFriend:) withObject:selectedCell waitUntilDone:NO];
                 });
             }
         }];
@@ -442,8 +434,14 @@
     }
 }
 
-- (void)removeContactFriend:(NSIndexPath *)indexPath
+- (void)removeContactFriend:(UITableViewCell *)cell
 {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    
+    NSMutableArray *contactFriends_m = [contactFriends mutableCopy];
+    [contactFriends_m removeObjectAtIndex:indexPath.row];
+    contactFriends = [NSArray arrayWithArray:contactFriends_m];
+    
     [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
     
     if (contactFriends.count == 0)
@@ -459,8 +457,14 @@
     }
 }
 
-- (void)removeFriendRequest:(NSIndexPath *)indexPath
+- (void)removeFriendRequest:(UITableViewCell *)cell
 {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    
+    NSMutableArray *friendRequests_m = [friendRequests mutableCopy];
+    [friendRequests_m removeObjectAtIndex:indexPath.row];
+    friendRequests = [NSArray arrayWithArray:friendRequests_m];
+    
     [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
     
     if (friendRequests.count == 0)
@@ -608,6 +612,7 @@
     [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
     [MBProgressHUD hideAllHUDsForView:self.tableView animated:YES];
     [self.refreshControl endRefreshing];
+    didRefresh = NO;
 }
 
 - (void)setViewStyles

@@ -99,6 +99,43 @@
     }
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == 3)
+    {
+        dispatch_async(dispatch_get_main_queue(), ^
+        {
+            [self facebookLogin];
+        });
+    }
+    else if (indexPath.row == 4)
+    {
+        dispatch_async(dispatch_get_main_queue(), ^
+        {
+            [self twitterLogin];
+        });
+    }
+}
+
+- (void)facebookLogin
+{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [helper loginWithFacebook:^(BOOL successful, BOOL newUser)
+     {
+         if (successful)
+         {
+             hud.mode = MBProgressHUDModeText;
+             hud.labelText = @"Login Successful!";
+             [self performSelector:@selector(finishLogin) withObject:nil afterDelay:1.0];
+         }
+         [hud hide:YES afterDelay:1.0];
+     }];
+}
+
+- (void)twitterLogin
+{
+    
+}
 
 #pragma mark - Navigation
 

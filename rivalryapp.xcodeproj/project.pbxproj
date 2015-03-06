@@ -114,6 +114,7 @@
 		D3C4A1071A3EA0B0009B8E67 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3C4A1061A3EA0B0009B8E67 /* Images.xcassets */; };
 		D3C4A10A1A3EA0B0009B8E67 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3C4A1081A3EA0B0009B8E67 /* LaunchScreen.xib */; };
 		D3C4A1161A3EA0B0009B8E67 /* rivalryappTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D3C4A1151A3EA0B0009B8E67 /* rivalryappTests.m */; };
+		D3DCE1481AAA46850081A1DD /* LoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3DCE1471AAA46850081A1DD /* LoadingViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -253,6 +254,8 @@
 		D3C4A10F1A3EA0B0009B8E67 /* rivalryappTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = rivalryappTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3C4A1141A3EA0B0009B8E67 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D3C4A1151A3EA0B0009B8E67 /* rivalryappTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = rivalryappTests.m; sourceTree = "<group>"; };
+		D3DCE1461AAA46850081A1DD /* LoadingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingViewController.h; sourceTree = "<group>"; };
+		D3DCE1471AAA46850081A1DD /* LoadingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -327,8 +330,6 @@
 				D3AB621B1A572101001C08D4 /* UIFloatLabelTextField.m */,
 				D3AB61F61A4F3FE9001C08D4 /* UIAlertView+Blocks.h */,
 				D3AB61F71A4F3FE9001C08D4 /* UIAlertView+Blocks.m */,
-				D3A4091C1A9BED2100D8066A /* MBProgressHUD.h */,
-				D3A4091D1A9BED2100D8066A /* MBProgressHUD.m */,
 			);
 			name = "Added Frameworks";
 			sourceTree = "<group>";
@@ -356,6 +357,8 @@
 			children = (
 				D3C4A0FA1A3EA0B0009B8E67 /* AppDelegate.h */,
 				D3C4A0FB1A3EA0B0009B8E67 /* AppDelegate.m */,
+				D3DCE1461AAA46850081A1DD /* LoadingViewController.h */,
+				D3DCE1471AAA46850081A1DD /* LoadingViewController.m */,
 				D33A75FD1A40E3EB0080D572 /* DataHelper.h */,
 				D33A75FE1A40E3EB0080D572 /* DataHelper.m */,
 				D33A75FA1A40E3CC0080D572 /* TeamSelectTableViewController.h */,
@@ -668,6 +671,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3AB62251A58F9FE001C08D4 /* SettingsTableViewController.m in Sources */,
+				D3DCE1481AAA46850081A1DD /* LoadingViewController.m in Sources */,
 				D33A75FF1A40E3EB0080D572 /* DataHelper.m in Sources */,
 				D3AB62161A563CB7001C08D4 /* LogInTableViewController.m in Sources */,
 				D3AB62221A588314001C08D4 /* RivalryTableViewController.m in Sources */,

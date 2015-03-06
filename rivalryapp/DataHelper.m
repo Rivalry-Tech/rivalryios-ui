@@ -838,7 +838,8 @@ static DataHelper *instance = nil;
 
 - (void)loginWithFacebook:(void (^)(BOOL successful, BOOL newUser))callback
 {
-    [PFFacebookUtils logInWithPermissions:@[@"public_profile", @"user_friends", @"email"] block:^(PFUser *user, NSError *error)
+    NSArray *permissisons = @[@"public_profile", @"user_friends", @"email"];
+    [PFFacebookUtils logInWithPermissions:permissisons block:^(PFUser *user, NSError *error)
      {
          if (error)
          {
@@ -849,7 +850,6 @@ static DataHelper *instance = nil;
          {
              if (!user)
              {
-                 //Canceled
                  callback(NO, NO);
              }
              else if (user.isNew)
@@ -868,8 +868,20 @@ static DataHelper *instance = nil;
                      [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                          if (error)
                          {
-                             [DataHelper handleError:error message:nil];
-                             callback(NO, NO);
+                             if (error.code == 203)
+                             {
+                                 [DataHelper handleError:nil message:@"It looks like you already have an account with us. Log in with your username and password and then link your Facebook account to login with Facebook in the furture."];
+                                 callback(NO, NO);
+                                 [PFUser logOut];
+                                 [user deleteEventually];
+                             }
+                             else
+                             {
+                                 [DataHelper handleError:error message:nil];
+                                 callback(NO, NO);
+                                 [PFUser logOut];
+                                 [user deleteEventually];
+                             }
                          }
                          else
                          {

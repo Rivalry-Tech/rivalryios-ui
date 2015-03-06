@@ -48,6 +48,29 @@
             </objects>
             <point key="canvasLocation" x="431" y="296"/>
         </scene>
+        <!--Loading View Controller-->
+        <scene sceneID="Rhb-eu-9kB">
+            <objects>
+                <viewController id="sFj-cJ-yfU" customClass="LoadingViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="dki-5t-p4z"/>
+                        <viewControllerLayoutGuide type="bottom" id="ikG-eU-QXa"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="qGo-G4-G1I">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="BkG-qR-41e"/>
+                    <connections>
+                        <segue destination="npl-SI-Tkg" kind="show" identifier="showStart" id="cVI-67-lko"/>
+                        <segue destination="4ZR-5c-oH3" kind="show" identifier="showRivalry" id="1dQ-jj-OVJ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ljV-oR-XSK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5" y="997"/>
+        </scene>
         <!--LOG IN-->
         <scene sceneID="XwW-uK-Tvu">
             <objects>
@@ -715,7 +738,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>
                     <connections>
-                        <segue destination="npl-SI-Tkg" kind="relationship" relationship="rootViewController" id="azg-68-A7J"/>
+                        <segue destination="sFj-cJ-yfU" kind="relationship" relationship="rootViewController" id="WbD-eb-TUN"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9lc-1U-ONW" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -964,7 +987,7 @@
         <image name="SettingsIcon" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="1dQ-jj-OVJ"/>
         <segue reference="3zf-Xc-LZJ"/>
-        <segue reference="s71-4J-One"/>
     </inferredMetricsTieBreakers>
 </document>

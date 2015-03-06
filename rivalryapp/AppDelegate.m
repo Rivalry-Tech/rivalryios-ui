@@ -56,26 +56,6 @@
         [PFUser logOut];
     }
     
-    PFUser *currentUser = [PFUser currentUser];
-    if (currentUser)
-    {
-        currentInstallation[@"user"] = currentUser;
-        [currentInstallation saveInBackground];
-        
-        DataHelper *helper = [DataHelper getInstance];
-        PFObject *team = currentUser[@"primaryTeam"];
-        PFQuery *teamQuery = [PFQuery queryWithClassName:@"Team"];
-        [teamQuery whereKey:@"objectId" equalTo:team.objectId];
-        teamQuery.cachePolicy = kPFCachePolicyCacheElseNetwork;
-        [teamQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-            helper.myTeam = object;
-            UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
-            UIViewController *start = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"rivalry"];
-            [start.navigationItem setHidesBackButton:YES];
-            [navController pushViewController:start animated:NO];
-        }];
-    }
-    
     return YES;
 }
 

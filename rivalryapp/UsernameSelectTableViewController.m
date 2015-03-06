@@ -144,18 +144,38 @@
             }
             else if (indexPath.row == 3)
             {
-                [helper loginWithFacebook:^(BOOL successful, BOOL newUser) {
-                    if (successful)
-                    {
-                        dispatch_async(dispatch_get_main_queue(), ^
-                        {
-                            [self performSegueWithIdentifier:@"signupToRecruit" sender:self];
-                        });
-                    }
-                }];
+                dispatch_async(dispatch_get_main_queue(), ^
+                {
+                    [self facebookSignup];
+                });
             }
         }
     }];
+}
+
+- (void)facebookSignup
+{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [helper loginWithFacebook:^(BOOL successful, BOOL newUser)
+    {
+        if (successful)
+        {
+            hud.mode = MBProgressHUDModeText;
+            hud.labelText = @"Signup Successful!";
+            [self performSelector:@selector(finishSignup) withObject:nil afterDelay:1.0];
+        }
+        [hud hide:YES afterDelay:1.0];
+    }];
+}
+
+- (void)twitterSignup
+{
+    
+}
+
+- (void)finishSignup
+{
+    [self performSegueWithIdentifier:@"signupToRecruit" sender:self];
 }
 
 #pragma mark - Navigation

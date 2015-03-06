@@ -42,6 +42,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="loginButton" destination="eqg-U8-Byu" id="ghZ-Xa-cc4"/>
+                        <segue destination="4ZR-5c-oH3" kind="show" identifier="skipTutorial" id="J2I-Gj-dFf"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7hB-fs-PLZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -987,7 +988,7 @@
         <image name="SettingsIcon" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="1dQ-jj-OVJ"/>
-        <segue reference="3zf-Xc-LZJ"/>
+        <segue reference="J2I-Gj-dFf"/>
+        <segue reference="4kf-Fl-EGN"/>
     </inferredMetricsTieBreakers>
 </document>

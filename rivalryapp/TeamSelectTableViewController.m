@@ -14,7 +14,7 @@
 
 @implementation TeamSelectTableViewController
 
-@synthesize fromSettings;
+@synthesize fromSettings, invalidTeam;
 
 #pragma mark - UIViewController Methods
 
@@ -31,7 +31,7 @@
     helper.tutorialComplete = NO;
     
     self.title = @"PICK YOUR TEAM";
-    if (fromSettings)
+    if (fromSettings || invalidTeam)
     {
         self.title = @"PICK NEW TEAM";
     }
@@ -102,6 +102,11 @@
         helper.myTeam = [teams objectAtIndex:indexPath.row];
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
+    else if (invalidTeam)
+    {
+        helper.myTeam = [teams objectAtIndex:indexPath.row];
+        [self performSegueWithIdentifier:@"skipTutorial" sender:self];
+    }
     else
     {
         //Custom call to segue from custom UITableViewCell
@@ -154,7 +159,7 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.rowHeight = 85.0;
     
-    if (!fromSettings)
+    if (!fromSettings && !invalidTeam)
     {
         helper.myTeam = nil;
     }

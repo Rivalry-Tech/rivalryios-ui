@@ -41,6 +41,11 @@
 {
     UIViewController *dst = [segue destinationViewController];
     [dst.navigationItem setHidesBackButton:YES];
+    if (resetTeam)
+    {
+        TeamSelectTableViewController *cont = (TeamSelectTableViewController *)dst;
+        cont.invalidTeam = YES;
+    }
 }
 
 
@@ -73,13 +78,19 @@
         PFQuery *teamQuery = [PFQuery queryWithClassName:@"Team"];
         [teamQuery whereKey:@"objectId" equalTo:team.objectId];
         teamQuery.cachePolicy = kPFCachePolicyCacheElseNetwork;
-        [teamQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-            helper.myTeam = object;
-//            UINavigationController *navController = self.navigationController;
-//            UIViewController *start = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"rivalry"];
-//            [start.navigationItem setHidesBackButton:YES];
-//            [navController pushViewController:start animated:NO];
-            [self performSegueWithIdentifier:@"showRivalry" sender:self];
+        [teamQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error)
+        {
+            if (object)
+            {
+                helper.myTeam = object;
+                [self performSegueWithIdentifier:@"showRivalry" sender:self];
+            }
+            else
+            {
+                [UIAlertView showWithTitle:@"ERROR" message:@"The your current team no longer exists in our system. Please select a new team." cancelButtonTitle:@"Done" otherButtonTitles:nil tapBlock:nil];
+                resetTeam = YES;
+                [self performSegueWithIdentifier:@"showStart" sender:self];
+            }
         }];
     }
     else

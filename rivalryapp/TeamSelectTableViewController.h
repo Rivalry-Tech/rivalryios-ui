@@ -24,8 +24,10 @@
     
     //Settings Page
     BOOL fromSettings;
+    BOOL invalidTeam;
 }
 
 @property (nonatomic) BOOL fromSettings;
+@property (nonatomic) BOOL invalidTeam;
 
 @end

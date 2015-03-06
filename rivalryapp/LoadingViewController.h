@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "DataHelper.h"
+#import "TeamSelectTableViewController.h"
 
 @interface LoadingViewController : UIViewController
 {
     DataHelper *helper;
+    
+    BOOL resetTeam;
 }
 
 @end

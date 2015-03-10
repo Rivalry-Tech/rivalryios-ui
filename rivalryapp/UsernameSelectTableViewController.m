@@ -149,6 +149,13 @@
                     [self facebookSignup];
                 });
             }
+            else if (indexPath.row == 4)
+            {
+                dispatch_async(dispatch_get_main_queue(), ^
+                {
+                    [self twitterSignup];
+                });
+            }
         }
     }];
 }
@@ -170,7 +177,17 @@
 
 - (void)twitterSignup
 {
-    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [helper loginWithTwitter:^(BOOL successful, BOOL newUser)
+     {
+         if (successful)
+         {
+             hud.mode = MBProgressHUDModeText;
+             hud.labelText = @"Signup Successful!";
+             [self performSelector:@selector(finishSignup) withObject:nil afterDelay:1.0];
+         }
+         [hud hide:YES afterDelay:1.0];
+     }];
 }
 
 - (void)finishSignup

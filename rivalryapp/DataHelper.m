@@ -898,6 +898,48 @@ static DataHelper *instance = nil;
      }];
 }
 
+- (void)loginWithTwitter:(void (^)(BOOL successful, BOOL newUser))callback
+{
+    [PFTwitterUtils logInWithBlock:^(PFUser *user, NSError *error)
+    {
+         if (error)
+         {
+             [DataHelper handleError:error message:nil];
+             callback(NO, NO);
+         }
+         else
+         {
+             if (!user)
+             {
+                 callback(NO, NO);
+             }
+             else if (user.isNew)
+             {
+                 PFUser *currentUser = [PFUser currentUser];
+                 currentUser.username = usernameStorage;
+                 currentUser[@"primaryTeam"] = myTeam;
+                 [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                      if (error)
+                      {
+                          [DataHelper handleError:error message:nil];
+                          callback(NO, NO);
+                          [PFUser logOut];
+                          [user deleteEventually];
+                      }
+                      else
+                      {
+                          callback(YES, YES);
+                      }
+                  }];
+             }
+             else
+             {
+                 callback(YES, NO);
+             }
+         }
+     }];
+}
+
 #pragma mark - Error Handling
 
 + (void)handleError:(NSError *)error message:(NSString *)message

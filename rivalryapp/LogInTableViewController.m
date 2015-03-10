@@ -134,7 +134,17 @@
 
 - (void)twitterLogin
 {
-    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [helper loginWithTwitter:^(BOOL successful, BOOL newUser)
+     {
+         if (successful)
+         {
+             hud.mode = MBProgressHUDModeText;
+             hud.labelText = @"Login Successful!";
+             [self performSelector:@selector(finishLogin) withObject:nil afterDelay:1.0];
+         }
+         [hud hide:YES afterDelay:1.0];
+     }];
 }
 
 #pragma mark - Navigation

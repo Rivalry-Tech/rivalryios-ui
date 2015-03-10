@@ -90,6 +90,7 @@
 - (void)forgotPassword:(void (^)(BOOL successful))callback;
 - (void)checkUsername:(NSString *)username callback:(void (^)(BOOL successful))callback;
 - (void)loginWithFacebook:(void (^)(BOOL successful, BOOL newUser))callback;
+- (void)loginWithTwitter:(void (^)(BOOL successful, BOOL newUser))callback;
 
 //Error Handling
 + (void)handleError:(NSError *)error message:(NSString *)message;

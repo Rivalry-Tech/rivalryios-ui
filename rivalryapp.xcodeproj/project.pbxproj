@@ -115,6 +115,8 @@
 		D3C4A10A1A3EA0B0009B8E67 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3C4A1081A3EA0B0009B8E67 /* LaunchScreen.xib */; };
 		D3C4A1161A3EA0B0009B8E67 /* rivalryappTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D3C4A1151A3EA0B0009B8E67 /* rivalryappTests.m */; };
 		D3DCE1481AAA46850081A1DD /* LoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3DCE1471AAA46850081A1DD /* LoadingViewController.m */; };
+		D3DCE14A1AAE798B0081A1DD /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3DCE1491AAE798B0081A1DD /* Accounts.framework */; };
+		D3DCE14C1AAE79970081A1DD /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3DCE14B1AAE79970081A1DD /* Social.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -256,6 +258,8 @@
 		D3C4A1151A3EA0B0009B8E67 /* rivalryappTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = rivalryappTests.m; sourceTree = "<group>"; };
 		D3DCE1461AAA46850081A1DD /* LoadingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingViewController.h; sourceTree = "<group>"; };
 		D3DCE1471AAA46850081A1DD /* LoadingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingViewController.m; sourceTree = "<group>"; };
+		D3DCE1491AAE798B0081A1DD /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		D3DCE14B1AAE79970081A1DD /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -263,6 +267,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3DCE14C1AAE79970081A1DD /* Social.framework in Frameworks */,
+				D3DCE14A1AAE798B0081A1DD /* Accounts.framework in Frameworks */,
 				D3AB61F41A477829001C08D4 /* libsqlite3.0.dylib in Frameworks */,
 				D3A409071A97A06A00D8066A /* FacebookSDK.framework in Frameworks */,
 				D3AB61F51A477829001C08D4 /* libstdc++.6.dylib in Frameworks */,
@@ -298,6 +304,8 @@
 		D33A76031A40EF120080D572 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D3DCE14B1AAE79970081A1DD /* Social.framework */,
+				D3DCE1491AAE798B0081A1DD /* Accounts.framework */,
 				D3A409061A97A06A00D8066A /* FacebookSDK.framework */,
 				D33A76121A40EFA20080D572 /* CoreGraphics.framework */,
 				D33A76131A40EFA20080D572 /* CoreLocation.framework */,

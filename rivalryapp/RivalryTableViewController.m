@@ -394,8 +394,12 @@
 
 - (void)getData
 {
+    friendsDone = NO;
+    botsDone = NO;
+    
     //Add progress indicator
-    [MBProgressHUD showHUDAddedTo:self.tableView animated:YES];
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.tableView animated:YES];
+    hud.labelText = @"Fetching friends...";
     
     [helper getFriends:^(BOOL successful)
     {

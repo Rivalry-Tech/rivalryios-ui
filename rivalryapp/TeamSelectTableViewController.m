@@ -99,13 +99,29 @@
 {
     if (fromSettings)
     {
-        helper.myTeam = [teams objectAtIndex:indexPath.row];
-        [self.navigationController popToRootViewControllerAnimated:YES];
+        if (invalidTeam)
+        {
+            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            [helper updateTeam:[teams objectAtIndex:indexPath.row] callback:^(BOOL successful)
+             {
+                 [MBProgressHUD hideHUDForView:self.view animated:YES];
+                 [self.navigationController popViewControllerAnimated:YES];
+             }];
+        }
+        else
+        {
+            helper.myTeam = [teams objectAtIndex:indexPath.row];
+            [self.navigationController popViewControllerAnimated:YES];
+        }
     }
     else if (invalidTeam)
     {
-        helper.myTeam = [teams objectAtIndex:indexPath.row];
-        [self performSegueWithIdentifier:@"skipTutorial" sender:self];
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [helper updateTeam:[teams objectAtIndex:indexPath.row] callback:^(BOOL successful)
+        {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [self performSegueWithIdentifier:@"skipTutorial" sender:self];
+        }];
     }
     else
     {
@@ -146,9 +162,16 @@
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.tintColor = [DataHelper colorFromHex:@"#0099FF"];
     
-    //Login Button Styles
-    [loginButton setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:15.0],NSFontAttributeName, nil] forState:UIControlStateNormal];
-    loginButton.tintColor = [DataHelper colorFromHex:@"#0099FF"];
+    if (!fromSettings && !invalidTeam)
+    {
+        //Login Button Styles
+        [loginButton setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:15.0],NSFontAttributeName, nil] forState:UIControlStateNormal];
+        loginButton.tintColor = [DataHelper colorFromHex:@"#0099FF"];
+    }
+    else
+    {
+        self.navigationItem.rightBarButtonItem = nil;
+    }
     
     //Make bar opaque to preserve colors
     self.navigationController.navigationBar.translucent = NO;

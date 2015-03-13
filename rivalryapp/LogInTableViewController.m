@@ -35,6 +35,8 @@
     barTap = [[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)];
     barTap.cancelsTouchesInView = NO;
     [self.navigationController.navigationBar addGestureRecognizer:barTap];
+    
+    [self checkLoginButton:@""];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -121,14 +123,21 @@
 {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [helper loginWithFacebook:^(BOOL successful, BOOL newUser)
-     {
-         if (successful)
-         {
-             hud.mode = MBProgressHUDModeText;
-             hud.labelText = @"Login Successful!";
-             [self performSelector:@selector(finishLogin) withObject:nil afterDelay:1.0];
-         }
-         [hud hide:YES afterDelay:1.0];
+    {
+        if (successful)
+        {
+            if (newUser)
+            {
+                //Direct to tutorial
+            }
+            else
+            {
+                hud.mode = MBProgressHUDModeText;
+                hud.labelText = @"Login Successful!";
+                [self performSelector:@selector(finishLogin) withObject:nil afterDelay:1.0];
+            }
+        }
+        [hud hide:YES afterDelay:1.0];
      }];
 }
 
@@ -136,15 +145,22 @@
 {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [helper loginWithTwitter:^(BOOL successful, BOOL newUser)
-     {
-         if (successful)
-         {
-             hud.mode = MBProgressHUDModeText;
-             hud.labelText = @"Login Successful!";
-             [self performSelector:@selector(finishLogin) withObject:nil afterDelay:1.0];
-         }
-         [hud hide:YES afterDelay:1.0];
-     }];
+    {
+        if (successful)
+        {
+            if (newUser)
+            {
+                //Direct to tutorial
+            }
+            else
+            {
+                hud.mode = MBProgressHUDModeText;
+                hud.labelText = @"Login Successful!";
+                [self performSelector:@selector(finishLogin) withObject:nil afterDelay:1.0];
+            }
+        }
+        [hud hide:YES afterDelay:1.0];
+    }];
 }
 
 #pragma mark - Navigation
@@ -175,6 +191,13 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
+    [self checkLoginButton:string];
+    
+    return YES;
+}
+
+- (void)checkLoginButton:(NSString *)string
+{
     NSInteger dir = ([string isEqualToString:@""] ? -1 : 1);
     
     //Get the lengths of the text field inputs
@@ -190,8 +213,6 @@
     {
         [self disableLogin];
     }
-    
-    return YES;
 }
 
 #pragma mark - Custom Methods
@@ -323,13 +344,20 @@
     NSString *password = passwordField.text;
     
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [helper login:username password:password callback:^(BOOL successful)
+    [helper login:username password:password callback:^(BOOL successful, BOOL resetTeam)
     {
         if (successful)
         {
             hud.mode = MBProgressHUDModeText;
             hud.labelText = @"Login Successful!";
             [self performSelector:@selector(finishLogin) withObject:nil afterDelay:1.0];
+        }
+        if (resetTeam)
+        {
+            TeamSelectTableViewController *controller = [[TeamSelectTableViewController alloc] init];
+            controller.fromSettings = YES;
+            controller.invalidTeam = YES;
+            [self.navigationController pushViewController:controller animated:YES];
         }
         [hud hide:YES afterDelay:1.0];
     }];

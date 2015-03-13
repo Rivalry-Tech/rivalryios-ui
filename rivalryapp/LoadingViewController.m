@@ -75,6 +75,13 @@
         [currentInstallation saveInBackground];
         
         PFObject *team = currentUser[@"primaryTeam"];
+        if (team == nil)
+        {
+            [UIAlertView showWithTitle:@"ERROR" message:@"Your user account doesn't have a team associated with it. Please pick one now." cancelButtonTitle:@"Done" otherButtonTitles:nil tapBlock:nil];
+            resetTeam = YES;
+            [self performSegueWithIdentifier:@"showStart" sender:self];
+            return;
+        }
         PFQuery *teamQuery = [PFQuery queryWithClassName:@"Team"];
         [teamQuery whereKey:@"objectId" equalTo:team.objectId];
         teamQuery.cachePolicy = kPFCachePolicyCacheElseNetwork;
@@ -95,8 +102,18 @@
     }
     else
     {
-        [self performSegueWithIdentifier:@"showStart" sender:self];
+        dispatch_async(dispatch_get_main_queue(), ^
+        {
+            [self performSegueWithIdentifier:@"showStart" sender:self];
+        });
+        
     }
+}
+
+- (IBAction)unwindFromLogout:(UIStoryboardSegue *)segue
+{
+    helper = [DataHelper getInstance];
+    [self getData];
 }
 
 @end

@@ -147,7 +147,8 @@
     }
     else if (indexPath.section == 1 && indexPath.row == 0)
     {
-        [helper logout:^(BOOL successful) {
+        [helper logout:^(BOOL successful)
+        {
             [self performSegueWithIdentifier:@"logoutSegue" sender:self];
         }];
     }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="gTb-bM-v4u">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="gTb-bM-v4u">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -601,7 +601,7 @@
                         <outlet property="teamField" destination="QXm-nl-a95" id="LUy-MP-odW"/>
                         <outlet property="usernameField" destination="wvR-iX-VNi" id="8Sc-rc-RbH"/>
                         <segue destination="jPB-aq-twc" kind="unwind" identifier="exitSettings" unwindAction="unwindFromSettings:" id="JO9-ET-q8e"/>
-                        <segue destination="jPB-aq-twc" kind="unwind" identifier="logoutSegue" unwindAction="unwindFromLogin:" id="sMZ-et-KA3"/>
+                        <segue destination="jPB-aq-twc" kind="unwind" identifier="logoutSegue" unwindAction="unwindFromLogout:" id="mvV-vK-pYy"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RQh-tg-EwL" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -87,7 +87,7 @@ static DataHelper *instance = nil;
     }];
 }
 
-- (void)login:(NSString *)username password:(NSString *)password callback:(void (^)(BOOL successful))callback
+- (void)login:(NSString *)username password:(NSString *)password callback:(void (^)(BOOL successful, BOOL resetTeam))callback
 {
     //Login through Parse
     [PFUser logInWithUsernameInBackground:username password:password block:^(PFUser *user, NSError *error)
@@ -96,18 +96,32 @@ static DataHelper *instance = nil;
         {
             PFObject *team = user[@"primaryTeam"];
             PFQuery *teamQuery = [PFQuery queryWithClassName:@"Team"];
+            if (team == nil)
+            {
+                [UIAlertView showWithTitle:@"ERROR" message:@"Your user account doesn't have a team associated with it. Please pick one now." cancelButtonTitle:@"Done" otherButtonTitles:nil tapBlock:nil];
+                callback(NO, YES);
+                return;
+            }
             [teamQuery whereKey:@"objectId" equalTo:team.objectId];
             teamQuery.cachePolicy = kPFCachePolicyNetworkOnly;
             [teamQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error)
             {
-                myTeam = object;
-                callback(YES);
+                if (object)
+                {
+                    myTeam = object;
+                    callback(YES, NO);
+                }
+                else
+                {
+                    [UIAlertView showWithTitle:@"ERROR" message:@"The your current team no longer exists in our system. Please select a new team." cancelButtonTitle:@"Done" otherButtonTitles:nil tapBlock:nil];
+                    callback(NO, YES);
+                }
             }];
         }
         else
         {
             [DataHelper handleError:error message:nil];
-            callback(NO);
+            callback(NO, NO);
         }
     }];
 }
@@ -840,104 +854,87 @@ static DataHelper *instance = nil;
 {
     NSArray *permissisons = @[@"public_profile", @"user_friends", @"email"];
     [PFFacebookUtils logInWithPermissions:permissisons block:^(PFUser *user, NSError *error)
-     {
-         if (error)
-         {
-             [DataHelper handleError:error message:nil];
-             callback(NO, NO);
-         }
-         else
-         {
-             if (!user)
-             {
-                 callback(NO, NO);
-             }
-             else if (user.isNew)
-             {
-                 PFUser *currentUser = [PFUser currentUser];
-                 currentUser.username = usernameStorage;
-                 currentUser[@"primaryTeam"] = myTeam;
-                 [FBRequestConnection startWithGraphPath:@"me?fields=email" completionHandler:^(FBRequestConnection *connection, id result, NSError *error)
-                 {
-                     if (result)
-                     {
-                         NSDictionary *resultDict = (NSDictionary *)result;
-                         NSString *email = resultDict[@"email"];
-                         currentUser.email = email;
-                     }
-                     [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                         if (error)
-                         {
-                             if (error.code == 203)
-                             {
-                                 [DataHelper handleError:nil message:@"It looks like you already have an account with us. Log in with your username and password and then link your Facebook account to login with Facebook in the furture."];
-                                 callback(NO, NO);
-                                 [PFUser logOut];
-                                 [user deleteEventually];
-                             }
-                             else
-                             {
-                                 [DataHelper handleError:error message:nil];
-                                 callback(NO, NO);
-                                 [PFUser logOut];
-                                 [user deleteEventually];
-                             }
-                         }
-                         else
-                         {
-                             callback(YES, YES);
-                         }
-                     }];
-                 }];
-             }
-             else
-             {
-                 callback(YES, NO);
-             }
-         }
-     }];
+    {
+        [self handleSocialLogin:user error:error callback:callback];
+    }];
 }
 
 - (void)loginWithTwitter:(void (^)(BOOL successful, BOOL newUser))callback
 {
     [PFTwitterUtils logInWithBlock:^(PFUser *user, NSError *error)
     {
-         if (error)
-         {
-             [DataHelper handleError:error message:nil];
-             callback(NO, NO);
-         }
-         else
-         {
-             if (!user)
+        [self handleSocialLogin:user error:error callback:callback];
+    }];
+}
+
+- (void)handleSocialLogin:(PFUser *)user error:(NSError *)error callback:(void (^)(BOOL successful, BOOL newUser))callback
+{
+    if (error)
+    {
+        [DataHelper handleError:nil message:@"Social network error"];
+        callback(NO, NO);
+    }
+    else
+    {
+        PFUser *currentUser = [PFUser currentUser];
+        if (!user)
+        {
+            callback(NO, NO);
+        }
+        else if (user.isNew)
+        {
+            currentUser.username = usernameStorage;
+            currentUser[@"primaryTeam"] = myTeam;
+            [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (error)
+                {
+                    [DataHelper handleError:error message:nil];
+                    callback(NO, NO);
+                    [PFUser logOut];
+                    [user deleteEventually];
+                }
+                else
+                {
+                    callback(YES, YES);
+                }
+            }];
+        }
+        else
+        {
+            myTeam = currentUser[@"primaryTeam"];
+            [myTeam fetchInBackgroundWithBlock:^(PFObject *object, NSError *error)
              {
-                 callback(NO, NO);
-             }
-             else if (user.isNew)
-             {
-                 PFUser *currentUser = [PFUser currentUser];
-                 currentUser.username = usernameStorage;
-                 currentUser[@"primaryTeam"] = myTeam;
-                 [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                      if (error)
-                      {
-                          [DataHelper handleError:error message:nil];
-                          callback(NO, NO);
-                          [PFUser logOut];
-                          [user deleteEventually];
-                      }
-                      else
-                      {
-                          callback(YES, YES);
-                      }
-                  }];
-             }
-             else
-             {
-                 callback(YES, NO);
-             }
-         }
-     }];
+                 if (object)
+                 {
+                     myTeam = object;
+                     callback(YES, NO);
+                 }
+                 else
+                 {
+                     [DataHelper handleError:error message:nil];
+                     callback(NO, NO);
+                 }
+             }];
+        }
+    }
+}
+
+- (void)updateTeam:(PFObject *)team callback:(void (^)(BOOL successful))callback
+{
+    myTeam = team;
+    PFUser *currentUser = [PFUser currentUser];
+    currentUser[@"primaryTeam"] = myTeam;
+    [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded)
+        {
+            callback(YES);
+        }
+        else
+        {
+            [DataHelper handleError:error message:nil];
+            callback(NO);
+        }
+    }];
 }
 
 #pragma mark - Error Handling

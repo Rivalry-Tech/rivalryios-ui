@@ -71,7 +71,7 @@
 //Data Methods
 - (void)getTeams:(void (^)(BOOL successful))callback;
 - (void)getIntroBots:(void (^)(BOOL successful))callback;
-- (void)login:(NSString *)username password:(NSString *)password callback:(void (^)(BOOL successful))callback;
+- (void)login:(NSString *)username password:(NSString *)password callback:(void (^)(BOOL successful, BOOL resetTeam))callback;
 - (void)signup:(NSString *)username password:(NSString *)password email:(NSString *)email phone:(NSString *)phone callback:(void (^)(BOOL successful))callback;
 - (void)getFriends:(void (^)(BOOL successful))callback;
 - (void)sendCallout:(PFUser *)user callback:(void (^)(BOOL successful))callback;
@@ -91,6 +91,7 @@
 - (void)checkUsername:(NSString *)username callback:(void (^)(BOOL successful))callback;
 - (void)loginWithFacebook:(void (^)(BOOL successful, BOOL newUser))callback;
 - (void)loginWithTwitter:(void (^)(BOOL successful, BOOL newUser))callback;
+- (void)updateTeam:(PFObject *)team callback:(void (^)(BOOL successful))callback;
 
 //Error Handling
 + (void)handleError:(NSError *)error message:(NSString *)message;

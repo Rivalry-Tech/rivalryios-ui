@@ -411,7 +411,8 @@ static DataHelper *instance = nil;
     currentUser[@"primaryTeam"] = myTeam;
     
     //Save current user
-    [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+    [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+    {
         if (succeeded)
         {
             callback(YES);
@@ -421,7 +422,7 @@ static DataHelper *instance = nil;
             currentUser.username = oldUsername;
             currentUser.password = oldPassword;
             currentUser.email = oldEmail;
-            currentUser[@"phone"] = oldPhone;
+            currentUser[@"phone"] = (oldPhone == nil) ? [NSNumber numberWithInt:0] : oldPhone;
             currentUser[@"primaryTeam"] = oldTeam;
             myTeam = oldTeam;
             [DataHelper handleError:error message:nil];
@@ -941,14 +942,17 @@ static DataHelper *instance = nil;
 
 + (void)handleError:(NSError *)error message:(NSString *)message
 {
-    if (message)
+    dispatch_async(dispatch_get_main_queue(), ^
     {
-        [UIAlertView showWithTitle:@"ERROR" message:message cancelButtonTitle:@"Done" otherButtonTitles:nil tapBlock:nil];
-    }
-    else if (error.userInfo[@"error"])
-    {
-        [UIAlertView showWithTitle:@"ERROR" message:[NSString stringWithFormat:@"%@", error.userInfo[@"error"]] cancelButtonTitle:@"Done" otherButtonTitles:nil tapBlock:nil];
-    }
+        if (message)
+        {
+            [UIAlertView showWithTitle:@"ERROR" message:message cancelButtonTitle:@"Done" otherButtonTitles:nil tapBlock:nil];
+        }
+        else if (error.userInfo[@"error"])
+        {
+            [UIAlertView showWithTitle:@"ERROR" message:[NSString stringWithFormat:@"%@", error.userInfo[@"error"]] cancelButtonTitle:@"Done" otherButtonTitles:nil tapBlock:nil];
+        }
+    });
 }
 
 #pragma mark - Helper Methods

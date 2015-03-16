@@ -23,8 +23,11 @@
     
     [Parse setApplicationId:@"VpoTYiqIfqYQtUWAzHxz55dbbecnjSv30wrX0ULj"
                   clientKey:@"U62N1GwoVE5sVa3T3mm7p6CthwQMO1GT3Y8mcIwq"];
+    
     [PFFacebookUtils initializeFacebook];
+    
     [PFTwitterUtils initializeWithConsumerKey:@"pgrP1hc5IK0kd0q8nybcL4qhG" consumerSecret:@"2zMY4IcW1BFOdahnOIMSw4dnsmp7uQa8zuLeUJKUvBdGT9YNoU"];
+    
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
     //Set Global Navigation Bar Styles

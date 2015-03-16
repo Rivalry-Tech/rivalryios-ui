@@ -128,7 +128,7 @@
         {
             if (newUser)
             {
-                //Direct to tutorial
+                [self directToTutorial];
             }
             else
             {
@@ -150,7 +150,7 @@
         {
             if (newUser)
             {
-                //Direct to tutorial
+                [self directToTutorial];
             }
             else
             {
@@ -161,6 +161,11 @@
         }
         [hud hide:YES afterDelay:1.0];
     }];
+}
+
+- (void)directToTutorial
+{
+    //TODO
 }
 
 #pragma mark - Navigation

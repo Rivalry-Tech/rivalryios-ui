@@ -127,7 +127,7 @@
     {
         //Custom call to segue from custom UITableViewCell
         helper.myTeam = [teams objectAtIndex:indexPath.row];
-        [self performSegueWithIdentifier:@"showRivalry" sender:self];
+        [self performSegueWithIdentifier:@"skipToSignup" sender:self];
     }
 }
 

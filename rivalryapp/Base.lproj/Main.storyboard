@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="gTb-bM-v4u">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="gTb-bM-v4u">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -43,6 +43,7 @@
                     <connections>
                         <outlet property="loginButton" destination="eqg-U8-Byu" id="ghZ-Xa-cc4"/>
                         <segue destination="4ZR-5c-oH3" kind="show" identifier="skipTutorial" id="J2I-Gj-dFf"/>
+                        <segue destination="CEj-r5-xLp" kind="show" identifier="skipToSignup" id="paK-yA-54C"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7hB-fs-PLZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -628,6 +629,7 @@
         <!--SEND A CALLOUT-->
         <scene sceneID="acj-M0-9Gj">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8Xp-FO-OtT" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController id="rjO-nb-iXd" customClass="TutorialTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="2cp-81-3bP">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
@@ -720,12 +722,10 @@
                     </navigationItem>
                     <connections>
                         <outlet property="loginButton" destination="JP3-kG-1WK" id="pTg-VA-pPl"/>
-                        <segue destination="h51-y3-cHi" kind="presentation" identifier="showSignUp" id="6qW-4b-gIl"/>
                     </connections>
                 </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8Xp-FO-OtT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1195" y="296"/>
+            <point key="canvasLocation" x="1183" y="244"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="IZW-dQ-WFS">
@@ -953,8 +953,15 @@
                             <outlet property="delegate" destination="CEj-r5-xLp" id="szu-Sg-o8n"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="SIGN UP" id="JNf-0t-7jh"/>
+                    <navigationItem key="navigationItem" title="SIGN UP" id="JNf-0t-7jh">
+                        <barButtonItem key="rightBarButtonItem" title="LOG IN" id="Y2e-gJ-0JT">
+                            <connections>
+                                <segue destination="1wF-by-suS" kind="presentation" id="tZh-pr-zSV"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="loginButton" destination="Y2e-gJ-0JT" id="MWm-65-WFR"/>
                         <segue destination="i9S-kD-tjU" kind="show" identifier="showEmailSignUp" id="yoT-iD-ogK"/>
                         <segue destination="1kj-5v-wMO" kind="unwind" identifier="cancelSignup" unwindAction="unwindFromSignup:" id="ujA-Nh-xk7"/>
                         <segue destination="4ZR-5c-oH3" kind="show" identifier="signupToRecruit" id="s71-4J-One"/>
@@ -965,30 +972,12 @@
             </objects>
             <point key="canvasLocation" x="1911" y="1754"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="Eqx-pp-Tcx">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="h51-y3-cHi" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="rKw-Pb-p27">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="CEj-r5-xLp" kind="relationship" relationship="rootViewController" id="1ub-f3-NrG"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="sRN-cn-fCq" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1911" y="1042"/>
-        </scene>
     </scenes>
     <resources>
         <image name="SettingsIcon" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="J2I-Gj-dFf"/>
-        <segue reference="4kf-Fl-EGN"/>
+        <segue reference="tZh-pr-zSV"/>
+        <segue reference="s71-4J-One"/>
     </inferredMetricsTieBreakers>
 </document>

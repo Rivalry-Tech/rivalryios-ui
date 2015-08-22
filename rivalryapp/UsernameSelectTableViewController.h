@@ -19,6 +19,8 @@
     UITapGestureRecognizer *barTap;
     
     UITextField *usernameField;
+    
+    IBOutlet UIBarButtonItem *loginButton;
 }
 
 @end

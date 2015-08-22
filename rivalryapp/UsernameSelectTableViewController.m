@@ -235,9 +235,9 @@
     self.navigationController.navigationBar.barTintColor = primary;
     self.navigationController.navigationBar.tintColor = secondary;
     
-    //Create Cancel Button
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"CANCEL" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelClicked)];
-    self.navigationItem.leftBarButtonItem = cancelButton;
+    //Login Button Styles
+    [loginButton setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:15.0],NSFontAttributeName, nil] forState:UIControlStateNormal];
+    loginButton.tintColor = secondary;
     
     //Get rid of extra lines
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];

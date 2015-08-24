@@ -242,6 +242,7 @@
                         <outlet property="usernameField" destination="ZkG-O2-ZUL" id="qS0-XA-7xx"/>
                         <segue destination="N0U-n2-bFq" kind="unwind" identifier="exitLogin" unwindAction="unwindFromLogin:" id="XeR-tN-C91"/>
                         <segue destination="4ZR-5c-oH3" kind="show" identifier="loginToFriends" id="x80-4B-CEK"/>
+                        <segue destination="npl-SI-Tkg" kind="show" identifier="needTeam" id="QBc-DI-uRo"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2DW-t2-rU5" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -978,6 +979,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="tZh-pr-zSV"/>
-        <segue reference="s71-4J-One"/>
+        <segue reference="QBc-DI-uRo"/>
+        <segue reference="x80-4B-CEK"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -280,7 +280,12 @@
     teamField.clearButtonMode = UITextFieldViewModeNever;
     PFUser *currentUser = [PFUser currentUser];
     usernameField.text = currentUser.username;
-    emailField.text = currentUser.email;
+    
+    NSString *placeholderEmail = [NSString stringWithFormat:@"%@@email.com", currentUser.username];
+    if (![currentUser.email isEqualToString:placeholderEmail])
+    {
+        emailField.text = currentUser.email;
+    }
     NSNumber *phone = (NSNumber *)currentUser[@"phone"];
     if (![phone integerValue] == 0)
     {

@@ -370,6 +370,10 @@
     //Set username as title
     PFUser *currentUser = [PFUser currentUser];
     self.title = currentUser.username;
+    if (currentUser.username.length > 15)
+    {
+        [UIAlertView showWithTitle:@"Change Username" message:@"You have been assigned a temporary username. You can navigate to the settings page to change it." cancelButtonTitle:@"Done" otherButtonTitles:nil tapBlock:nil];
+    }
     
     //Make bar opaque to preserve colors
     self.navigationController.navigationBar.translucent = NO;

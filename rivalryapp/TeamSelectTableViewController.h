@@ -10,6 +10,7 @@
 
 #import "DataHelper.h"
 #import "TeamSelectTableViewCell.h"
+#import "RivalryTableViewController.h"
 
 @interface TeamSelectTableViewController : UITableViewController
 {

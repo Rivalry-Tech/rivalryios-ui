@@ -12,7 +12,7 @@
 
 #pragma mark - Singleton Object Method
 
-@synthesize teams, myTeam, bots, tutorialComplete, friends, interactions, contactFriends, requests, contentProviders, contactData, notifyRegister, usernameStorage;
+@synthesize teams, myTeam, bots, tutorialComplete, friends, interactions, contactFriends, requests, contentProviders, contactData, notifyRegister, usernameStorage, invalidTeam;
 
 static DataHelper *instance = nil;
 
@@ -406,7 +406,15 @@ static DataHelper *instance = nil;
     {
         currentUser.password = password;
     }
-    currentUser.email = email;
+    
+    if (email == nil || [email isEqualToString:@""])
+    {
+        currentUser.email = [NSString stringWithFormat:@"%@@email.com", username];
+    }
+    else
+    {
+        currentUser.email = email;
+    }
     currentUser[@"phone"] = [NSNumber numberWithLongLong:[phone longLongValue]];
     currentUser[@"primaryTeam"] = myTeam;
     
@@ -833,6 +841,13 @@ static DataHelper *instance = nil;
 {
     usernameStorage = username;
     
+    if ([username isEqualToString:@""] || username == nil)
+    {
+        [UIAlertView showWithTitle:@"Error" message:@"Please enter a username." cancelButtonTitle:@"Done" otherButtonTitles:nil tapBlock:nil];
+        callback(NO);
+        return;
+    }
+    
     NSCharacterSet *badCharacters = [[NSCharacterSet alphanumericCharacterSet] invertedSet];
     if ([username rangeOfCharacterFromSet:badCharacters].location != NSNotFound)
     {
@@ -848,7 +863,20 @@ static DataHelper *instance = nil;
         return;
     }
     
-    callback(YES);
+    PFQuery *nameCheck = [PFUser query];
+    [nameCheck whereKey:@"username" equalTo:username];
+    [nameCheck countObjectsInBackgroundWithBlock:^(int number, NSError *error) {
+        if (number != 0)
+        {
+            [UIAlertView showWithTitle:@"Error" message:@"Username is already taken." cancelButtonTitle:@"Done" otherButtonTitles:nil tapBlock:nil];
+            callback(NO);
+            return;
+        }
+        else
+        {
+            callback(YES);
+        }
+    }];
 }
 
 - (void)loginWithFacebook:(void (^)(BOOL successful, BOOL newUser))callback
@@ -884,9 +912,18 @@ static DataHelper *instance = nil;
         }
         else if (user.isNew)
         {
-            currentUser.username = usernameStorage;
-            currentUser[@"primaryTeam"] = myTeam;
-            [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if (usernameStorage != nil)
+            {
+                currentUser.username = usernameStorage;
+            }
+            
+            if (myTeam != nil)
+            {
+                currentUser[@"primaryTeam"] = myTeam;
+            }
+            
+            [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+            {
                 if (error)
                 {
                     [DataHelper handleError:error message:nil];

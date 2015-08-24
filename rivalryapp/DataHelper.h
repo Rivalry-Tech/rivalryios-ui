@@ -45,6 +45,7 @@
     BOOL friendsDone;
     BOOL interactionsDone;
     BOOL notifyRegister;
+    BOOL invalidTeam;
 }
 
 //Data Storage Properties
@@ -63,6 +64,7 @@
 //Global Stoage Properties
 @property (nonatomic) BOOL tutorialComplete;
 @property (nonatomic) BOOL notifyRegister;
+@property (nonatomic) BOOL invalidTeam;
 @property (nonatomic, strong) NSString *usernameStorage;
 
 //Singleton Object Method

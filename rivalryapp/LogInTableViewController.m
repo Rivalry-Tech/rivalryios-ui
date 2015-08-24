@@ -126,14 +126,17 @@
     {
         if (successful)
         {
+            hud.mode = MBProgressHUDModeText;
+            hud.labelText = @"Login Successful!";
+            
             if (newUser)
             {
-                [self directToTutorial];
+                [UIAlertView showWithTitle:@"ERROR" message:@"Your user account doesn't have a team associated with it. Please pick one now." cancelButtonTitle:@"Done" otherButtonTitles:nil tapBlock:nil];
+                helper.invalidTeam = true;
+                [self performSegueWithIdentifier:@"needTeam" sender:self];
             }
             else
             {
-                hud.mode = MBProgressHUDModeText;
-                hud.labelText = @"Login Successful!";
                 [self performSelector:@selector(finishLogin) withObject:nil afterDelay:1.0];
             }
         }
@@ -148,14 +151,18 @@
     {
         if (successful)
         {
+            hud.mode = MBProgressHUDModeText;
+            hud.labelText = @"Login Successful!";
+            
             if (newUser)
             {
-                [self directToTutorial];
+                [UIAlertView showWithTitle:@"ERROR" message:@"Your user account doesn't have a team associated with it. Please pick one now." cancelButtonTitle:@"Done" otherButtonTitles:nil tapBlock:nil];
+                TeamSelectTableViewController *controller = [[TeamSelectTableViewController alloc] init];
+                controller.invalidTeam = true;
+                [self.navigationController pushViewController:controller animated:YES];
             }
             else
             {
-                hud.mode = MBProgressHUDModeText;
-                hud.labelText = @"Login Successful!";
                 [self performSelector:@selector(finishLogin) withObject:nil afterDelay:1.0];
             }
         }

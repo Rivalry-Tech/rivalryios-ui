@@ -31,6 +31,12 @@
     helper.tutorialComplete = NO;
     
     self.title = @"PICK YOUR TEAM";
+    
+    if (helper.invalidTeam)
+    {
+        invalidTeam = true;
+    }
+    
     if (fromSettings || invalidTeam)
     {
         self.title = @"PICK NEW TEAM";
@@ -185,6 +191,11 @@
     if (!fromSettings && !invalidTeam)
     {
         helper.myTeam = nil;
+    }
+    
+    if (!fromSettings && invalidTeam)
+    {
+        [self.navigationItem setHidesBackButton:true];
     }
 }
 

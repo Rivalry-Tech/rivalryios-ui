@@ -372,7 +372,7 @@
     self.title = currentUser.username;
     if (currentUser.username.length > 15)
     {
-        [UIAlertView showWithTitle:@"Change Username" message:@"You have been assigned a temporary username. You can navigate to the settings page to change it." cancelButtonTitle:@"Done" otherButtonTitles:nil tapBlock:nil];
+        [self showUsernameChange];
     }
     
     //Make bar opaque to preserve colors
@@ -383,6 +383,34 @@
     
     self.refreshControl.tintColor = [UIColor whiteColor];
     [self.refreshControl addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
+}
+
+- (void)showUsernameChange
+{
+    [UIAlertView showWithTitle:@"Change Username" message:@"" style:UIAlertViewStylePlainTextInput cancelButtonTitle:@"Done" otherButtonTitles:nil tapBlock:^(UIAlertView *alertView, NSInteger buttonIndex)
+    {
+        NSString *username = [alertView textFieldAtIndex:0].text.uppercaseString;
+        if ([username isEqualToString:@""] || username == nil)
+        {
+            [self showUsernameChange];
+            return;
+        }
+        PFUser *currentUser = [PFUser currentUser];
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.tableView animated:YES];
+        hud.labelText = @"Saving name...";
+        [helper updateProfile:username password:@"" email:currentUser.email phone:currentUser[@"phone"] callback:^(BOOL successful)
+        {
+            if (!successful)
+            {
+                [self showUsernameChange];
+            }
+            else
+            {
+                self.title = username;
+            }
+            [self finishLoading];
+        }];
+    }];
 }
 
 - (void)refreshTable
